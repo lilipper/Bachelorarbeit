@@ -3,7 +3,7 @@ import torch
 import scipy.io
 
 
-def read_rdf(filename):
+def read_rdf_old(filename):
     print("File not working, to be done")
     return
     # Read file
@@ -44,6 +44,49 @@ def read_rdf(filename):
     complex_raw_data = torch.complex(raw_data[0,  ...], raw_data[1, ...])
     complex_raw_data = complex_raw_data[parameters["predata"]:(parameters["NF"] + parameters["predata"]), ...]
     return complex_raw_data
+
+def read_rdf(filename, device="cpu"):
+    parameters = {}
+    parameters["predata"] = 250
+    parameters["postdata"] = 50
+
+    # Öffne Datei im Binärmodus
+    with open(filename, 'rb') as f:
+        # === Header lesen ===
+        line = b''
+        while not line.strip() == b'end_of_header':
+            line = f.readline()
+
+        # === Variablen lesen ===
+        while True:
+            line = f.readline().decode('utf-8').strip()
+            if line == "end_of_var_list":
+                break
+            if line == "":
+                continue
+            name, value = line.split()
+            parameters[name] = float(value)
+
+        # === Benötigte Parameter extrahieren ===
+        NX = int(parameters["NX"])
+        NY = int(parameters["NY"])
+        NF = int(parameters["NF"])
+        pre = parameters["predata"]
+        post = parameters["postdata"]
+        total_depth = int(NF + pre + post)
+
+        # === Rohdaten lesen ===
+        num_values = 2 * NX * NY * total_depth
+        data = torch.frombuffer(f.read(4 * num_values), dtype=torch.float32)
+
+    # === In komplexe Daten umwandeln ===
+    data = data.view(2, NX, NY, total_depth).to(device)
+    complex_raw_data = torch.complex(data[0], data[1])
+    complex_raw_data = complex_raw_data[:, :, int(pre):int(pre+NF)]
+    # Rearrange axes to match MATLAB: (depth, NX, NY)
+    complex_raw_data = complex_raw_data.permute(2, 0, 1).contiguous()
+
+    return complex_raw_data, parameters
 
 def read_mat(filename, device="cpu"):
     
