@@ -5,8 +5,8 @@ def create_prompt_json(source_dir, output_file=r'.\prompt.json'):
     prompts = []
     for filename in os.listdir(source_dir):
         prompt = {
-            'source': rf"D:\700GHz\mat_files\train\{filename}",
-            'target': rf"D:\700GHz\mat_files\target\{filename}",
+            'source': rf".\thz_dataset\train\{filename}",
+            'target': rf".\thz_dataset\target\{filename}",
             'prompt': "a scan with a defect" if "AMITIE_Tepex_WRC1331" in filename else "a scan without a defect"
         }
         prompts.append(prompt)
