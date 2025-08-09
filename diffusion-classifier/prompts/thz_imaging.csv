@@ -1,0 +1,5 @@
+prompt,classname,classidx
+a scan with a defect.,defect,0
+a blurry scan with a defect.,defect,0
+a scan without a defect.,healthy,1
+a blurry scan without a defect.,healthy,1
