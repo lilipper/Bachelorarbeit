@@ -341,8 +341,6 @@ class ControlNet(nn.Module):
         )
         controlnet_block = zero_module(controlnet_block)
         self.controlnet_mid_block = controlnet_block
-        self.depth_pool = nn.AdaptiveAvgPool3d((1, None, None))
-        self.rgb_head = nn.Conv2d(self.block_out_channels[0], 3, kernel_size=1)
 
     def forward(
         self,
@@ -362,22 +360,55 @@ class ControlNet(nn.Module):
             context: context tensor (N, 1, ContextDim).
             class_labels: context tensor (N, ).
         """
-        timesteps = torch.zeros(x.shape[0], device=x.device, dtype=torch.long)
+        # 1. time
         t_emb = get_timestep_embedding(timesteps, self.block_out_channels[0])
+
+        # timesteps does not contain any weights and will always return f32 tensors
+        # but time_embedding might actually be running in fp16. so we need to cast here.
+        # there might be better ways to encapsulate this.
         t_emb = t_emb.to(dtype=x.dtype)
         emb = self.time_embed(t_emb)
 
+        # 2. class
+        if self.num_class_embeds is not None:
+            if class_labels is None:
+                raise ValueError("class_labels should be provided when num_class_embeds > 0")
+            class_emb = self.class_embedding(class_labels)
+            class_emb = class_emb.to(dtype=x.dtype)
+            emb = emb + class_emb
+
+        # 3. initial convolution
         h = self.conv_in(x)
 
         controlnet_cond = self.controlnet_cond_embedding(controlnet_cond)
 
         h += controlnet_cond
 
+        # 4. down
+        if context is not None and self.with_conditioning is False:
+            raise ValueError("model should have with_conditioning = True if context is provided")
+        down_block_res_samples: list[torch.Tensor] = [h]
         for downsample_block in self.down_blocks:
-           h, _ = downsample_block(hidden_states=h, temb=emb, context=None)
-           
-        h = self.middle_block(hidden_states=h, temb=emb, context=None)
-        h = self.controlnet_mid_block(h)
-        h = self.depth_pool(h).squeeze(2)
-        rgb = self.rgb_head(h)
-        return rgb
+            h, res_samples = downsample_block(hidden_states=h, temb=emb, context=context)
+            for residual in res_samples:
+                down_block_res_samples.append(residual)
+
+        # 5. mid
+        h = self.middle_block(hidden_states=h, temb=emb, context=context)
+
+        # 6. Control net blocks
+        controlnet_down_block_res_samples = ()
+
+        for down_block_res_sample, controlnet_block in zip(down_block_res_samples, self.controlnet_down_blocks):
+            down_block_res_sample = controlnet_block(down_block_res_sample)
+            controlnet_down_block_res_samples += (down_block_res_sample,)
+
+        down_block_res_samples = controlnet_down_block_res_samples
+
+        mid_block_res_sample = self.controlnet_mid_block(h)
+
+        # 6. scaling
+        down_block_res_samples = [h * conditioning_scale for h in down_block_res_samples]
+        mid_block_res_sample *= conditioning_scale
+
+        return down_block_res_samples, mid_block_res_sample
