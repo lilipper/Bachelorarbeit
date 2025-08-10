@@ -58,14 +58,13 @@ class ImageNetV2(ImageNetV2Dataset):
                                          transform=transform)
         self.fnames.sort()
 
-class ThzDataset(Dataset):
+class ThzDatasetraw(Dataset):
     def __init__(self, data_dir, label_csv, transform=None):
         self.data_dir = data_dir
         self.transform = transform
         self.labels_df = pd.read_csv(label_csv)
         self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
         self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
-
         self.files = list(self.file_to_class.keys())
 
     def __len__(self):
@@ -74,41 +73,112 @@ class ThzDataset(Dataset):
     def __getitem__(self, idx):
         filename = self.files[idx]
         filepath = os.path.join(self.data_dir, filename)
+        label = self.file_to_class[filename]
 
         device = 'cpu'
         complex_raw_data, parameters = prdf.read_mat(filepath, device=device)
         processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, int(parameters["NF"]), device=device)
-        images = []
-        for depth_layer in range(processed_data.shape[0]):
-            img = processed_data[depth_layer, ...]
-            img = torch.abs(img) ** 2
-            img = img / max_val_abs
-            img = torch.flip(img, dims=[0])     # flipud → dim=0
-            img = img.transpose(0, 1)           # H↔W
-            images.append(img)
+        # 3) Normalisierung: 
+        vol = torch.pow(torch.abs(processed_data), 2)
+        vol = vol / (max_val_abs)  # [T,H,W], float32
 
-        # Stapeln zu Tensor [T, H, W]
-        volume = torch.stack(images, dim=0)
+        # 4) vertikal flippen (wie flipud) -> entlang H (dim=1)
+        vol = torch.flipud(vol).transpose(1, 2).detach().cpu().numpy()  # [T,H,W]
 
-        # Beispiel: mittlere Projektion über Tiefe
-        projection = np.mean(volume, axis=2)
+        # 5) auf [0,255] skalieren und nach uint8
+        #    (PIL erwartet uint8; Normalisierung für Classifier macht später dein transform)
+        img2d = torch.mean(vol, dim=0)
+        minv = torch.min(img2d)
+        maxv = torch.max(img2d)
+        img2d = (img2d - minv) / (maxv - minv + 1e-8)
+        img_u8 = (img2d * 255.0).clamp(0, 255).to(torch.uint8).cpu().numpy()  # [H,W], uint8
 
-        # Normieren auf [0, 255]
-        projection = (projection - projection.min()) / (projection.max() - projection.min() + 1e-5)
-        image = (projection * 255).astype(np.uint8)
+        # 7) nach PIL und RGB
+        img = Image.fromarray(img_u8, mode="L").convert("RGB")  # [H,W,3] als PIL
 
-        # In RGB-Format bringen
-        image = np.stack([image] * 3, axis=-1)  # [H, W, 3]
-
-        # In PIL.Image umwandeln
-        img = Image.fromarray(image)
-
-        # Transforms anwenden (falls vorhanden)
+        # 8) Transforms (wie bei ImageNetA)
         if self.transform is not None:
-            img = self.transform(img)
+            img = self.transform(img)  # typischerweise Tensor [3,H',W'] mit Normalize
 
+        return img, label
+    
+class ThzDataset_depthlayer(Dataset):
+    def __init__(self, data_dir, label_csv, transform=None, depth_layer=700):
+        self.data_dir = data_dir
+        self.transform = transform
+        self.labels_df = pd.read_csv(label_csv)
+        self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
+        self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
+        self.files = list(self.file_to_class.keys())
+        self.depth_layer = depth_layer  
+
+    def __len__(self):
+        return len(self.files)
+
+    def __getitem__(self, idx):
+        filename = self.files[idx]
+        filepath = os.path.join(self.data_dir, filename)
         label = self.file_to_class[filename]
-        return image, label
+
+        device = 'cpu'
+        complex_raw_data, parameters = prdf.read_mat(filepath, device=device)
+        processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, int(parameters["NF"]), device=device)
+
+
+        img2d = torch.flipud(torch.pow(torch.abs(processed_data[self.depth_layer, ...]), 2)/max_val_abs).transpose(0, 1).detach().cpu().numpy()
+
+        minv, maxv = img2d.min(), img2d.max()
+        img2d = (img2d - minv) / (maxv - minv)
+        img_u8 = (img2d * 255.0).astype(np.uint8)
+
+        img = Image.fromarray(img_u8, mode="L").convert("RGB")
+
+        if self.transform is not None:
+            img = self.transform(img)  
+
+        return img, label
+
+class ThzDataset(Dataset):
+    def __init__(self, data_dir, label_csv, transform=None):
+        self.data_dir = data_dir
+        self.transform = transform
+        self.labels_df = pd.read_csv(label_csv)
+        self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
+        self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
+        self.files = list(self.file_to_class.keys())
+
+    def __len__(self):
+        return len(self.files)
+
+    def __getitem__(self, idx):
+        filename = self.files[idx]
+        filepath = os.path.join(self.data_dir, filename)
+        label = self.file_to_class[filename]
+
+        device = "cpu"  # Laden auf CPU, optional später im Loader auf GPU
+
+        # 1) Komplettes Volumen laden
+        complex_raw_data, parameters = prdf.read_mat(filepath, device=device)
+
+        # 2) Signalverarbeitung
+        T = int(parameters["NF"])
+        processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, T, device=device)  # [T,H,W], complex
+
+        # 3) Betrag² / max → normiert auf [0,1]
+        vol = torch.abs(processed_data) ** 2
+        vol = vol / (max_val_abs + 1e-12)   # [T,H,W], float32
+
+        # 4) Flip entlang Höhe (dim=1) – entspricht torch.flipud
+        vol = torch.flip(vol, dims=[1])     # [T,H,W]
+
+        # 5) In Form [B,C,T,H,W] bringen
+        vol = vol.unsqueeze(0).unsqueeze(0).contiguous()  # [1,1,T,H,W]
+
+        # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
+        if self.transform is not None:
+            vol = self.transform(vol)
+
+        return vol, label
 
 class ImageNetA(torch.utils.data.Dataset):
     def __init__(
@@ -230,7 +300,21 @@ def get_target_dataset(name: str, train=False, transform=None, target_transform=
     elif name == "mnist":
         dataset = MNIST(root=DATASET_ROOT, train=train, transform=transform, target_transform=target_transform,
                         download=True)
-    elif name == "thz":
+    elif name == "thz_raw":
+        dataset = ThzDatasetraw(
+            data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
+            label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+        )
+        dataset.class_to_idx = dataset.class_to_idx
+        dataset.file_to_class = dataset.file_to_class
+    elif name == "thz_for_adapter":
+        dataset = ThzDataset(
+            data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
+            label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+        )
+        dataset.class_to_idx = dataset.class_to_idx
+        dataset.file_to_class = dataset.file_to_class
+    elif name == "thz_700":
         dataset = ThzDataset(
             data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
             label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
