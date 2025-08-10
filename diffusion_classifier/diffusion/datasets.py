@@ -13,7 +13,7 @@ import scipy.io
 import numpy as np
 from torch.utils.data import Dataset
 import pandas as pd
-import Bachelorarbeit.THz.process_rdf as prdf
+import process_rdf as prdf
 
 IMAGENET_A_CLASSES = [
     6, 11, 13, 15, 17, 22, 23, 27, 30, 37, 39, 42, 47, 50, 57, 70, 71, 76, 79, 89, 90, 94, 96, 97, 99, 105, 107, 108,
