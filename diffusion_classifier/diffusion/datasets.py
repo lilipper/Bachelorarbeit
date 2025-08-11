@@ -156,7 +156,7 @@ class ThzDataset(Dataset):
     def __getitem__(self, idx):
         filename = self.files[idx]
         filepath = os.path.join(self.data_dir, filename)
-        label = self.file_to_class[filename]
+        label = int(self.file_to_class[filename])
 
         device = "cpu"  # Laden auf CPU, optional später im Loader auf GPU
 
@@ -175,7 +175,7 @@ class ThzDataset(Dataset):
         vol = torch.flip(vol, dims=[1])     # [T,H,W]
 
         # 5) In Form [B,C,T,H,W] bringen
-        vol = vol.unsqueeze(0).unsqueeze(0).contiguous()  # [1,1,T,H,W]
+        vol = vol.unsqueeze(0).unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
 
         # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
         if self.transform is not None:
