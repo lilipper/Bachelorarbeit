@@ -3,6 +3,8 @@ import cv2
 import numpy as np
 
 from torch.utils.data import Dataset
+from process_rdf import process_complex_data, read_mat
+
 
 
 class MyDataset(Dataset):
@@ -22,7 +24,8 @@ class MyDataset(Dataset):
         target_filename = item['target']
         prompt = item['prompt']
 
-        source = cv2.imread(source_filename)
+        data_complex_all, parameters = read_mat(source_filename)
+        source, max_val = process_complex_data(data_complex_all, int(parameters["NF"]), device="cpu")
         target = cv2.imread(target_filename)
 
         # Do not forget that OpenCV read images in BGR order.
