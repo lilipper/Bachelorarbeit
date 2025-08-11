@@ -4,6 +4,7 @@ import os
 import os.path as osp
 import torch
 from torchvision import datasets
+from torchvision import transforms
 from diffusion.utils import DATASET_ROOT, get_classes_templates
 from diffusion.dataset.objectnet import ObjectNetBase
 from diffusion.dataset.imagenet_classnames import get_classnames
@@ -87,6 +88,8 @@ class ThzDatasetraw(Dataset):
 
         # 5) auf [0,255] skalieren und nach uint8
         #    (PIL erwartet uint8; Normalisierung für Classifier macht später dein transform)
+        if isinstance(vol, np.ndarray):
+            vol = torch.from_numpy(vol).float()
         img2d = torch.mean(vol, dim=0)
         minv = torch.min(img2d)
         maxv = torch.max(img2d)
@@ -105,12 +108,12 @@ class ThzDatasetraw(Dataset):
 class ThzDataset_depthlayer(Dataset):
     def __init__(self, data_dir, label_csv, transform=None, depth_layer=700):
         self.data_dir = data_dir
-        self.transform = transform
         self.labels_df = pd.read_csv(label_csv)
         self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
         self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
         self.files = list(self.file_to_class.keys())
         self.depth_layer = depth_layer  
+        self.transform = transform
 
     def __len__(self):
         return len(self.files)
@@ -304,6 +307,7 @@ def get_target_dataset(name: str, train=False, transform=None, target_transform=
         dataset = ThzDatasetraw(
             data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
             label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+            transform=transform
         )
         dataset.class_to_idx = dataset.class_to_idx
         dataset.file_to_class = dataset.file_to_class
@@ -311,13 +315,15 @@ def get_target_dataset(name: str, train=False, transform=None, target_transform=
         dataset = ThzDataset(
             data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
             label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+            transform=transform
         )
         dataset.class_to_idx = dataset.class_to_idx
         dataset.file_to_class = dataset.file_to_class
     elif name == "thz_700":
-        dataset = ThzDataset(
+        dataset = ThzDataset_depthlayer(
             data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
             label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+            transform=transform
         )
         dataset.class_to_idx = dataset.class_to_idx
         dataset.file_to_class = dataset.file_to_class

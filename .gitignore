@@ -5,8 +5,8 @@
 #Folders
 *\__pycache__
 700GHz
-THz\USAF_images
 *\dataset
 *\data\*
-*\USAF_images\*
+*/data
 */USAF_images
+THz\USAF_images
