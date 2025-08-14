@@ -1,0 +1,489 @@
+{
+    "prompts": [
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0045.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0045.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0029.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0029.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_0008_N.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_0008_N.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0040.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0040.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0005.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0005.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0004.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0004.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0049.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0049.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0037.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0037.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0006.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0008.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0008.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0006.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0005.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0005.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0020.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0020.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0052.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0052.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0007.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0007.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0009.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0009.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0028.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0028.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0048.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0048.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_0004_N.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_0004_N.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0056.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0056.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0003.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0047.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0047.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0008.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0008.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0051.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0051.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0039.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0039.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_0002.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0004.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0004.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0008.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0008.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0002.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0001.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0001.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0019.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0019.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0003.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0008.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0008.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0009.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0009.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0024.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0024.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0013.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0013.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0055.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0055.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0003.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0008.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0008.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0017.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0017.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0035.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0035.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0007.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0007.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0005.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0005.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0060.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0060.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0015.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0015.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0008.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0008.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0027_N.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0027_N.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0007.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0007.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0005.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0005.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_0007_N.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_0007_N.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0044.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0044.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0001.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0001.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0004.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0004.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0006.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0003.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0006.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0001.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0001.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0025.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0025.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0033.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0033.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0006.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0001.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0001.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0032.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0032.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0002.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0053.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0053.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0041.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0041.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0023.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0023.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_0003.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0005.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0005.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_0006.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0057.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0057.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0043.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0043.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0021.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0021.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0009.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0009.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0011.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0011.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0031.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0031.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0036.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0036.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0007.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0007.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0002.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0004.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0004.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0009.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_4_Delamination_750GHz_0009.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0007.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0007.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0004.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_1_FB_Deckl_750GHz_0004.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0002.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0009.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_2_FV_Mitte_750GHz_0009.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0001.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_5_Poren_UK_750GHz_0001.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0002.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0009.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0009.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0016.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0016.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0003.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0001.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_2_1_FV_Deckl_750GHz_0001.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0003.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0003.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0007.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_3_2_FB_Mitte_750GHz_0007.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0005.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0005.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0004.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0004.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0006.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_1_FV_L_Deckl_750GHz_Rueckseite_0006.tiff",
+            "prompt": "a scan with a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0012.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_104-RG600_750GHz_R\u00fcckseite_0012.tiff",
+            "prompt": "a scan without a defect"
+        },
+        {
+            "source": "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0002.mat",
+            "target": "rf/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/target/AMITIE_Tepex_WRC1331_1_2_FV_L_Mitte_750GHz_Rueckseite_0002.tiff",
+            "prompt": "a scan with a defect"
+        }
+    ]
+}

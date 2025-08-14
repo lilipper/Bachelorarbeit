@@ -1,6 +1,6 @@
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
-from load_thz_dataset import MyDataset
+from Bachelorarbeit.Adapter.ControlNet.load_thz_dataset_one_target import MyDataset
 from cldm.logger import ImageLogger
 from cldm.model import create_model, load_state_dict
 from diffusers import AutoencoderKL, UNet2DConditionModel, DDPMScheduler, StableDiffusionPipeline, \
