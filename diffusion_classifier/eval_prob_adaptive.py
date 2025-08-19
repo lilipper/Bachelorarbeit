@@ -121,6 +121,260 @@ def eval_error(unet, scheduler, latent, all_noise, ts, noise_idxs,
             idx += len(batch_ts)
     return pred_errors
 
+def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args, latent_size=64, all_noise=None):
+    """
+    Wie dein eval_prob_adaptive, aber:
+      - verwendet eval_error_differentiable (keine no_grad/detach/cpu)
+      - Rückgabe: pred_idx, data, errors_per_class (Tensor [C])
+        => errors_per_class kannst du für logits/CE-Loss nutzen.
+    Hinweis:
+      - Control-Flow (Selektion verbleibender Prompts) ist wie im Original,
+        beeinflusst aber nicht den Gradientenfluss der Fehlerwerte selbst.
+    """
+    scheduler_config = get_scheduler_config(args)
+    T = scheduler_config['num_train_timesteps']
+    max_n_samples = max(args.n_samples)
+
+    device = latent.device
+
+    if all_noise is None:
+        all_noise = torch.randn((max_n_samples * args.n_trials, 4, latent_size, latent_size), device=device)
+    if args.dtype == 'float16':
+        all_noise = all_noise.half()
+        scheduler.alphas_cumprod = scheduler.alphas_cumprod.to(device).half()
+
+    data = dict()
+    t_evaluated = set()
+    remaining_prmpt_idxs = list(range(len(text_embeds)))
+
+    # gleiche t-Auswahl wie im Original
+    start = T // max_n_samples // 2
+    t_to_eval = list(range(start, T, T // max_n_samples))[:max_n_samples]
+
+    # Wir sammeln ALLE (ts, noise_idxs, text_embed_idxs), rechnen die Errors einmal,
+    # und gruppieren danach. Das reduziert Overhead und behält Gradienten.
+    global_ts = []
+    global_noise_idxs = []
+    global_text_embed_idxs = []
+
+    # Merker, um pro Round zu wissen, was neu ist
+    per_round_spans = []  # (start_index, end_index, curr_prompt_set)
+
+    # Round-Runden wie im Original
+    for n_samples, n_to_keep in zip(args.n_samples, args.to_keep):
+        curr_t_to_eval = t_to_eval[len(t_to_eval) // n_samples // 2::len(t_to_eval) // n_samples][:n_samples]
+        curr_t_to_eval = [t for t in curr_t_to_eval if t not in t_evaluated]
+
+        round_start = len(global_ts)
+
+        # wie im Original: pro verbleibendem Prompt alle ts * n_trials
+        for prompt_i in remaining_prmpt_idxs:
+            for t_idx, t in enumerate(curr_t_to_eval, start=len(t_evaluated)):
+                # ts: je t 'n_trials' Wiederholungen
+                global_ts.extend([t] * args.n_trials)
+                # noise-indizes für diesen Block
+                global_noise_idxs.extend(list(range(args.n_trials * t_idx, args.n_trials * (t_idx + 1))))
+                # prompt-indizes
+                global_text_embed_idxs.extend([prompt_i] * args.n_trials)
+
+        t_evaluated.update(curr_t_to_eval)
+
+        round_end = len(global_ts)
+        per_round_spans.append((round_start, round_end, remaining_prmpt_idxs.copy()))
+
+        # Nach der Round-Selektion wird remaining_prmpt_idxs upgedated,
+        # das machen wir NACH dem Fehler-Compute unten (einmalig über alle Runden).
+
+    # 1x differenzierbar Fehler berechnen
+    pred_errors_all = eval_error_differentiable(
+        unet, scheduler, latent, all_noise,
+        ts=global_ts, noise_idxs=global_noise_idxs,
+        text_embeds=text_embeds, text_embed_idxs=global_text_embed_idxs,
+        batch_size=args.batch_size, dtype=args.dtype, loss=args.loss
+    )  # [L]
+
+    # Jetzt die Round-Logik „matchen“ (ohne detach)
+    # und dabei data befüllen wie im Original
+    data = dict()
+    t_evaluated = set()
+    remaining_prmpt_idxs = list(range(len(text_embeds)))
+    pos = 0
+
+    for round_start, round_end, prompt_set_snapshot in per_round_spans:
+        # Slice der aktuellen Round
+        ts_slice            = global_ts[round_start:round_end]
+        noise_idxs_slice    = global_noise_idxs[round_start:round_end]
+        text_embed_idxs_slice = global_text_embed_idxs[round_start:round_end]
+        errors_slice        = pred_errors_all[round_start:round_end]  # [S]
+
+        # Gruppieren wie im Original
+        round_data = _group_errors_by_prompt(ts_slice, text_embed_idxs_slice, errors_slice)
+        # Merge in 'data' (verkettet pro Prompt)
+        for prompt_i, pack in round_data.items():
+            if prompt_i not in data:
+                data[prompt_i] = {'t': pack['t'], 'pred_errors': pack['pred_errors']}
+            else:
+                data[prompt_i]['t'] = torch.cat([data[prompt_i]['t'], pack['t']], dim=0)
+                data[prompt_i]['pred_errors'] = torch.cat([data[prompt_i]['pred_errors'], pack['pred_errors']], dim=0)
+
+        # Selektion nächster verbleibender Prompts wie im Original
+        # (Nutzen die bisher gesammelten Fehler in 'data')
+        mean_errs = torch.stack(
+            [data[p]['pred_errors'].mean() for p in remaining_prmpt_idxs], dim=0
+        )  # [len(rem)]
+        # errors = [-mean]; best k größte => kleinste mean_errs
+        scores = -mean_errs
+        # Wir nehmen den zu dieser Runde passenden n_to_keep:
+        # Finde n_to_keep dieser Runde über Matching:
+        # (einfacher: iteriere erneut die args.n_samples/args.to_keep parallel)
+        # Aber wir kennen ihn noch: er war beim Append der Round in per_round_spans nicht gespeichert.
+        # Wir lösen es pragmatisch: recompute Index dieser Round.
+        round_idx = per_round_spans.index((round_start, round_end, prompt_set_snapshot))
+        n_to_keep = args.to_keep[round_idx]
+
+        best_idxs_local = torch.topk(scores, k=n_to_keep, dim=0).indices.tolist()
+        remaining_prmpt_idxs = [remaining_prmpt_idxs[i] for i in best_idxs_local]
+
+        # t_evaluated erweitern
+        # (wir könnten curr_t_to_eval für diese Runde rekonstruieren; für die nächste Runde spielt es
+        #  hier aber keine Rolle mehr, da wir ts bereits gebaut haben.)
+        # -> Wir lassen diese Verwaltungsvariable hier symbolisch; sie wird oben nicht mehr benötigt.
+
+    # Organize output wie im Original:
+    if len(remaining_prmpt_idxs) > 1:
+        with torch.no_grad():
+            mean_errs_final = torch.stack(
+                [data[p]['pred_errors'].mean() for p in remaining_prmpt_idxs], dim=0
+            )
+        best_local = torch.argmin(mean_errs_final).item()
+        remaining_prmpt_idxs = [remaining_prmpt_idxs[best_local]]
+
+    pred_idx = remaining_prmpt_idxs[0]
+
+    # Zusätzlich: Differenzierbare Fehler über ALLE Klassen (für Training)
+    all_prompt_indices = list(range(len(text_embeds)))
+    errors_per_class = _mean_error_per_prompt(data, all_prompt_indices)  # [C], differentiable
+
+    return pred_idx, data, errors_per_class
+
+
+def eval_error_differentiable(unet, scheduler, latent, all_noise, ts, noise_idxs,
+                              text_embeds, text_embed_idxs, batch_size=32, dtype='float32', loss='l2'):
+    """
+    Wie eval_error(...), nur OHNE inference_mode, OHNE detach/cpu.
+    Gibt einen 1D-Tensor auf dem selben device mit Gradients zurück.
+    Achtung: rechenintensiv – für Training besser kleinere Batches / weniger ts.
+    """
+    assert len(ts) == len(noise_idxs) == len(text_embed_idxs)
+    device = latent.device
+    # wichtig: auf dem gleichen Device & dtype bleiben
+    pred_errors = []
+
+    idx = 0
+    # keine tqdm hier, damit es im Training einfacher ist
+    while idx < len(ts):
+        # Batch-Chunk
+        end = min(idx + batch_size, len(ts))
+        batch_ts_list = ts[idx:end]
+        batch_noise_idxs = noise_idxs[idx:end]
+        batch_text_idxs = text_embed_idxs[idx:end]
+
+        # -> Tensoren auf device (ohne detach)
+        batch_ts = torch.tensor(batch_ts_list, device=device, dtype=torch.long)
+        noise = all_noise[batch_noise_idxs]  # [B,4,latent_size,latent_size]
+
+        # noised_latent = sqrt(a) * latent + sqrt(1-a) * noise
+        alphas = scheduler.alphas_cumprod.to(device)[batch_ts].view(-1, 1, 1, 1)
+        if dtype == 'float16':
+            noise = noise.half()
+            alphas = alphas.half()
+        noised_latent = latent * (alphas ** 0.5) + noise * ((1.0 - alphas) ** 0.5)
+
+        t_input = batch_ts.half() if dtype == 'float16' else batch_ts
+        text_input = text_embeds[batch_text_idxs]  # shape [B, seq, hid]
+
+        # Vorhersage der Störung
+        noise_pred = unet(noised_latent, t_input, encoder_hidden_states=text_input).sample  # [B,4,*,*]
+
+        # Fehler nach deiner Losswahl
+        if loss == 'l2':
+            error = F.mse_loss(noise, noise_pred, reduction='none').mean(dim=(1, 2, 3))   # [B]
+        elif loss == 'l1':
+            error = F.l1_loss(noise, noise_pred, reduction='none').mean(dim=(1, 2, 3))    # [B]
+        elif loss == 'huber':
+            error = F.huber_loss(noise, noise_pred, reduction='none').mean(dim=(1, 2, 3)) # [B]
+        else:
+            raise NotImplementedError
+
+        pred_errors.append(error)  # NICHT detach/cpu!
+
+        idx = end
+
+    # Konkatenieren auf dem Device, Gradients bleiben erhalten
+    pred_errors = torch.cat(pred_errors, dim=0)  # [len(ts)]
+    return pred_errors
+
+def group_errors_per_prompt_idx(ts, text_embed_idxs, pred_errors, remaining_prmpt_idxs):
+    """
+    Baut aus (ts, text_embed_idxs, pred_errors) die pro-Prompt aggregierten Fehler.
+    Alles tensoriell, ohne detach/cpu. Rückgabe: dict[prompt_i] -> (t_tensor, error_tensor).
+    """
+    device = pred_errors.device
+    ts_t = torch.tensor(ts, device=device, dtype=torch.long)
+    tei_t = torch.tensor(text_embed_idxs, device=device, dtype=torch.long)
+
+    data = {}
+    for prompt_i in remaining_prmpt_idxs:
+        mask = (tei_t == prompt_i)
+        prompt_ts = ts_t[mask]                # [K]
+        prompt_pred_errors = pred_errors[mask]# [K]
+        data[prompt_i] = (prompt_ts, prompt_pred_errors)
+    return data
+
+def avg_error_per_class(data, class_indices):
+    """
+    data: dict[prompt_i] -> (t_tensor, error_tensor)
+    Rückgabe: Tensor [C] mit mittlerem Fehler pro Klasse in der Reihenfolge class_indices.
+    """
+    errs = []
+    for ci in class_indices:
+        _, e = data[ci]
+        errs.append(e.mean())
+    return torch.stack(errs, dim=0)  
+
+def _group_errors_by_prompt(ts, text_embed_idxs, pred_errors):
+    """
+    Baut ein Dict: prompt_i -> {'t': Tensor[..], 'pred_errors': Tensor[..]}
+    Alles auf demselben Device, mit Gradienten.
+    """
+    device = pred_errors.device
+    ts_t = torch.tensor(ts, device=device, dtype=torch.long)
+    tei_t = torch.tensor(text_embed_idxs, device=device, dtype=torch.long)
+
+    data = {}
+    uniq = torch.unique(tei_t).tolist()
+    for prompt_i in uniq:
+        mask = (tei_t == prompt_i)
+        data[prompt_i] = {
+            't': ts_t[mask],                        # [k]
+            'pred_errors': pred_errors[mask]        # [k]
+        }
+    return data
+
+
+def _mean_error_per_prompt(data, prompt_indices):
+    """
+    Liefert Tensor [C] mit mittleren Fehlern pro Klasse/Prompt in Reihenfolge prompt_indices.
+    Fehlende Keys (falls adaptive Auswahl nicht alle enthält) werden mit +inf gefüllt.
+    """
+    errs = []
+    device = next(iter(data.values()))['pred_errors'].device if len(data) > 0 else torch.device('cpu')
+    for pi in prompt_indices:
+        if pi in data:
+            errs.append(data[pi]['pred_errors'].mean())
+        else:
+            errs.append(torch.tensor(float('inf'), device=device))
+    return torch.stack(errs, dim=0) 
 
 def main():
     parser = argparse.ArgumentParser()

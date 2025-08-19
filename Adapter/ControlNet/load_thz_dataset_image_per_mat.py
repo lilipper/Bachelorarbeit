@@ -37,7 +37,7 @@ class MyDataset(Dataset):
         vol = torch.flip(vol, dims=[1])     # [T,H,W]
 
         # 5) In Form [B,C,T,H,W] bringen
-        source = vol.unsqueeze(0).unsqueeze(0).contiguous().float()
+        source = vol.unsqueeze(0).contiguous().float()
         target = cv2.imread(target_filename, cv2.IMREAD_UNCHANGED)
 
         # Sicherstellen, dass Bild geladen wurde

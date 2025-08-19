@@ -16,6 +16,8 @@ from torch.utils.data import Dataset
 import pandas as pd
 import process_rdf as prdf
 
+file_path = os.path.join(os.path.dirname(__file__))
+
 IMAGENET_A_CLASSES = [
     6, 11, 13, 15, 17, 22, 23, 27, 30, 37, 39, 42, 47, 50, 57, 70, 71, 76, 79, 89, 90, 94, 96, 97, 99, 105, 107, 108,
     110, 113, 124, 125, 130, 132, 143, 144, 150, 151, 207, 234, 235, 254, 277, 283, 287, 291, 295, 298, 301, 306, 307,
@@ -37,7 +39,7 @@ OBJECTNET_CLASSES = [
     906, 907, 909, 923, 930, 950, 951, 954, 968, 999
 ]
 
-with open('diffusion/imagenet_class_index.json', 'r') as f:
+with open(os.path.join(file_path, 'imagenet_class_index.json'), 'r') as f:
     IMAGENET_CLASS_INDEX = json.load(f)
 FOLDER_TO_CLASS = {folder: int(i) for i, (folder, _) in IMAGENET_CLASS_INDEX.items()}
 
@@ -175,7 +177,7 @@ class ThzDataset(Dataset):
         vol = torch.flip(vol, dims=[1])     # [T,H,W]
 
         # 5) In Form [B,C,T,H,W] bringen
-        vol = vol.unsqueeze(0).unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
+        vol = vol.unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
 
         # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
         if self.transform is not None:

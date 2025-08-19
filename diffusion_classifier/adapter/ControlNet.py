@@ -315,20 +315,27 @@ class ControlNet(nn.Module):
 
         # mid
         mid_block_channel = num_channels[-1]
-
-        self.middle_block = get_mid_block(
-            spatial_dims=spatial_dims,
-            in_channels=mid_block_channel,
-            temb_channels=time_embed_dim,
-            norm_num_groups=norm_num_groups,
-            norm_eps=norm_eps,
-            with_conditioning=with_conditioning,
-            num_head_channels=num_head_channels[-1],
-            transformer_num_layers=transformer_num_layers,
-            cross_attention_dim=cross_attention_dim,
-            upcast_attention=upcast_attention,
-            use_flash_attention=use_flash_attention,
+        self.middle_block = nn.Sequential(
+            Convolution(spatial_dims=spatial_dims, in_channels=mid_block_channel, out_channels=mid_block_channel,
+                        strides=1, kernel_size=3, padding=1, conv_only=True),
+            nn.SiLU(),
+            Convolution(spatial_dims=spatial_dims, in_channels=mid_block_channel, out_channels=mid_block_channel,
+                        strides=1, kernel_size=3, padding=1, conv_only=True),
         )
+
+        # self.middle_block = get_mid_block(
+        #     spatial_dims=spatial_dims,
+        #     in_channels=mid_block_channel,
+        #     temb_channels=time_embed_dim,
+        #     norm_num_groups=norm_num_groups,
+        #     norm_eps=norm_eps,
+        #     with_conditioning=with_conditioning,
+        #     num_head_channels=num_head_channels[-1],
+        #     transformer_num_layers=transformer_num_layers,
+        #     cross_attention_dim=cross_attention_dim,
+        #     upcast_attention=upcast_attention,
+        #     use_flash_attention=use_flash_attention,
+        # )
 
         controlnet_block = Convolution(
             spatial_dims=spatial_dims,
@@ -376,13 +383,19 @@ class ControlNet(nn.Module):
         h = self.conv_in(x)
 
         controlnet_cond = self.controlnet_cond_embedding(controlnet_cond)
+        # NEU: Größen angleichen (D/T, H, W) an h, bevor addiert wird
+        if controlnet_cond.shape[-3:] != h.shape[-3:]:
+            controlnet_cond = F.interpolate(
+                controlnet_cond, size=h.shape[-3:], mode="trilinear", align_corners=False
+            )
 
         h += controlnet_cond
 
         for downsample_block in self.down_blocks:
            h, _ = downsample_block(hidden_states=h, temb=emb, context=None)
            
-        h = self.middle_block(hidden_states=h, temb=emb, context=None)
+        # h = self.middle_block(hidden_states=h, temb=emb, context=None)
+        h = self.middle_block(h)
         h = self.controlnet_mid_block(h)
         h = self.depth_pool(h).squeeze(2)
         h = self.refine2d(h)

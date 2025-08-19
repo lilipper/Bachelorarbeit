@@ -16,13 +16,6 @@ learning_rate = 1e-5
 sd_locked = True
 only_mid_control = False
 
-scheduler = EulerDiscreteScheduler.from_pretrained("stabilityai/stable-diffusion-2-1-base", subfolder="scheduler")
-pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-1-base", scheduler=scheduler, torch_dtype=torch.float16)
-pipe.enable_xformers_memory_efficient_attention()
-vae = pipe.vae
-tokenizer = pipe.tokenizer
-text_encoder = pipe.text_encoder
-unet = pipe.unet
 # First use cpu to load models. Pytorch Lightning will automatically move it to GPUs.
 model = create_model('./models/cldm_v21.yaml').cpu()
 model.load_state_dict(load_state_dict(resume_path, location='cpu'))
