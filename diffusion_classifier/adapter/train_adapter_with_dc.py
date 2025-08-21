@@ -16,7 +16,7 @@ from transformers import logging as hf_logging
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from ControlNet import ControlNet
-import process_rdf as prdf
+import Bachelorarbeit.diffusion_classifier.adapter.process_rdf as prdf
 
 
 
@@ -134,6 +134,7 @@ def run_eval(dataloader, adapter, vae, unet, class_embeds, scheduler, eargs, img
             if vol.dim() == 6:  # [B,1,1,T,H,W] -> [B,1,T,H,W]
                 vol = vol.squeeze(1)
 
+            use_amp = (device == "cuda" and eargs.dtype == "float16")
             with torch.amp.autocast('cuda', dtype=torch.float16, enabled=use_amp):
                 img  = adapter(vol)                       # [1,3,512,512]
                 x_in = (img * 2.0 - 1.0).to(dtype=vae.dtype)
