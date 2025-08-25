@@ -16,7 +16,7 @@ from transformers import logging as hf_logging
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from ControlNet import ControlNet
-import Bachelorarbeit.diffusion_classifier.adapter.process_rdf as prdf
+import process_rdf as prdf
 
 
 

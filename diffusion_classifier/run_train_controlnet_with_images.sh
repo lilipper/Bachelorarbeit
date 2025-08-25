@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=eval-cifar10
 #SBATCH --partition=gpu_h100
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
-#SBATCH --mem=100GB
+#SBATCH --mem=60GB
 #SBATCH --cpus-per-task=16
 #SBATCH --output=logs/eval_%j.out
 #SBATCH --error=logs/eval_%j.err
