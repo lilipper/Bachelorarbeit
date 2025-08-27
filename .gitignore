@@ -6,8 +6,9 @@
 *\__pycache__
 700GHz
 *\dataset
-*\data\*
-*/data
+diffusion_classifier\data\*
+diffusion_classifier/data
 */USAF_images
+THz/USAF_images
 THz\USAF_images
 */checkpoints_adapter
