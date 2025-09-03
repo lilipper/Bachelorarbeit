@@ -1,19 +1,22 @@
 #!/bin/bash
-#SBATCH --job-name=eval-cifar10
+#SBATCH --job-name=dc-adapter-training-with-feedback
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=48:00:00
-#SBATCH --mem=60GB
+#SBATCH --time=16:00:00
+#SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=logs/eval_%j.out
-#SBATCH --error=logs/eval_%j.err
+#SBATCH --output=logs/train_adapter_with_dc_%j.out
+#SBATCH --error=logs/train_adapter_with_dc_%j.err
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
 echo "=== Job gestartet: $(date) ==="
 echo "Job-ID: $SLURM_JOB_ID auf Node: $(hostname)"
 
 set -euo pipefail
 
-# conda activate diffusion-classifier
+conda init
+conda activate diffusion-classifier
 
 # Stabilere CUDA-Allocator-Einstellungen (hilft gegen Fragmentierung)
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:512"

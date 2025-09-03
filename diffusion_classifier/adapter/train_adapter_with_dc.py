@@ -336,7 +336,6 @@ def main():
     eargs.version = args.version
 
     best_val_acc = -1.0
-    patience, bad_epochs = 5, 0
     best_path = os.path.join(args.save_dir, "adapter_best.pt")
 
     # ---------- TRAIN ----------
@@ -443,11 +442,7 @@ def main():
                 "dtype": args.dtype,
             }, best_path)
             print(f"-> Neues Best-Model gespeichert: {best_path}")
-        else:
-            bad_epochs += 1
-            if bad_epochs >= patience:
-                print(f"Early stopping nach {patience} erfolglosen Epochen. Best val_acc={best_val_acc:.4f}")
-                break
+        
 
     print(f"Training beendet. Bestes Checkpoint: {best_path} (val_acc={best_val_acc:.4f})")
 

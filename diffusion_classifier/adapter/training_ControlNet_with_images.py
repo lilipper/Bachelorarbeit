@@ -130,8 +130,8 @@ class ThzPromptsDataset(Dataset):
     }
 
     Gibt pro Sample zurück:
-      - "thz":  (1, T, H, W)  Float32  (normiert, geflippt)
-      - "pixel_values": (3, R, R) Float32 in [-1, 1]
+      - "thz":  (1, T, H, W)  Float16  (normiert, geflippt)
+      - "pixel_values": (3, R, R) Float16 in [-1, 1]
       - "prompt": str
     """
     def __init__(
@@ -267,7 +267,7 @@ def parse_args():
     parser.add_argument("--resolution", type=int, default=512)
     parser.add_argument("--train_batch_size", type=int, default=1)
     parser.add_argument("--num_train_epochs", type=int, default=10)
-    parser.add_argument("--max_train_steps", type=int, default=0, help="Optional, überschreibt Epochen")
+    parser.add_argument("--max_train_steps", type=int, default=10000, help="Optional, überschreibt Epochen")
     parser.add_argument("--learning_rate", type=float, default=1e-5)
     parser.add_argument("--adam_beta1", type=float, default=0.9)
     parser.add_argument("--adam_beta2", type=float, default=0.999)
@@ -392,7 +392,7 @@ def main():
 
     # ----------- Training steps calc ----------- #
     num_update_steps_per_epoch = math.ceil(len(train_dataloader) / args.gradient_accumulation_steps)
-    if args.max_train_steps and args.max_train_steps > 0:
+    if args.max_train_steps > 0:
         max_train_steps = args.max_train_steps
         num_train_epochs = math.ceil(max_train_steps / num_update_steps_per_epoch)
     else:
@@ -456,7 +456,7 @@ def main():
                 optimizer.step()
                 optimizer.zero_grad(set_to_none=True)
 
-            if accelerator.is_main_process and (global_step + 1) % 50 == 0:
+            if accelerator.is_main_process and (global_step + 1) % 10 == 0:
                 logger.info(f"epoch {epoch} step {step} | loss {loss.item():.4f}")
 
             # Checkpointing
@@ -464,7 +464,7 @@ def main():
                 save_dir = os.path.join(args.output_dir, f"checkpoint-{global_step+1}")
                 os.makedirs(save_dir, exist_ok=True)
                 accelerator.unwrap_model(controlnet).save_pretrained(os.path.join(save_dir, "controlnet"))
-                torch.save(accelerator.unwrap_model(thz_adapter).state_dict(), os.path.join(save_dir, "thz_adapter.safetensors"))
+                torch.save(accelerator.unwrap_model(thz_adapter).state_dict(), os.path.join(save_dir, "thz_adapter.pt"))
                 logger.info(f"Checkpoint gespeichert: {save_dir}")
 
             global_step += 1
@@ -477,7 +477,7 @@ def main():
     # ----------- Final Save ----------- #
     if accelerator.is_main_process:
         accelerator.unwrap_model(controlnet).save_pretrained(os.path.join(args.output_dir, "controlnet"))
-        torch.save(accelerator.unwrap_model(thz_adapter).state_dict(), os.path.join(args.output_dir, "thz_adapter.safetensors"))
+        torch.save(accelerator.unwrap_model(thz_adapter).state_dict(), os.path.join(args.output_dir, "thz_adapter.pt"))
         logger.info(f"Fertig. Modelle gespeichert in {args.output_dir}")
 
 
