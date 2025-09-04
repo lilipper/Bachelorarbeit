@@ -17,7 +17,7 @@ from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from ControlNet import ControlNet
 import process_rdf as prdf
-
+import time
 
 
 hf_logging.set_verbosity_error()
@@ -272,7 +272,7 @@ def main():
     ap.add_argument("--batch_size", type=int, default=2)
     ap.add_argument("--num_workers", type=int, default=4)
     ap.add_argument("--lr", type=float, default=1e-4)
-    ap.add_argument("--save_dir", type=str, default="./checkpoints_adapter")
+    ap.add_argument("--save_dir", type=str, default=f".runs/checkpoints_adapter_{time.time()}")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--use_xformers", action="store_true")
     args = ap.parse_args()

@@ -15,8 +15,8 @@ echo "Job-ID: $SLURM_JOB_ID auf Node: $(hostname)"
 
 set -euo pipefail
 
-conda init
-conda activate diffusion-classifier
+# init_conda
+# conda activate diffusion-classifier
 
 # Stabilere CUDA-Allocator-Einstellungen (hilft gegen Fragmentierung)
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:512"

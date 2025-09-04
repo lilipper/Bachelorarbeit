@@ -41,6 +41,7 @@ from PIL import Image
 import pandas as pd
 import process_rdf as prdf
 import tiffile as tiff
+import time
 
 import torch
 import torch.nn as nn
@@ -262,7 +263,7 @@ def collate_fn(examples: List[dict], tokenizer: AutoTokenizer) -> Batch:
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset_jsonl", type=str, required=True)
-    parser.add_argument("--output_dir", type=str, required=True)
+    parser.add_argument("--output_dir", type=str, default=f"./runs/thz_controlnet_sd21_{time.time()}")
     parser.add_argument("--version", type=str, default="2-1", choices=["2-1", "2-0", "1-5", "1-4", "1-3", "1-2", "1-1"], help="Stable Diffusion Version")
     parser.add_argument("--resolution", type=int, default=512)
     parser.add_argument("--train_batch_size", type=int, default=1)

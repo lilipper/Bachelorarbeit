@@ -14,8 +14,8 @@ echo "=== Job gestartet: $(date) ==="
 echo "Job-ID: $SLURM_JOB_ID auf Node: $(hostname)"
 
 set -euo pipefail
-conda init
-conda activate diffusion-classifier
+# init_conda
+# conda activate diffusion-classifier
 
 # Stabilere CUDA-Allocator-Einstellungen (hilft gegen Fragmentierung)
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:512"
@@ -38,7 +38,6 @@ PY
 # Dein Python-Skript aufrufen
 python adapter/training_ControlNet_with_images.py \
   --dataset_jsonl /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/jsons/train_prompt_one_target.json \
-  --output_dir ./runs/thz_controlnet_sd21 \
   --resolution 512 \
   --train_batch_size 2 \
   --gradient_accumulation_steps 4 \
