@@ -77,7 +77,7 @@ class ControlNetAdapterWrapper(torch.nn.Module):
         if (rgb.shape[-2], rgb.shape[-1]) != (self.out_size, self.out_size):
             rgb = F.interpolate(rgb, size=(self.out_size, self.out_size), mode="bilinear", align_corners=False)
 
-        return rgb.clamp(0, 1)
+        return torch.sigmoid(rgb)
     
 
 # ========= SD 2.1 base laden (eingefroren) =========
@@ -220,24 +220,36 @@ class PromptBank:
 
 
 # ---- Prompt-Fehler → Klassen-Fehler poolen (mean/min) ----
-def pool_prompt_errors_to_class_errors(errors_per_prompt: torch.Tensor,
-                                       prompt_to_class: torch.Tensor,
-                                       num_classes: int,
-                                       reduce: str = "mean") -> torch.Tensor:
+def pool_prompt_errors_to_class_errors(
+    errors_per_prompt: torch.Tensor,
+    prompt_to_class: torch.Tensor,
+    num_classes: int,
+    reduce: str = "mean",
+) -> torch.Tensor:
     """
-    errors_per_prompt: [P]
-    prompt_to_class:   [P]
-    return:            [C]
+    Poolt Prompt-Fehler zu Klassen-Fehlern, dtype-sicher (keine Overflows in fp16).
     """
-    C = num_classes
-    class_errors = torch.zeros(C, device=errors_per_prompt.device)
-    for c in range(C):
+    dev = errors_per_prompt.device
+    dt  = errors_per_prompt.dtype
+    finfo = torch.finfo(dt)
+
+    # dtype-sicherer großer Wert (z.B. ~6.5e4 bei fp16, ~1e19 Deckel bei fp32)
+    fill_float = min(1e6, float(finfo.max * 0.5))
+    fill = torch.tensor(fill_float, device=dev, dtype=dt)
+
+    # init mit großem Wert
+    class_errors = torch.full((num_classes,), fill, device=dev, dtype=dt)
+
+    for c in range(num_classes):
         mask = (prompt_to_class == c)
-        if not torch.any(mask):
-            class_errors[c] = float("inf")
-        else:
+        if torch.any(mask):
             vals = errors_per_prompt[mask]
-            class_errors[c] = vals.mean() if reduce == "mean" else vals.min()
+            # numerisch robust zusammenfegen
+            vals = torch.nan_to_num(vals, nan=float(fill), posinf=float(fill), neginf=float(fill))
+            ce = vals.mean() if reduce == "mean" else vals.min()
+            class_errors[c] = ce
+
+    class_errors = torch.nan_to_num(class_errors, nan=float(fill), posinf=float(fill), neginf=float(fill))
     return class_errors
 
 
@@ -267,12 +279,17 @@ def main():
     ap.add_argument("--num_train_timesteps", type=int, default=1000)
     ap.add_argument("--version", type=str, default="2-1", help="Stable Diffusion Version (2-1, 2-0, etc.)", choices=("2-1", "2-0", '1-1', '1-2', '1-3', '1-4', '1-5'))
 
+    from datetime import datetime
+    from zoneinfo import ZoneInfo 
+
+    stamp = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%y%m%d_%H%M")
+
     # Training
     ap.add_argument("--epochs", type=int, default=10)
     ap.add_argument("--batch_size", type=int, default=2)
     ap.add_argument("--num_workers", type=int, default=4)
     ap.add_argument("--lr", type=float, default=1e-4)
-    ap.add_argument("--save_dir", type=str, default=f".runs/checkpoints_adapter_{time.time()}")
+    ap.add_argument("--save_dir", type=str, default=f"./runs/checkpoints_adapter_{stamp}")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--use_xformers", action="store_true")
     args = ap.parse_args()
@@ -313,7 +330,7 @@ def main():
         num_channels=(32, 64, 64, 64),
         attention_levels=(False, False, False, False),
         conditioning_embedding_in_channels=1,
-        conditioning_embedding_num_channels=(16, 32, 96, 256),
+        conditioning_embedding_num_channels=(32, 64, 64, 64),
         with_conditioning=False,
     )
     adapter = ControlNetAdapterWrapper(ControlNet(**controlnet_cfg).to(device), out_size=args.img_size).to(device)
@@ -324,13 +341,14 @@ def main():
     scaler = torch.amp.GradScaler('cuda',enabled=use_amp)
 
     # eval_prob_adaptive_differentiable-Args
+    P = len(pb.prompt_texts)
     class EArgs: pass
     eargs = EArgs()
     eargs.n_samples = args.n_samples
-    eargs.to_keep = args.to_keep
+    eargs.to_keep = [P] * len(eargs.n_samples)
     eargs.n_trials = args.n_trials
     eargs.batch_size = args.batch_size
-    eargs.dtype = args.dtype
+    eargs.dtype = 'float32'
     eargs.loss = args.loss
     eargs.num_train_timesteps = args.num_train_timesteps
     eargs.version = args.version
@@ -369,20 +387,45 @@ def main():
                         text_embeds=prompt_embeds, scheduler=scheduler,
                         args=eargs, latent_size=args.img_size // 8, all_noise=None
                     )
+                    print(f"[E{epoch:02d} B{b:02d}] Label={int(label[b].item())} "
+                          f"Pred={int(pred_idx)} "
+                          f"MinErr={float(errors_per_prompt.min()):.3e} "
+                          f"MaxErr={float(errors_per_prompt.max()):.3e} "
+                          f"MeanErr={float(errors_per_prompt.mean()):.3e}")
+                    errors_per_prompt = torch.nan_to_num(errors_per_prompt, nan=1e4, posinf=1e4, neginf=1e4).float()
+                    print("errors_per_prompt dtype:", errors_per_prompt.dtype, " device:", errors_per_prompt.device)
+                    print("errors_per_prompt:", errors_per_prompt)
+
                     class_errors = pool_prompt_errors_to_class_errors(
                         errors_per_prompt, prompt_to_class, num_classes, reduce="mean"
                     )  # [C]
-
-                    logits = -class_errors.unsqueeze(0)       # [1,C]
+                    print("class_errors dtype:", class_errors.dtype, " device:", class_errors.device)
+                    print("class_errors:", class_errors)
+                    logits = (-class_errors).unsqueeze(0)       # [1,C]
                     loss_b = F.cross_entropy(logits, label[b:b+1])
 
                     batch_loss_tensor = batch_loss_tensor + loss_b
                     batch_acc += acc_from_class_errors(class_errors.detach(), int(label[b].item()))
+                    print("requires_grad:", errors_per_prompt.requires_grad)
 
+            if not torch.isfinite(batch_loss_tensor):
+                # nichts updaten; nächster Batch
+                print(f"[E{epoch:02d}] Batch mit nicht-finitem Loss (loss={batch_loss_tensor.item()}). Überspringe.")
+                continue
             # 4) Ein Backward für den ganzen Batch + Optimizer-Step via GradScaler
             scaler.scale(batch_loss_tensor).backward()
+            with torch.no_grad():
+                g = [float(p.grad.norm().detach().cpu()) for p in adapter.parameters() if p.grad is not None]
+                print(f"[gradcheck] BEFORE step: n={len(g)} median={(np.median(g) if g else 0):.3e}")
             scaler.step(opt)
             scaler.update()
+            with torch.no_grad():
+                any_grad = []
+                for n,p in adapter.named_parameters():
+                    if p.grad is not None:
+                        any_grad.append(float(p.grad.norm().detach().cpu()))
+                print(f"[gradcheck] num_params_with_grad={sum(g>0 for g in any_grad)} "
+                    f"median_grad_norm={(np.median(any_grad) if any_grad else 0):.3e}")
 
             # 5) Logging-Variablen updaten
 
@@ -412,6 +455,8 @@ def main():
                     unet=unet, latent=lat, text_embeds=prompt_embeds,
                     scheduler=scheduler, args=eargs, latent_size=args.img_size // 8, all_noise=None
                 )
+                errors_per_prompt = torch.nan_to_num(errors_per_prompt, nan=0.0, posinf=float('inf'), neginf=0.0)
+
                 class_errors = pool_prompt_errors_to_class_errors(
                     errors_per_prompt, prompt_to_class, num_classes, reduce="mean"
                 )

@@ -2,7 +2,7 @@
 #SBATCH --job-name=dc-adapter-training-with-feedback
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=16:00:00
+#SBATCH --time=24:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
 #SBATCH --output=logs/train_adapter_with_dc_%j.out
@@ -12,6 +12,7 @@
 
 echo "=== Job gestartet: $(date) ==="
 echo "Job-ID: $SLURM_JOB_ID auf Node: $(hostname)"
+export PYTHONPATH="$(pwd):$PYTHONPATH"
 
 set -euo pipefail
 
@@ -45,9 +46,9 @@ python adapter/train_adapter_with_dc.py \
   --prompts_csv /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/prompts/thz_prompts.csv \
   --n_samples 8 4 2 \
   --to_keep   3 2 1 \
-  --epochs 20 \
+  --epochs 200 \
   --batch_size 2 \
-  --lr 1e-4 \
+  --lr 1e-3 \
   --dtype float16 \
   --use_xformers
 

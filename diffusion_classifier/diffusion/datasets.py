@@ -316,7 +316,15 @@ def get_target_dataset(name: str, train=False, transform=None, target_transform=
     elif name == "thz_for_adapter":
         dataset = ThzDataset(
             data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
-            label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+            label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/jsons/test_labels.csv",
+            transform=transform
+        )
+        dataset.class_to_idx = dataset.class_to_idx
+        dataset.file_to_class = dataset.file_to_class
+    elif name == "thz_for_train_adapter":
+        dataset = ThzDataset(
+            data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train",
+            label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/jsons/train_labels.csv",
             transform=transform
         )
         dataset.class_to_idx = dataset.class_to_idx
@@ -325,6 +333,14 @@ def get_target_dataset(name: str, train=False, transform=None, target_transform=
         dataset = ThzDataset_depthlayer(
             data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/test",
             label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/test_labels.csv",
+            transform=transform
+        )
+        dataset.class_to_idx = dataset.class_to_idx
+        dataset.file_to_class = dataset.file_to_class
+    elif name == "thz_700_train":
+        dataset = ThzDataset_depthlayer(
+            data_dir="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/thz_dataset/train",
+            label_csv="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/train_labels.csv",
             transform=transform
         )
         dataset.class_to_idx = dataset.class_to_idx

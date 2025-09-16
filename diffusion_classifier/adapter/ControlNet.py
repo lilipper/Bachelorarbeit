@@ -48,7 +48,7 @@ class ControlNetConditioningEmbedding(nn.Module):
     """
 
     def __init__(
-        self, spatial_dims: int, in_channels: int, out_channels: int, num_channels: Sequence[int] = (16, 32, 96, 256)
+        self, spatial_dims: int, in_channels: int, out_channels: int, num_channels: Sequence[int] = (32, 64, 64, 64)
     ):
         super().__init__()
 
@@ -91,8 +91,7 @@ class ControlNetConditioningEmbedding(nn.Module):
                 )
             )
 
-        self.conv_out = zero_module(
-            Convolution(
+        self.conv_out = Convolution(
                 spatial_dims=spatial_dims,
                 in_channels=num_channels[-1],
                 out_channels=out_channels,
@@ -101,15 +100,21 @@ class ControlNetConditioningEmbedding(nn.Module):
                 padding=1,
                 conv_only=True,
             )
-        )
 
-    def forward(self, conditioning):
+    def forward(self, conditioning, return_pyramid: bool = False):
         embedding = self.conv_in(conditioning)
         embedding = F.silu(embedding)
+        feats = [embedding]
 
-        for block in self.blocks:
-            embedding = block(embedding)
-            embedding = F.silu(embedding)
+        for i in range(0, len(self.blocks), 2):
+            embedding = self.blocks[i](embedding)
+            embedding = F.silu(embedding)    
+            embedding = self.blocks[i+1](embedding)
+            embedding = F.silu(embedding)     
+            feats.append(embedding)
+
+        if return_pyramid:
+            return feats
 
         embedding = self.conv_out(embedding)
 
@@ -166,7 +171,7 @@ class ControlNet(nn.Module):
         upcast_attention: bool = False,
         use_flash_attention: bool = False,
         conditioning_embedding_in_channels: int = 1,
-        conditioning_embedding_num_channels: Sequence[int] | None = (16, 32, 96, 256),
+        conditioning_embedding_num_channels: Sequence[int] | None = (32, 64, 64, 64),
     ) -> None:
         super().__init__()
         if with_conditioning is True and cross_attention_dim is None:
@@ -258,7 +263,6 @@ class ControlNet(nn.Module):
             padding=0,
             conv_only=True,
         )
-        controlnet_block = zero_module(controlnet_block.conv)
         self.controlnet_down_blocks.append(controlnet_block)
 
         for i in range(len(num_channels)):
@@ -290,27 +294,27 @@ class ControlNet(nn.Module):
             for _ in range(num_res_blocks[i]):
                 controlnet_block = Convolution(
                     spatial_dims=spatial_dims,
-                    in_channels=output_channel,
-                    out_channels=output_channel,
+                    in_channels=num_channels[i],
+                    out_channels=num_channels[i],
                     strides=1,
                     kernel_size=1,
                     padding=0,
                     conv_only=True,
                 )
-                controlnet_block = zero_module(controlnet_block)
+                controlnet_block = controlnet_block
                 self.controlnet_down_blocks.append(controlnet_block)
             #
             if not is_final_block:
                 controlnet_block = Convolution(
                     spatial_dims=spatial_dims,
-                    in_channels=output_channel,
-                    out_channels=output_channel,
+                    in_channels=num_channels[i + 1],
+                    out_channels=num_channels[i],
                     strides=1,
                     kernel_size=1,
                     padding=0,
                     conv_only=True,
                 )
-                controlnet_block = zero_module(controlnet_block)
+                controlnet_block = controlnet_block
                 self.controlnet_down_blocks.append(controlnet_block)
 
         # mid
@@ -337,25 +341,24 @@ class ControlNet(nn.Module):
         #     use_flash_attention=use_flash_attention,
         # )
 
-        controlnet_block = Convolution(
-            spatial_dims=spatial_dims,
-            in_channels=output_channel,
-            out_channels=output_channel,
-            strides=1,
-            kernel_size=1,
-            padding=0,
-            conv_only=True,
+        mid_C = num_channels[-1]
+        self.controlnet_mid_inj = Convolution(
+            spatial_dims=spatial_dims, in_channels=mid_C, out_channels=mid_C,
+            strides=1, kernel_size=1, padding=0, conv_only=True,
         )
-        ch = 16
-        controlnet_block = zero_module(controlnet_block)
-        self.controlnet_mid_block = controlnet_block
+        C = self.block_out_channels[-1]  # z.B. 64
+        self.depth_mixer = nn.Conv3d(C, C, kernel_size=(5,1,1), padding=(2,0,0), groups=C, bias=False)
+
         self.depth_pool = nn.AdaptiveAvgPool3d((1, None, None))
         self.refine2d = nn.Sequential(
-            nn.Conv2d(ch*4, ch*2, 3, padding=1), nn.SiLU(),
-            nn.Conv2d(ch*2, ch, 3, padding=1), nn.SiLU()
+            nn.GroupNorm(8, C),
+            nn.Conv2d(C, C // 2, 3, padding=1), nn.SiLU(),
+            nn.Conv2d(C // 2, C // 4, 3, padding=1), nn.SiLU(),
         )
-        # RGB-Head
-        self.head = nn.Conv2d(ch, 3, 1)
+        self.head = nn.Conv2d(C // 4, 3, 1)
+        nn.init.zeros_(self.head.bias)
+        nn.init.normal_(self.head.weight, mean=0.0, std=1e-4)
+        
 
     def forward(
         self,
@@ -375,29 +378,49 @@ class ControlNet(nn.Module):
             context: context tensor (N, 1, ContextDim).
             class_labels: context tensor (N, ).
         """
-        timesteps = torch.zeros(x.shape[0], device=x.device, dtype=torch.long)
+        if timesteps is None:
+            timesteps = torch.zeros(x.shape[0], device=x.device, dtype=torch.long)
         t_emb = get_timestep_embedding(timesteps, self.block_out_channels[0])
         t_emb = t_emb.to(dtype=x.dtype)
         emb = self.time_embed(t_emb)
 
         h = self.conv_in(x)
 
-        controlnet_cond = self.controlnet_cond_embedding(controlnet_cond)
-        # NEU: Größen angleichen (D/T, H, W) an h, bevor addiert wird
-        if controlnet_cond.shape[-3:] != h.shape[-3:]:
-            controlnet_cond = F.interpolate(
-                controlnet_cond, size=h.shape[-3:], mode="trilinear", align_corners=False
-            )
+        cond_pyr = self.controlnet_cond_embedding(controlnet_cond, return_pyramid=True)
 
-        h += controlnet_cond
+        # Hilfsfunktion: räumliche Größe angleichen
+        def match(feat, ref):
+            if feat.shape[-3:] != ref.shape[-3:]:
+                feat = F.interpolate(feat, size=ref.shape[-3:], mode="trilinear", align_corners=False)
+            return feat
 
-        for downsample_block in self.down_blocks:
-           h, _ = downsample_block(hidden_states=h, temb=emb, context=None)
-           
-        # h = self.middle_block(hidden_states=h, temb=emb, context=None)
+        cb_idx = 0  # Index über self.controlnet_down_blocks
+
+        # (0) Injektion vor dem ersten Down-Block (Stufe 0)
+        c0 = match(cond_pyr[0], h)
+        h = h + conditioning_scale * self.controlnet_down_blocks[cb_idx](c0); cb_idx += 1
+
+        # Down-Pfad mit Injektionen
+        for i, down_block in enumerate(self.down_blocks):
+            # Hauptpfad durch die Stufe
+            h, _ = down_block(hidden_states=h, temb=emb, context=context)
+
+            # (a) ResBlock-Injektionen auf Stufe i
+            for _ in range(self.num_res_blocks[i]):
+                ci = match(cond_pyr[i], h)
+                h = h + conditioning_scale * self.controlnet_down_blocks[cb_idx](ci); cb_idx += 1
+
+            # (b) Downsample-Injektion auf Stufe i+1 (falls vorhanden)
+            if i < len(self.down_blocks) - 1:
+                ci1 = match(cond_pyr[i + 1], h)
+                h = h + conditioning_scale * self.controlnet_down_blocks[cb_idx](ci1); cb_idx += 1
+
+        # Middle-Block + Mid-Injektion (letzte Stufe)
         h = self.middle_block(h)
-        h = self.controlnet_mid_block(h)
-        h = self.depth_pool(h).squeeze(2)
+        cmid = match(cond_pyr[-1], h)
+        h = h + conditioning_scale * self.controlnet_mid_inj(cmid)
+        h = self.depth_mixer(h)
+        h = self.depth_pool(h).squeeze(2)  # [B,C,H,W]
         h = self.refine2d(h)
         rgb = self.head(h)
         return rgb

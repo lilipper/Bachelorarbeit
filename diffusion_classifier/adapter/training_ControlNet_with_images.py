@@ -262,8 +262,12 @@ def collate_fn(examples: List[dict], tokenizer: AutoTokenizer) -> Batch:
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    from datetime import datetime
+    from zoneinfo import ZoneInfo  # Py 3.9+
+
+    stamp = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%y%m%d_%H%M")
     parser.add_argument("--dataset_jsonl", type=str, required=True)
-    parser.add_argument("--output_dir", type=str, default=f"./runs/thz_controlnet_sd21_{time.time()}")
+    parser.add_argument("--output_dir", type=str, default=f"./runs/thz_controlnet_sd21_{stamp}")
     parser.add_argument("--version", type=str, default="2-1", choices=["2-1", "2-0", "1-5", "1-4", "1-3", "1-2", "1-1"], help="Stable Diffusion Version")
     parser.add_argument("--resolution", type=int, default=512)
     parser.add_argument("--train_batch_size", type=int, default=1)
@@ -452,6 +456,7 @@ def main():
 
                 # 7) Loss (epsilon prädiktion)
                 loss = F.mse_loss(model_pred.float(), noise.float(), reduction="mean")
+                print(f"Epoch {epoch} step {step} | loss {loss.item():.4f}")
 
                 accelerator.backward(loss)
                 optimizer.step()
