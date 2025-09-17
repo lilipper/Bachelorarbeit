@@ -21,7 +21,7 @@ def parse_args():
     p.add_argument('--train_dataset', type=str, default='thz_for_train_adapter')
     # Auswahl
     p.add_argument('--classifier', required=True, choices=('diffusion', 'resnet50', "vit_b_16", "vit_b_32", "convnext_tiny"))       # z. B. diffusion, resnet50
-    p.add_argument('--trained_head', action='store_true')  # nur für torchvision-classifier
+    p.add_argument('--train_head', action='store_true')  # nur für torchvision-classifier
     p.add_argument('--adapter', type=str)  # z. B. feedback rgb
     # Diffusion/Eval
     p.add_argument('--version',  type=str, default='2-1')
@@ -115,7 +115,7 @@ def main():
                 train_dir = args.train_dataset,
                 val_dir= args.dataset,
                 arch= args.classifier,
-                num_classes = len(ds.classes),
+                num_classes = len(ds),
                 pretrained= True,
                 freeze_head= False,
                 epochs= 10,
@@ -129,10 +129,10 @@ def main():
         else:
             model, weights = build_torchvision_backbone(
                 arch=args.classifier,
-                num_classes=len(ds.classes),
+                num_classes=len(ds),
                 freeze_head=False
             )
-        classifier = TorchvisionClassifier(model, num_classes=len(ds.classes), weights=weights, input_adapter=adapter)
+        classifier = TorchvisionClassifier(model, num_classes=len(ds), weights=weights, input_adapter=adapter)
         classifier.to(device)
         classifier.eval()
 
@@ -171,10 +171,11 @@ def main():
                 args=args, prompts_df=prompts_df, all_noise=all_noise
             )
             
-            torch.save(dict(errors=pred_errors or [], pred=pred, label=label), fname)
+            torch.save(dict(errors=pred_errors, pred=pred, label=label), fname)
         else:
             with torch.inference_mode():
-                pred = classifier.predict(x, extra_cond=extra_cond).argmax(1).item()
+                pred, predictions, score, category_name = classifier.predict(x, extra_cond=extra_cond)
+                torch.save(dict(score=score, pred=pred, label=label), fname)
         correct += int(pred == int(label)); total += 1
         
 

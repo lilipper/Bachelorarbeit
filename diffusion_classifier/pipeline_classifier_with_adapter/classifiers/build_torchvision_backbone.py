@@ -17,17 +17,17 @@ def build_torchvision_backbone(
     Gibt (model, preprocess) zurück.
     preprocess ist weights.transforms() wenn pretrained=True, sonst None (du kannst dann eigene Transforms wählen).
     """
-    if arch == "resnet18":
-        weights = tvm.ResNet18_Weights.IMAGENET1K_V1 
-        m = tvm.resnet18(weights=weights)
+    if arch == "resnet50":
+        weights = tvm.ResNet50_Weights.IMAGENET1K_V1
+        m = tvm.resnet50(weights=weights)
         m.fc = nn.Linear(m.fc.in_features, num_classes)
-        preprocess = weights.transforms() if weights is not None else None
+        preprocess = weights
 
     elif arch == "convnext_tiny":
         weights = tvm.ConvNeXt_Tiny_Weights.IMAGENET1K_V1 
         m = tvm.convnext_tiny(weights=weights)
         m.classifier[-1] = nn.Linear(m.classifier[-1].in_features, num_classes)
-        preprocess = weights.transforms() if weights is not None else None
+        preprocess = weights
 
     elif arch in ("vit_b_16", "vit_b_32"):
         WeightsEnum = tvm.ViT_B_16_Weights if arch == "vit_b_16" else tvm.ViT_B_32_Weights
@@ -36,7 +36,7 @@ def build_torchvision_backbone(
         m = ctor(weights=weights)
         # ViT-Kopf austauschen
         m.heads.head = nn.Linear(m.heads.head.in_features, num_classes)
-        preprocess = weights.transforms() if weights is not None else None
+        preprocess = weights
 
     else:
         raise ValueError(f"unknown arch: {arch}")
@@ -46,7 +46,7 @@ def build_torchvision_backbone(
 
     if not freeze_head:
         # nur den Kopf trainieren
-        if arch == "resnet18":
+        if arch == "resnet50":
             for p in m.fc.parameters(): p.requires_grad = True
         elif arch == "convnext_tiny":
             for p in m.classifier[-1].parameters(): p.requires_grad = True
