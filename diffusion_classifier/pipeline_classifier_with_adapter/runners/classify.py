@@ -8,6 +8,7 @@ from pipeline_classifier_with_adapter.classifiers.diffusion_zero_shot import Dif
 from pipeline_classifier_with_adapter.classifiers.torchvision_classifier import TorchvisionClassifier
 from pipeline_classifier_with_adapter.adapters.rgb_adapter import load_rgb_adapter, load_thz_adapter_only
 from pipeline_classifier_with_adapter.adapters.feedback_adapter import load_feedback_adapter
+from diffusion.utils import LOG_DIR, get_formatstr
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -23,12 +24,12 @@ def parse_args():
     p.add_argument('--trained_head', action='store_true')  # nur für torchvision-classifier
     p.add_argument('--adapter', type=str)  # z. B. feedback rgb
     # Diffusion/Eval
-    p.add_argument('--version', default='2-1')
+    p.add_argument('--version',  type=str, default='2-1')
     p.add_argument('--prompt_path', required=True)
     p.add_argument('--dtype', default='float16', choices=('float16','float32'))
     p.add_argument('--n_trials', type=int, default=2)
     p.add_argument('--n_samples', nargs='+', type=int, default=[8,16,32])
-    p.add_argument('--to_keep', nargs='+', type=int, default=[5,3,1])
+    p.add_argument('--to_keep', nargs='+', type=int, default=[4,3,1])
     p.add_argument('--loss', default='l2', choices=('l1','l2','huber'))
     p.add_argument('--noise_path', default=None)
     # THz
@@ -36,6 +37,18 @@ def parse_args():
     # Adapter-Args
     p.add_argument('--feedback_ckpt', default=None)
     p.add_argument('--rgb_dir', default=None)
+
+    #output
+    p.add_argument('--output_dir', default='./data')
+
+    #for dc
+    p.add_argument('--batch_size', '-b', type=int, default=32)
+    p.add_argument('--subset_path', type=str, default=None)
+    p.add_argument('--interpolation', type=str, default='bicubic')
+    p.add_argument('--extra', type=str, default=None)
+    p.add_argument('--n_workers', type=int, default=1)
+    p.add_argument('--worker_idx', type=int, default=0)
+
     return p.parse_args()
 
 def main():
@@ -61,11 +74,17 @@ def main():
     embeds = torch.cat(embeds, dim=0)
     if args.dtype=='float16': embeds = embeds.half()
 
+    # Ausgabeordner
+    from datetime import datetime
+    from zoneinfo import ZoneInfo 
+
+    stamp = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%y%m%d_%H%M")
+    output_dir = os.path.join(args.output_dir, args.classifier + (f"_{args.adapter}" if args.adapter else ""), stamp)
+    os.makedirs(output_dir, exist_ok=True)
     # Adapter bauen
-    if args.adapter in ("none", "", None):
-        raise ValueError("Kein Adapter angegeben. Bitte mindestens einen Adapter angeben.")
     adapter = None
     if args.adapter == "feedback":
+        print("Lade Feedback-Adapter...")
         adapter = load_feedback_adapter(
             ckpt_path=args.feedback_ckpt,
             device=device,
@@ -73,6 +92,7 @@ def main():
             out_size=args.img_size
         )
     elif args.adapter == "rgb":
+        print("Lade RGB-Adapter...")
         rgb = load_rgb_adapter(
             output_dir=args.rgb_dir,
             device=device,
@@ -86,8 +106,9 @@ def main():
     'TODO: Mehrere Classifier unterstützen'
     clf = None
     if args.classifier == "diffusion":
+        print("Baue Diffusion Zero-Shot Classifier...")
         classifier = DiffusionZeroShotClassifier(dtype=args.dtype, loss=args.loss)
-        classifier.prepare(dict(vae=vae, unet=unet, scheduler=scheduler, forward_fn=forward_fn))
+        classifier.prepare(vae=vae, unet=unet, scheduler=scheduler, forward_fn=forward_fn)
     else:
         if args.train_head:
             model, weights = train_classifier(
@@ -111,7 +132,7 @@ def main():
                 num_classes=len(ds.classes),
                 freeze_head=False
             )
-        classifier = TorchvisionClassifier(model, input_adapter=adapter)
+        classifier = TorchvisionClassifier(model, num_classes=len(ds.classes), weights=weights, input_adapter=adapter)
         classifier.to(device)
         classifier.eval()
 
@@ -119,8 +140,10 @@ def main():
 
     correct = total = 0
     pbar = tqdm.tqdm(range(len(ds)))
+    formatstr = get_formatstr(len(ds) - 1)
     for i in pbar:
         if total>0: pbar.set_description(f'Acc: {100*correct/total:.2f}%')
+        fname = os.path.join(output_dir, formatstr.format(i) + '.pt')
 
         image, label = ds[i]         # (3,H,W), [-1,1]
         x = image.unsqueeze(0).to(device)
@@ -143,14 +166,17 @@ def main():
         else: extra_cond = None
 
         if args.classifier == "diffusion":
-            pred = classifier.predict(dict(
-                image=x, thz=thz, embeds=embeds, adapters=adapter,
-                runner=dict(extra_cond=extra_cond, all_noise=all_noise),
-                args=args, prompts_df=prompts_df
-            ))
+            pred, pred_errors = classifier.predict(
+                x_in=image, embeds=embeds, extra_cond=extra_cond,
+                args=args, prompts_df=prompts_df, all_noise=all_noise
+            )
+            
+            torch.save(dict(errors=pred_errors or [], pred=pred, label=label), fname)
         else:
-            pred = classifier.predict(x, extra_cond=extra_cond).argmax(1).item()
+            with torch.inference_mode():
+                pred = classifier.predict(x, extra_cond=extra_cond).argmax(1).item()
         correct += int(pred == int(label)); total += 1
+        
 
     print(f"Final Acc: {100*correct/max(1,total):.2f}%")
 

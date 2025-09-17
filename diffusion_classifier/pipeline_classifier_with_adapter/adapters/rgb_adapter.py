@@ -1,6 +1,6 @@
 import os, json, torch, torch.nn as nn, torch.nn.functional as F
 from typing import Dict, Any, Optional
-from adapters.base import BaseAdapter
+from pipeline_classifier_with_adapter.adapters.base import BaseAdapter
 from diffusers import ControlNetModel
 
 # exakt wie im Trainingsscript 2 (damit StateDict passt)

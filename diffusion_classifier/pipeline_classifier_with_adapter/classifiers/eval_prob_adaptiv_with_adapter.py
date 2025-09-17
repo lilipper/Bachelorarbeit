@@ -5,10 +5,10 @@ from diffusion.utils import LOG_DIR, get_formatstr
 import torchvision.transforms as T
 from torchvision.transforms.functional import InterpolationMode
 
-from classifiers.adapter_forward import unet_with_adapters_forward
-from adapters.feedback_adapter import load_feedback_adapter
-from adapters.rgb_adapter import load_rgb_adapter
-from classifiers.unet_with_adapter import UNetWithAdapters
+from pipeline_classifier_with_adapter.classifiers.adapter_forward import unet_with_adapters_forward
+from pipeline_classifier_with_adapter.adapters.feedback_adapter import load_feedback_adapter
+from pipeline_classifier_with_adapter.adapters.rgb_adapter import load_rgb_adapter
+from pipeline_classifier_with_adapter.classifiers.unet_with_adapter import UNetWithAdapters
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 INTERPOLATIONS = {'bilinear': InterpolationMode.BILINEAR,'bicubic': InterpolationMode.BICUBIC,'lanczos': InterpolationMode.LANCZOS}
@@ -109,37 +109,8 @@ def eval_error(unet, scheduler, latent, all_noise, ts, noise_idxs,
             idx += len(batch_ts)
     return pred_errors
 
-def main():
-    p = argparse.ArgumentParser()
-    # dataset args
-    p.add_argument('--dataset', type=str, default='pets',
-                   choices=['pets','flowers','stl10','mnist','cifar10','food','caltech101','imagenet','objectnet','aircraft'])
-    p.add_argument('--split', type=str, default='train', choices=['train','test'])
-    # run args
-    p.add_argument('--version', type=str, default='2-1')
-    p.add_argument('--img_size', type=int, default=512, choices=(256,512))
-    p.add_argument('--batch_size', '-b', type=int, default=32)
-    p.add_argument('--n_trials', type=int, default=1)
-    p.add_argument('--prompt_path', type=str, required=True)
-    p.add_argument('--noise_path', type=str, default=None)
-    p.add_argument('--subset_path', type=str, default=None)
-    p.add_argument('--dtype', type=str, default='float16', choices=('float16','float32'))
-    p.add_argument('--interpolation', type=str, default='bicubic')
-    p.add_argument('--extra', type=str, default=None)
-    p.add_argument('--n_workers', type=int, default=1)
-    p.add_argument('--worker_idx', type=int, default=0)
-    p.add_argument('--load_stats', action='store_true')
-    p.add_argument('--loss', type=str, default='l2', choices=('l1','l2','huber'))
-    # adaptive selection
-    p.add_argument('--to_keep', nargs='+', type=int, required=True)
-    p.add_argument('--n_samples', nargs='+', type=int, required=True)
-    # Adapters
-    p.add_argument('--feedback_ckpt', type=str, default=None, help='Pfad zu adapter_best.pt (Script 1)')
-    p.add_argument('--rgb_dir', type=str, default=None, help='Ordner mit controlnet/ & thz_adapter.pt (Script 2)')
-    # THz input (für Adapter)
-    p.add_argument('--thz_path', type=str, default=None, help='Ordner mit THz-Volumen, z.B. {index}.pt/.npy')
-    args = p.parse_args(); assert len(args.to_keep) == len(args.n_samples)
-
+def main(args):
+    
     # Output-Folder
     name = f"v{args.version}_{args.n_trials}trials_" + '_'.join(map(str,args.to_keep)) + 'keep_' + '_'.join(map(str,args.n_samples)) + 'samples'
     if args.interpolation != 'bicubic': name += f'_{args.interpolation}'
@@ -263,5 +234,37 @@ def main():
 
     print(f"Final Acc: {100*correct/max(1,total):.2f}%")
 
+def parse_args():
+    p = argparse.ArgumentParser()
+    # dataset args
+    p.add_argument('--dataset', type=str, default='pets',
+                   choices=['pets','flowers','stl10','mnist','cifar10','food','caltech101','imagenet','objectnet','aircraft'])
+    p.add_argument('--split', type=str, default='train', choices=['train','test'])
+    # run args
+    p.add_argument('--version', type=str, default='2-1')
+    p.add_argument('--img_size', type=int, default=512, choices=(256,512))
+    p.add_argument('--batch_size', '-b', type=int, default=32)
+    p.add_argument('--n_trials', type=int, default=1)
+    p.add_argument('--prompt_path', type=str, required=True)
+    p.add_argument('--noise_path', type=str, default=None)
+    p.add_argument('--subset_path', type=str, default=None)
+    p.add_argument('--dtype', type=str, default='float16', choices=('float16','float32'))
+    p.add_argument('--interpolation', type=str, default='bicubic')
+    p.add_argument('--extra', type=str, default=None)
+    p.add_argument('--n_workers', type=int, default=1)
+    p.add_argument('--worker_idx', type=int, default=0)
+    p.add_argument('--load_stats', action='store_true')
+    p.add_argument('--loss', type=str, default='l2', choices=('l1','l2','huber'))
+    # adaptive selection
+    p.add_argument('--to_keep', nargs='+', type=int, required=True)
+    p.add_argument('--n_samples', nargs='+', type=int, required=True)
+    # Adapters
+    p.add_argument('--feedback_ckpt', type=str, default=None, help='Pfad zu adapter_best.pt (Script 1)')
+    p.add_argument('--rgb_dir', type=str, default=None, help='Ordner mit controlnet/ & thz_adapter.pt (Script 2)')
+    # THz input (für Adapter)
+    p.add_argument('--thz_path', type=str, default=None, help='Ordner mit THz-Volumen, z.B. {index}.pt/.npy')
+    args = p.parse_args(); assert len(args.to_keep) == len(args.n_samples)
+
 if __name__ == '__main__':
-    main()
+    args = parse_args()
+    main(args)

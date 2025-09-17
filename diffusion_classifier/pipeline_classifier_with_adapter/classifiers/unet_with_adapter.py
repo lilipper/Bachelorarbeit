@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
 import torch
 from torch import nn
-from adapters.base import BaseAdapter
+from pipeline_classifier_with_adapter.adapters.base import BaseAdapter
 
 def _merge_residual_lists(a, b):
     if a is None: return b
