@@ -5,7 +5,7 @@
 #Folders
 *\__pycache__
 700GHz
-*\dataset
+
 diffusion_classifier\data\*
 diffusion_classifier/data
 */USAF_images
