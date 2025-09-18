@@ -272,7 +272,7 @@ def main():
     ap.add_argument("--prompts_csv", type=str, required=True, help="CSV: prompt,classname,classidx")
 
     # SD/DC-Args
-    ap.add_argument("--dtype", type=str, default="float16", choices=("float16", "float32"))
+    ap.add_argument("--dtype", type=str, default="float16", choices=("float16", "float32", "bfloat16"))
     ap.add_argument("--img_size", type=int, default=512, choices=(256, 512))
     ap.add_argument("--loss", type=str, default="l2", choices=("l1", "l2", "huber"))
     ap.add_argument("--n_trials", type=int, default=1)
