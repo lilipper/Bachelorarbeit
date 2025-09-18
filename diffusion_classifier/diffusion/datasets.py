@@ -157,14 +157,7 @@ class ThzDataset(Dataset):
         self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
         self.files = list(self.file_to_class.keys())
         self.is_train = is_train
-        if self.is_train and transform is None:
-            self.transform = Compose([
-                    RandRotate90d(keys=["vol"], prob=0.5, spatial_axes=(1, 2)),  # rotiere in H–W-Ebene
-                    RandFlipd(keys=["vol"], prob=0.5, spatial_axis=1),           # spiegel entlang der Höhe
-                    RandGaussianNoised(keys=["vol"], prob=0.2, mean=0.0, std=0.01),
-                ])
-        else:
-            self.transform = transform
+        self.transform = transform
 
     def __len__(self):
         return len(self.files)
@@ -194,11 +187,8 @@ class ThzDataset(Dataset):
         vol = vol.unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
 
         # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
-        sample = {'vol': vol.float(), 'label': label}
         if self.transform:
-            sample = self.transform(sample)
-            vol = sample['vol']
-            label = sample['label']
+            vol = self.transform(vol)
 
 
         return vol, label, filename

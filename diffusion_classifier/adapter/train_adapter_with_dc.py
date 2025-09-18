@@ -3,7 +3,7 @@ import sys
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(PROJECT_ROOT)
 
-import tqdm
+from tqdm import tqdm
 import math
 import argparse
 import numpy as np
