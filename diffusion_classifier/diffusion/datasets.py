@@ -156,6 +156,7 @@ class ThzDataset(Dataset):
         self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
         self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
         self.files = list(self.file_to_class.keys())
+        self.is_train = is_train
         if self.is_train and transform is None:
             self.transform = Compose([
                     RandRotate90d(keys=["vol"], prob=0.5, spatial_axes=(1, 2)),  # rotiere in H–W-Ebene
