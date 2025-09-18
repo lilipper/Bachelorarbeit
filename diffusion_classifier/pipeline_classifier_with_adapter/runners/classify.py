@@ -12,6 +12,14 @@ from diffusion.utils import LOG_DIR, get_formatstr
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+COLLECTION_ADAPTERS = {
+    
+}
+
+COLLECTION_TRAINED_CLASSIFIERS = {
+    'IMAGENET1K_V1 ' : 'IMAGENET1K_V1' 
+}
+
 def parse_args():
     p = argparse.ArgumentParser()
     # Daten
@@ -22,7 +30,14 @@ def parse_args():
     # Auswahl
     p.add_argument('--classifier', required=True, choices=('diffusion', 'resnet50', "vit_b_16", "vit_b_32", "convnext_tiny"))       # z. B. diffusion, resnet50
     p.add_argument('--train_head', action='store_true')  # nur für torchvision-classifier
-    p.add_argument('--adapter', type=str)  # z. B. feedback rgb
+    p.add_argument('--adapter', type=str, choices=('feedback', 'rgb'))  # z. B. feedback rgb
+
+    # Pretrained laden
+    p.add_argument('--from_pretrained_classifier', action='store_true')
+    p.add_argument('--from_pretrained_adapter', action='store_true')
+    p.add_argument('--pretrained_classifier', type=str)
+    p.add_argument('--pretrained_adapter', type=str)
+    
     # Diffusion/Eval
     p.add_argument('--version',  type=str, default='2-1')
     p.add_argument('--prompt_path', required=True)
@@ -41,7 +56,7 @@ def parse_args():
     #output
     p.add_argument('--output_dir', default='./data')
 
-    #for dc
+    #for diffusion-classifier
     p.add_argument('--batch_size', '-b', type=int, default=32)
     p.add_argument('--subset_path', type=str, default=None)
     p.add_argument('--interpolation', type=str, default='bicubic')

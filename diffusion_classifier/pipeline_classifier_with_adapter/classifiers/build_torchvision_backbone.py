@@ -15,7 +15,6 @@ def build_torchvision_backbone(
 ) -> Tuple[nn.Module, Optional[object]]:
     """
     Gibt (model, preprocess) zurück.
-    preprocess ist weights.transforms() wenn pretrained=True, sonst None (du kannst dann eigene Transforms wählen).
     """
     if arch == "resnet50":
         weights = tvm.ResNet50_Weights.IMAGENET1K_V1

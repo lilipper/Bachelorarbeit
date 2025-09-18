@@ -15,6 +15,12 @@ import numpy as np
 from torch.utils.data import Dataset
 import pandas as pd
 import process_rdf as prdf
+from monai.transforms import (
+    Compose,
+    RandFlipd,
+    RandRotate90d,
+    RandGaussianNoised,
+)
 
 file_path = os.path.join(os.path.dirname(__file__))
 
@@ -144,13 +150,20 @@ class ThzDataset_depthlayer(Dataset):
         return img, label
 
 class ThzDataset(Dataset):
-    def __init__(self, data_dir, label_csv, transform=None):
+    def __init__(self, data_dir, label_csv, transform=None, is_train=False):
         self.data_dir = data_dir
-        self.transform = transform
         self.labels_df = pd.read_csv(label_csv)
         self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
         self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
         self.files = list(self.file_to_class.keys())
+        if self.is_train and transform is None:
+            self.transform = Compose([
+                    RandRotate90d(keys=["vol"], prob=0.5, spatial_axes=(1, 2)),  # rotiere in H–W-Ebene
+                    RandFlipd(keys=["vol"], prob=0.5, spatial_axis=1),           # spiegel entlang der Höhe
+                    RandGaussianNoised(keys=["vol"], prob=0.2, mean=0.0, std=0.01),
+                ])
+        else:
+            self.transform = transform
 
     def __len__(self):
         return len(self.files)
@@ -170,7 +183,7 @@ class ThzDataset(Dataset):
         processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, T, device=device)  # [T,H,W], complex
 
         # 3) Betrag² / max → normiert auf [0,1]
-        vol = torch.abs(processed_data) ** 2
+        vol = torch.stack([processed_data.real, processed_data.imag], dim=0)
         vol = vol / (max_val_abs + 1e-12)   # [T,H,W], float32
 
         # 4) Flip entlang Höhe (dim=1) – entspricht torch.flipud
@@ -180,10 +193,14 @@ class ThzDataset(Dataset):
         vol = vol.unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
 
         # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
-        if self.transform is not None:
-            vol = self.transform(vol)
+        sample = {'vol': vol.float(), 'label': label}
+        if self.transform:
+            sample = self.transform(sample)
+            vol = sample['vol']
+            label = sample['label']
 
-        return vol, label
+
+        return vol, label, filename
 
 class ImageNetA(torch.utils.data.Dataset):
     def __init__(

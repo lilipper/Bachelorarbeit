@@ -157,6 +157,7 @@ class ControlNet(nn.Module):
         self,
         spatial_dims: int,
         in_channels: int,
+        final_depth:int,
         num_res_blocks: Sequence[int] | int = (2, 2, 2, 2),
         num_channels: Sequence[int] = (32, 64, 64, 64),
         attention_levels: Sequence[bool] = (False, False, True, True),
@@ -170,7 +171,7 @@ class ControlNet(nn.Module):
         num_class_embeds: int | None = None,
         upcast_attention: bool = False,
         use_flash_attention: bool = False,
-        conditioning_embedding_in_channels: int = 1,
+        conditioning_embedding_in_channels: int = 2,
         conditioning_embedding_num_channels: Sequence[int] | None = (32, 64, 64, 64),
     ) -> None:
         super().__init__()
@@ -319,27 +320,20 @@ class ControlNet(nn.Module):
 
         # mid
         mid_block_channel = num_channels[-1]
-        self.middle_block = nn.Sequential(
-            Convolution(spatial_dims=spatial_dims, in_channels=mid_block_channel, out_channels=mid_block_channel,
-                        strides=1, kernel_size=3, padding=1, conv_only=True),
-            nn.SiLU(),
-            Convolution(spatial_dims=spatial_dims, in_channels=mid_block_channel, out_channels=mid_block_channel,
-                        strides=1, kernel_size=3, padding=1, conv_only=True),
-        )
 
-        # self.middle_block = get_mid_block(
-        #     spatial_dims=spatial_dims,
-        #     in_channels=mid_block_channel,
-        #     temb_channels=time_embed_dim,
-        #     norm_num_groups=norm_num_groups,
-        #     norm_eps=norm_eps,
-        #     with_conditioning=with_conditioning,
-        #     num_head_channels=num_head_channels[-1],
-        #     transformer_num_layers=transformer_num_layers,
-        #     cross_attention_dim=cross_attention_dim,
-        #     upcast_attention=upcast_attention,
-        #     use_flash_attention=use_flash_attention,
-        # )
+        self.middle_block = get_mid_block(
+            spatial_dims=spatial_dims,
+            in_channels=mid_block_channel,
+            temb_channels=time_embed_dim,
+            norm_num_groups=norm_num_groups,
+            norm_eps=norm_eps,
+            with_conditioning=with_conditioning,
+            num_head_channels=num_head_channels[-1],
+            transformer_num_layers=transformer_num_layers,
+            cross_attention_dim=cross_attention_dim,
+            upcast_attention=upcast_attention,
+            use_flash_attention=use_flash_attention,
+        )
 
         mid_C = num_channels[-1]
         self.controlnet_mid_inj = Convolution(
@@ -349,7 +343,8 @@ class ControlNet(nn.Module):
         C = self.block_out_channels[-1]  # z.B. 64
         self.depth_mixer = nn.Conv3d(C, C, kernel_size=(5,1,1), padding=(2,0,0), groups=C, bias=False)
 
-        self.depth_pool = nn.AdaptiveAvgPool3d((1, None, None))
+        D = 16 
+        self.depth_projection = nn.Conv3d(C, C, kernel_size=(final_depth, 1, 1), stride=(1, 1, 1), padding=0)
         self.refine2d = nn.Sequential(
             nn.GroupNorm(8, C),
             nn.Conv2d(C, C // 2, 3, padding=1), nn.SiLU(),
@@ -420,7 +415,7 @@ class ControlNet(nn.Module):
         cmid = match(cond_pyr[-1], h)
         h = h + conditioning_scale * self.controlnet_mid_inj(cmid)
         h = self.depth_mixer(h)
-        h = self.depth_pool(h).squeeze(2)  # [B,C,H,W]
+        h = self.depth_projection(h).squeeze(2)  # [B,C,H,W]
         h = self.refine2d(h)
         rgb = self.head(h)
         return rgb

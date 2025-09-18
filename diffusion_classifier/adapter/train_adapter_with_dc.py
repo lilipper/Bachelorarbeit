@@ -3,6 +3,7 @@ import sys
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(PROJECT_ROOT)
 
+import tqdm
 import math
 import argparse
 import numpy as np
@@ -18,6 +19,7 @@ from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from ControlNet import ControlNet
 import process_rdf as prdf
 import time
+from diffusion.datasets import ThzDataset
 
 
 hf_logging.set_verbosity_error()
@@ -40,20 +42,35 @@ class ControlNetAdapterWrapper(torch.nn.Module):
     Nimmt Volumen [B,1,T,H,W] in [0,1] und gibt ein Bild [B,3,512,512] in [0,1] aus.
     Reduziert T vor dem 3D-Netz per AvgPool, um Speicher zu schonen.
     """
-    def __init__(self, controlnet, out_size=512, target_T=500, mid_channels=8, stride_T=3):
+    def __init__(self, controlnet_cfg, in_channels=2, out_size=512, target_T=512, mid_channels=8, stride_T=3):
         super().__init__()
-        self.net = controlnet
         self.out_size = out_size
         self.target_T = target_T
+        self.in_channels = in_channels
 
         # Lernbarer T-Downsampler: erst Feature-Anhebung, dann stride in T
         # stride_T=3 macht aus 1400 -> ~467 (1400//3); das ist schon ~64% Speicherersparnis.
         # Du kannst stride_T=2 setzen, wenn du konservativer (mehr Info, mehr RAM) sein willst (-> 1400->700).
         self.downT = nn.Sequential(
-            nn.Conv3d(1, mid_channels, kernel_size=(5,3,3), stride=(stride_T,1,1), padding=(2,1,1), bias=False),
+            nn.Conv3d(in_channels, mid_channels, kernel_size=(5,3,3), stride=(stride_T,1,1), padding=(2,1,1), bias=False),
             nn.SiLU(),
-            nn.Conv3d(mid_channels, 1, kernel_size=1, stride=1, padding=0, bias=False)
+            nn.Conv3d(mid_channels, in_channels, kernel_size=1, stride=1, padding=0, bias=False)
         )
+
+        num_downsamples = len(controlnet_cfg.get("num_channels", ())) - 1
+        downsample_factor = 2 ** num_downsamples
+        final_depth = target_T // downsample_factor
+
+        print(f"Adapter konfiguriert: Eingangstiefe -> {stride_T}x Reduktion -> {target_T} -> ControlNet-Flaschenhals-Tiefe: {final_depth}")
+
+        # Schritt 3: Aktualisiere die ControlNet-Konfiguration und instanziiere das Netz
+        # Dies stellt sicher, dass das ControlNet immer korrekt gebaut wird.
+        cfg = controlnet_cfg.copy()
+        cfg['in_channels'] = self.in_channels
+        cfg['conditioning_embedding_in_channels'] = self.in_channels
+        cfg['final_depth'] = final_depth
+
+        self.net = ControlNet(**cfg)
 
     def forward(self, vol):  # vol: [B,1,T,H,W]
         # 1) Lernbares Downsampling in T:
@@ -66,8 +83,8 @@ class ControlNetAdapterWrapper(torch.nn.Module):
                                 mode="trilinear", align_corners=False)
 
         # 2) Stubs fürs 3D-ControlNet (ignoriert x/t/context intern)
-        B, _, Tp, H, W = vol.shape
-        x_stub = torch.zeros((B, 1, Tp, H, W), device=vol.device, dtype=vol.dtype)
+        B, C, Tp, H, W = vol.shape
+        x_stub = torch.zeros((B, C, Tp, H, W), device=vol.device, dtype=vol.dtype)
         t_stub = torch.zeros((B,), device=vol.device, dtype=torch.long)
 
         # 3) Dein ControlNet rechnet 3D->2D
@@ -151,47 +168,6 @@ def run_eval(dataloader, adapter, vae, unet, class_embeds, scheduler, eargs, img
     adapter.train()
     return correct / max(1, total)
 
-class ThzDataset(Dataset):
-    def __init__(self, data_dir, label_csv, transform=None):
-        self.data_dir = data_dir
-        self.transform = transform
-        self.labels_df = pd.read_csv(label_csv)
-        self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
-        self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
-        self.files = list(self.file_to_class.keys())
-
-    def __len__(self):
-        return len(self.files)
-
-    def __getitem__(self, idx):
-        filename = self.files[idx]
-        filepath = os.path.join(self.data_dir, filename)
-        label = int(self.file_to_class[filename])
-
-        device = "cpu"  # Laden auf CPU, optional später im Loader auf GPU
-
-        # 1) Komplettes Volumen laden
-        complex_raw_data, parameters = prdf.read_mat(filepath, device=device)
-
-        # 2) Signalverarbeitung
-        T = int(parameters["NF"])
-        processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, T, device=device)  # [T,H,W], complex
-
-        # 3) Betrag² / max → normiert auf [0,1]
-        vol = torch.abs(processed_data) ** 2
-        vol = vol / (max_val_abs + 1e-12)   # [T,H,W], float32
-
-        # 4) Flip entlang Höhe (dim=1) – entspricht torch.flipud
-        vol = torch.flip(vol, dims=[1])     # [T,H,W]
-
-        # 5) In Form [B,C,T,H,W] bringen
-        vol = vol.unsqueeze(0).unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
-
-        # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
-        if self.transform is not None:
-            vol = self.transform(vol)
-
-        return vol, label, filename
 
 class PromptBank:
     def __init__(self, prompt_csv: str):
@@ -258,6 +234,27 @@ def acc_from_class_errors(class_errors: torch.Tensor, y: int) -> float:
     pred = torch.argmin(class_errors).item()
     return float(pred == y)
 
+def pool_prompt_errors_to_class_errors_batch(errors_per_prompt, prompt_to_class, num_classes, reduce="mean"):
+    """ Vektorisierte Version, die einen Batch von Fehler-Tensoren verarbeitet. """
+    B, P = errors_per_prompt.shape
+    device = errors_per_prompt.device
+    
+    one_hot_matrix = F.one_hot(prompt_to_class, num_classes=num_classes).float().to(device)
+    
+    errors_grouped = errors_per_prompt.unsqueeze(2) * one_hot_matrix.unsqueeze(0)
+    
+    sum_errors = errors_grouped.sum(dim=1)
+    prompts_per_class = one_hot_matrix.sum(dim=0)
+    
+    if reduce == "mean":
+        class_errors = sum_errors / (prompts_per_class.unsqueeze(0) + 1e-8)
+    elif reduce == "min":
+        errors_grouped[errors_grouped == 0] = float('inf')
+        class_errors = errors_grouped.min(dim=1).values
+    else:
+        raise ValueError("reduce must be 'mean' or 'min'")
+        
+    return class_errors
 
 def main():
     ap = argparse.ArgumentParser()
@@ -301,8 +298,8 @@ def main():
     vae, unet, tokenizer, text_encoder, scheduler = build_sd2_1_base(dtype=args.dtype, use_xformers=args.use_xformers)
 
     # Datasets
-    train_ds = ThzDataset(args.data_train, args.train_csv)
-    val_ds   = ThzDataset(args.data_test, args.val_csv)
+    train_ds = ThzDataset(args.data_train, args.train_csv, is_train=True)
+    val_ds   = ThzDataset(args.data_test, args.val_csv, is_train=False)
     train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
                               num_workers=args.num_workers, pin_memory=True, drop_last=True)
     val_loader   = DataLoader(val_ds, batch_size=1, shuffle=False,
@@ -325,15 +322,20 @@ def main():
     # Adapter (trainierbar)
     controlnet_cfg = dict(
         spatial_dims=3,
-        in_channels=1,
         num_res_blocks=(2, 2, 2, 2),
         num_channels=(32, 64, 64, 64),
         attention_levels=(False, False, False, False),
-        conditioning_embedding_in_channels=1,
+        conditioning_embedding_in_channels=2,
         conditioning_embedding_num_channels=(32, 64, 64, 64),
         with_conditioning=False,
     )
-    adapter = ControlNetAdapterWrapper(ControlNet(**controlnet_cfg).to(device), out_size=args.img_size).to(device)
+    adapter = ControlNetAdapterWrapper(
+        controlnet_cfg=controlnet_cfg,
+        in_channels=2,          
+        out_size=args.img_size,
+        target_T=512,           
+        stride_T=3              
+    ).to(device)
     adapter.train()
     opt = torch.optim.AdamW(adapter.parameters(), lr=args.lr)
 
@@ -360,7 +362,8 @@ def main():
     for epoch in range(1, args.epochs + 1):
         running_loss, running_acc, n_seen = 0.0, 0.0, 0
 
-        for vol, label, filename in train_loader:
+        pbar = tqdm(train_loader, desc=f"Epoch {epoch}/{args.epochs}")
+        for vol, label, filename in pbar:
             vol   = vol.to(device)        # [B,1,1,T,H,W]
             label = label.to(device).long()
 
@@ -371,70 +374,52 @@ def main():
 
             # Autocast nur, wenn use_amp=True (sonst no-op)
             with torch.amp.autocast("cuda", dtype=torch.float16, enabled=use_amp):
-                # 1) Adapter vorwärts -> Bild in [0,1]
-                img  = adapter(vol)                 # [B,3,512,512]
-                # 2) VAE-Encode -> Latent
-                x_in = (img * 2.0 - 1.0).to(dtype=vae.dtype)      # [-1,1]
-                lat  = vae.encode(x_in).latent_dist.mean * 0.18215  # [B,4,64,64]
+                # 1) Adapter 
+                img  = adapter(vol)         
+                x_in = (img * 2.0 - 1.0).to(dtype=vae.dtype)      
+                lat  = vae.encode(x_in).latent_dist.mean * 0.18215  
 
-                # 3) Verluste über den gesamten Batch aufsummieren
-                batch_loss_tensor = torch.zeros((), device=vol.device)
-                batch_acc = 0.0
+                pred_idx, data, errors_per_prompt_batch = eval_prob_adaptive_differentiable(
+                    unet=unet, latent=lat,
+                    text_embeds=prompt_embeds, scheduler=scheduler,
+                    args=eargs, latent_size=args.img_size // 8, all_noise=None
+                )
+                print(f"[E{epoch:02d}"
+                        f"Pred={int(pred_idx)} "
+                        f"MinErr={float(errors_per_prompt.min()):.3e} "
+                        f"MaxErr={float(errors_per_prompt.max()):.3e} "
+                        f"MeanErr={float(errors_per_prompt.mean()):.3e}")
+                
+                class_errors_batch = pool_prompt_errors_to_class_errors_batch(
+                    errors_per_prompt_batch, prompt_to_class, num_classes, reduce="mean"
+                )  # [C]
+                print("class_errors dtype:", class_errors_batch.dtype, " device:", class_errors_batch.device)
+                print("class_errors:", class_errors_batch)
+                logit_scale = 10.0
+                logits = (-class_errors) * logit_scale      # [1,C]
+                loss = F.cross_entropy(logits, label)
 
-                for b in range(vol.size(0)):
-                    pred_idx, data, errors_per_prompt = eval_prob_adaptive_differentiable(
-                        unet=unet, latent=lat[b:b+1],
-                        text_embeds=prompt_embeds, scheduler=scheduler,
-                        args=eargs, latent_size=args.img_size // 8, all_noise=None
-                    )
-                    print(f"[E{epoch:02d} B{b:02d}] Label={int(label[b].item())} "
-                          f"Pred={int(pred_idx)} "
-                          f"MinErr={float(errors_per_prompt.min()):.3e} "
-                          f"MaxErr={float(errors_per_prompt.max()):.3e} "
-                          f"MeanErr={float(errors_per_prompt.mean()):.3e}")
-                    errors_per_prompt = torch.nan_to_num(errors_per_prompt, nan=1e4, posinf=1e4, neginf=1e4).float()
-                    print("errors_per_prompt dtype:", errors_per_prompt.dtype, " device:", errors_per_prompt.device)
-                    print("errors_per_prompt:", errors_per_prompt)
-
-                    class_errors = pool_prompt_errors_to_class_errors(
-                        errors_per_prompt, prompt_to_class, num_classes, reduce="mean"
-                    )  # [C]
-                    print("class_errors dtype:", class_errors.dtype, " device:", class_errors.device)
-                    print("class_errors:", class_errors)
-                    logits = (-class_errors).unsqueeze(0)       # [1,C]
-                    loss_b = F.cross_entropy(logits, label[b:b+1])
-
-                    batch_loss_tensor = batch_loss_tensor + loss_b
-                    batch_acc += acc_from_class_errors(class_errors.detach(), int(label[b].item()))
-                    print("requires_grad:", errors_per_prompt.requires_grad)
-
-            if not torch.isfinite(batch_loss_tensor):
-                # nichts updaten; nächster Batch
-                print(f"[E{epoch:02d}] Batch mit nicht-finitem Loss (loss={batch_loss_tensor.item()}). Überspringe.")
+            if torch.isfinite(loss):
+                scaler.scale(loss).backward()
+                # Gradient Clipping zur weiteren Stabilisierung
+                torch.nn.utils.clip_grad_norm_(adapter.parameters(), max_norm=1.0)
+                scaler.step(opt)
+                scaler.update()
+            else:
+                print(f" Nicht-finiter Loss ({loss.item()}) in Epoche {epoch}. Überspringe Optimizer-Step.")
                 continue
-            # 4) Ein Backward für den ganzen Batch + Optimizer-Step via GradScaler
-            scaler.scale(batch_loss_tensor).backward()
             with torch.no_grad():
-                g = [float(p.grad.norm().detach().cpu()) for p in adapter.parameters() if p.grad is not None]
-                print(f"[gradcheck] BEFORE step: n={len(g)} median={(np.median(g) if g else 0):.3e}")
-            scaler.step(opt)
-            scaler.update()
-            with torch.no_grad():
-                any_grad = []
-                for n,p in adapter.named_parameters():
-                    if p.grad is not None:
-                        any_grad.append(float(p.grad.norm().detach().cpu()))
-                print(f"[gradcheck] num_params_with_grad={sum(g>0 for g in any_grad)} "
-                    f"median_grad_norm={(np.median(any_grad) if any_grad else 0):.3e}")
+                running_loss += loss.item() * vol.size(0)
+                preds = torch.argmin(class_errors_batch, dim=1)
+                running_acc += (preds == label).sum().item()
+                n_seen += vol.size(0)
+                
+                # Fortschrittsanzeige aktualisieren
+                pbar.set_postfix(loss=f"{running_loss/n_seen:.4f}", acc=f"{running_acc/n_seen:.4f}")
 
-            # 5) Logging-Variablen updaten
-
-            running_loss += float(batch_loss_tensor.item())
-            running_acc  += batch_acc
-            n_seen       += vol.size(0)
-
-        print(f"[E{epoch:02d}] train_loss={running_loss/max(1,n_seen):.4f}  "
-              f"train_acc={running_acc/max(1,n_seen):.4f}")
+        train_loss = running_loss / max(1, n_seen)
+        train_acc = running_acc / max(1, n_seen)
+        print(f"[E{epoch:02d}] train_loss={train_loss:.4f}  train_acc={train_acc:.4f}")
 
         # ---------- VALIDIERUNG ----------
         adapter.eval()
