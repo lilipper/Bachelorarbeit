@@ -386,9 +386,9 @@ def main():
                 )
                 print(f"[E{epoch:02d}"
                         f"Pred={int(pred_idx)} "
-                        f"MinErr={float(errors_per_prompt.min()):.3e} "
-                        f"MaxErr={float(errors_per_prompt.max()):.3e} "
-                        f"MeanErr={float(errors_per_prompt.mean()):.3e}")
+                        f"MinErr={float(errors_per_prompt_batch.min()):.3e} "
+                        f"MaxErr={float(errors_per_prompt_batch.max()):.3e} "
+                        f"MeanErr={float(errors_per_prompt_batch.mean()):.3e}")
                 
                 class_errors_batch = pool_prompt_errors_to_class_errors_batch(
                     errors_per_prompt_batch, prompt_to_class, num_classes, reduce="mean"
@@ -396,7 +396,7 @@ def main():
                 print("class_errors dtype:", class_errors_batch.dtype, " device:", class_errors_batch.device)
                 print("class_errors:", class_errors_batch)
                 logit_scale = 10.0
-                logits = (-class_errors) * logit_scale      # [1,C]
+                logits = (-class_errors_batch) * logit_scale      # [1,C]
                 loss = F.cross_entropy(logits, label)
 
             if torch.isfinite(loss):
@@ -440,10 +440,9 @@ def main():
                     unet=unet, latent=lat, text_embeds=prompt_embeds,
                     scheduler=scheduler, args=eargs, latent_size=args.img_size // 8, all_noise=None
                 )
-                errors_per_prompt = torch.nan_to_num(errors_per_prompt, nan=0.0, posinf=float('inf'), neginf=0.0)
 
                 class_errors = pool_prompt_errors_to_class_errors(
-                    errors_per_prompt, prompt_to_class, num_classes, reduce="mean"
+                    errors_per_prompt.squeeze(0), prompt_to_class, num_classes, reduce="mean"
                 )
                 pred = torch.argmin(class_errors).item()
                 correct += int(pred == label.item())
