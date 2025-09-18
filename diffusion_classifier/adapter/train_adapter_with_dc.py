@@ -102,7 +102,11 @@ class ControlNetAdapterWrapper(torch.nn.Module):
 def build_sd2_1_base(dtype="float16", use_xformers=True):
     model_id = "stabilityai/stable-diffusion-2-1-base"
     scheduler = EulerDiscreteScheduler.from_pretrained(model_id, subfolder="scheduler")
-    torch_dtype = torch.float16 if dtype == "float16" else torch.float32
+    torch_dtype = torch.float32
+    if dtype == "float16":
+        torch_dtype = torch.float16
+    elif dtype == "bfloat16":
+        torch_dtype = torch.bfloat16
     pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, torch_dtype=torch_dtype)
     if use_xformers:
         try:
@@ -184,15 +188,16 @@ class PromptBank:
 
     def to_text_embeds(self, tokenizer, text_encoder, device):
         with torch.no_grad():
-            batch = tokenizer(
-                self.prompt_texts,
-                padding="max_length",
-                max_length=tokenizer.model_max_length,
-                truncation=True,
-                return_tensors="pt",
-            ).to(device)
-            embeds = text_encoder(batch.input_ids)[0]  # [P, seq, hid]
-        return embeds
+            all_embeds = []
+            for i in range(0, len(self.prompt_texts), 100):
+                batch_texts = self.prompt_texts[i:i+100]
+                batch = tokenizer(
+                    batch_texts, padding="max_length", max_length=tokenizer.model_max_length,
+                    truncation=True, return_tensors="pt"
+                ).to(device)
+                embeds = text_encoder(batch.input_ids).last_hidden_state
+                all_embeds.append(embeds)
+        return torch.cat(all_embeds, dim=0)
 
 
 # ---- Prompt-Fehler → Klassen-Fehler poolen (mean/min) ----
@@ -389,19 +394,18 @@ def main():
                         f"MinErr={float(errors_per_prompt_batch.min()):.3e} "
                         f"MaxErr={float(errors_per_prompt_batch.max()):.3e} "
                         f"MeanErr={float(errors_per_prompt_batch.mean()):.3e}")
-                
+
                 class_errors_batch = pool_prompt_errors_to_class_errors_batch(
                     errors_per_prompt_batch, prompt_to_class, num_classes, reduce="mean"
-                )  # [C]
+                ) 
                 print("class_errors dtype:", class_errors_batch.dtype, " device:", class_errors_batch.device)
                 print("class_errors:", class_errors_batch)
                 logit_scale = 10.0
-                logits = (-class_errors_batch) * logit_scale      # [1,C]
+                logits = (-class_errors_batch) * logit_scale   
                 loss = F.cross_entropy(logits, label)
 
             if torch.isfinite(loss):
                 scaler.scale(loss).backward()
-                # Gradient Clipping zur weiteren Stabilisierung
                 torch.nn.utils.clip_grad_norm_(adapter.parameters(), max_norm=1.0)
                 scaler.step(opt)
                 scaler.update()

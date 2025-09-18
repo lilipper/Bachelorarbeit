@@ -44,12 +44,12 @@ python adapter/train_adapter_with_dc.py \
   --train_csv /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/jsons/train_labels.csv \
   --val_csv   /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/jsons/test_labels.csv \
   --prompts_csv /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/prompts/thz_prompts.csv \
-  --n_samples 8 4 2 \
+  --n_samples 2 4 8 \
   --to_keep   3 2 1 \
   --epochs 200 \
   --batch_size 2 \
-  --lr 1e-3 \
-  --dtype float16 \
+  --lr 1e-4 \
+  --dtype bfloat16  \
   --use_xformers
 
 echo "=== Job beendet: $(date) ==="
