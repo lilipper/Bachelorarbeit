@@ -411,7 +411,7 @@ class ControlNet(nn.Module):
                 h = h + conditioning_scale * self.controlnet_down_blocks[cb_idx](ci1); cb_idx += 1
 
         # Middle-Block + Mid-Injektion (letzte Stufe)
-        h = self.middle_block(h)
+        h = self.middle_block(h, emb)
         cmid = match(cond_pyr[-1], h)
         h = h + conditioning_scale * self.controlnet_mid_inj(cmid)
         h = self.depth_mixer(h)

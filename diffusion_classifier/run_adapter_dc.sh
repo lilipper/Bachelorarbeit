@@ -47,7 +47,7 @@ python adapter/train_adapter_with_dc.py \
   --n_samples 2 4 8 \
   --to_keep   3 2 1 \
   --epochs 200 \
-  --batch_size 2 \
+  --batch_size 1 \
   --lr 1e-4 \
   --dtype bfloat16  \
   --use_xformers

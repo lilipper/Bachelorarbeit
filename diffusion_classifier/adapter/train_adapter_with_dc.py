@@ -22,6 +22,7 @@ import time
 from diffusion.datasets import ThzDataset
 
 
+
 hf_logging.set_verbosity_error()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -42,7 +43,7 @@ class ControlNetAdapterWrapper(torch.nn.Module):
     Nimmt Volumen [B,1,T,H,W] in [0,1] und gibt ein Bild [B,3,512,512] in [0,1] aus.
     Reduziert T vor dem 3D-Netz per AvgPool, um Speicher zu schonen.
     """
-    def __init__(self, controlnet_cfg, in_channels=2, out_size=512, target_T=512, mid_channels=8, stride_T=3):
+    def __init__(self, controlnet_cfg, in_channels=2, out_size=512, target_T=256, mid_channels=8, stride_T=3):
         super().__init__()
         self.out_size = out_size
         self.target_T = target_T
@@ -280,24 +281,24 @@ def main():
     ap.add_argument("--to_keep",   nargs="+", type=int, required=True, help="z. B. 6 3 2 1")
     ap.add_argument("--num_train_timesteps", type=int, default=1000)
     ap.add_argument("--version", type=str, default="2-1", help="Stable Diffusion Version (2-1, 2-0, etc.)", choices=("2-1", "2-0", '1-1', '1-2', '1-3', '1-4', '1-5'))
-
-    from datetime import datetime
-    from zoneinfo import ZoneInfo 
-
-    stamp = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%y%m%d_%H%M")
-
     # Training
     ap.add_argument("--epochs", type=int, default=10)
     ap.add_argument("--batch_size", type=int, default=2)
     ap.add_argument("--num_workers", type=int, default=4)
     ap.add_argument("--lr", type=float, default=1e-4)
-    ap.add_argument("--save_dir", type=str, default=f"./runs/checkpoints_adapter_{stamp}")
+    ap.add_argument("--save_dir", type=str, default=f"./runs/checkpoints_adapter")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--use_xformers", action="store_true")
     args = ap.parse_args()
 
     set_seed(args.seed)
-    os.makedirs(args.save_dir, exist_ok=True)
+    from datetime import datetime
+    from zoneinfo import ZoneInfo 
+
+    stamp = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%y%m%d_%H%M")
+    save_dir = os.path.join(args.save_dir, f"run_{stamp}")
+
+    os.makedirs(save_dir, exist_ok=True)
 
     # Stable Diffusion 2.1 base einfrieren
     vae, unet, tokenizer, text_encoder, scheduler = build_sd2_1_base(dtype=args.dtype, use_xformers=args.use_xformers)
@@ -338,7 +339,7 @@ def main():
         controlnet_cfg=controlnet_cfg,
         in_channels=2,          
         out_size=args.img_size,
-        target_T=512,           
+        target_T=256,           
         stride_T=3              
     ).to(device)
     adapter.train()
@@ -355,13 +356,13 @@ def main():
     eargs.to_keep = [P] * len(eargs.n_samples)
     eargs.n_trials = args.n_trials
     eargs.batch_size = args.batch_size
-    eargs.dtype = 'float32'
+    eargs.dtype = args.dtype
     eargs.loss = args.loss
     eargs.num_train_timesteps = args.num_train_timesteps
     eargs.version = args.version
 
     best_val_acc = -1.0
-    best_path = os.path.join(args.save_dir, "adapter_best.pt")
+    best_path = os.path.join(save_dir, "adapter_best.pt")
 
     # ---------- TRAIN ----------
     for epoch in range(1, args.epochs + 1):
@@ -384,22 +385,19 @@ def main():
                 x_in = (img * 2.0 - 1.0).to(dtype=vae.dtype)      
                 lat  = vae.encode(x_in).latent_dist.mean * 0.18215  
 
-                pred_idx, data, errors_per_prompt_batch = eval_prob_adaptive_differentiable(
-                    unet=unet, latent=lat,
-                    text_embeds=prompt_embeds, scheduler=scheduler,
-                    args=eargs, latent_size=args.img_size // 8, all_noise=None
-                )
-                print(f"[E{epoch:02d}"
-                        f"Pred={int(pred_idx)} "
-                        f"MinErr={float(errors_per_prompt_batch.min()):.3e} "
-                        f"MaxErr={float(errors_per_prompt_batch.max()):.3e} "
-                        f"MeanErr={float(errors_per_prompt_batch.mean()):.3e}")
+                batch_errors_list = []
+                for b in range(lat.size(0)):
+                    pred_idx, data, errors_per_prompt_single = eval_prob_adaptive_differentiable(
+                        unet=unet, latent=lat,
+                        text_embeds=prompt_embeds, scheduler=scheduler,
+                        args=eargs, latent_size=args.img_size // 8, all_noise=None
+                    )
+                    batch_errors_list.append(errors_per_prompt_single)
 
+                errors_per_prompt_batch = torch.stack(batch_errors_list, dim=0)
                 class_errors_batch = pool_prompt_errors_to_class_errors_batch(
                     errors_per_prompt_batch, prompt_to_class, num_classes, reduce="mean"
-                ) 
-                print("class_errors dtype:", class_errors_batch.dtype, " device:", class_errors_batch.device)
-                print("class_errors:", class_errors_batch)
+                )
                 logit_scale = 10.0
                 logits = (-class_errors_batch) * logit_scale   
                 loss = F.cross_entropy(logits, label)

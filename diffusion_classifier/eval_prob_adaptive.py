@@ -51,6 +51,9 @@ def eval_prob_adaptive(unet, latent, text_embeds, scheduler, args, latent_size=6
     if args.dtype == 'float16':
         all_noise = all_noise.half()
         scheduler.alphas_cumprod = scheduler.alphas_cumprod.half()
+    elif args.dtype == 'bfloat16':
+        all_noise = all_noise.bfloat16()
+        scheduler.alphas_cumprod = scheduler.alphas_cumprod.bfloat16()
 
     data = dict()
     t_evaluated = set()
@@ -106,7 +109,13 @@ def eval_error(unet, scheduler, latent, all_noise, ts, noise_idxs,
             noise = all_noise[noise_idxs[idx: idx + batch_size]]
             noised_latent = latent * (scheduler.alphas_cumprod[batch_ts] ** 0.5).view(-1, 1, 1, 1).to(device) + \
                             noise * ((1 - scheduler.alphas_cumprod[batch_ts]) ** 0.5).view(-1, 1, 1, 1).to(device)
-            t_input = batch_ts.to(device).half() if dtype == 'float16' else batch_ts.to(device)
+            batch_ts = batch_ts.to(device)
+            if dtype == 'bfloat16':
+                t_input = batch_ts.bfloat16()
+            elif dtype == 'float16':
+                t_input = batch_ts.half()
+            else:
+                t_input = batch_ts
             text_input = text_embeds[text_embed_idxs[idx: idx + batch_size]]
             noise_pred = unet(noised_latent, t_input, encoder_hidden_states=text_input).sample
             if loss == 'l2':
@@ -142,6 +151,9 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
     if args.dtype == 'float16':
         all_noise = all_noise.half()
         scheduler.alphas_cumprod = scheduler.alphas_cumprod.to(device).half()
+    elif args.dtype == 'bfloat16':
+        all_noise = all_noise.bfloat16()
+        scheduler.alphas_cumprod = scheduler.alphas_cumprod.to(device).bfloat16()
 
     data = dict()
     t_evaluated = set()
@@ -288,9 +300,19 @@ def eval_error_differentiable(unet, scheduler, latent, all_noise, ts, noise_idxs
         if dtype == 'float16':
             noise = noise.half()
             alphas = alphas.half()
+        elif dtype == 'bfloat16':
+            noise = noise.bfloat16()
+            alphas = alphas.bfloat16()
+            
         noised_latent = latent * (alphas ** 0.5) + noise * ((1.0 - alphas) ** 0.5)
 
-        t_input = batch_ts.half() if dtype == 'float16' else batch_ts
+        if dtype == 'bfloat16':
+            t_input = batch_ts.bfloat16()
+        elif dtype == 'float16':
+            t_input = batch_ts.half()
+        else:
+            t_input = batch_ts
+
         text_input = text_embeds[batch_text_idxs]  # shape [B, seq, hid]
 
         # Vorhersage der Störung
@@ -393,7 +415,7 @@ def main():
     parser.add_argument('--prompt_path', type=str, required=True, help='Path to csv file with prompts to use')
     parser.add_argument('--noise_path', type=str, default=None, help='Path to shared noise to use')
     parser.add_argument('--subset_path', type=str, default=None, help='Path to subset of images to evaluate')
-    parser.add_argument('--dtype', type=str, default='float16', choices=('float16', 'float32'),
+    parser.add_argument('--dtype', type=str, default='float16', choices=('float16', 'float32', 'bfloat16'),
                         help='Model data type to use')
     parser.add_argument('--interpolation', type=str, default='bicubic', help='Resize interpolation type')
     parser.add_argument('--extra', type=str, default=None, help='To append to the run folder name')
@@ -490,6 +512,8 @@ def main():
             img_input = image.to(device).unsqueeze(0)
             if args.dtype == 'float16':
                 img_input = img_input.half()
+            elif args.dtype == 'bfloat16':
+                img_input = img_input.bfloat16()
             x0 = vae.encode(img_input).latent_dist.mean
             x0 *= 0.18215
         pred_idx, pred_errors = eval_prob_adaptive(unet, x0, text_embeddings, scheduler, args, latent_size, all_noise)
