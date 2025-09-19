@@ -274,7 +274,7 @@ def main():
 
     # SD/DC-Args
     ap.add_argument("--dtype", type=str, default="float16", choices=("float16", "float32", "bfloat16"))
-    ap.add_argument("--img_size", type=int, default=512, choices=(256, 512))
+    ap.add_argument("--img_size", type=int, default=256, choices=(256, 512))
     ap.add_argument("--loss", type=str, default="l2", choices=("l1", "l2", "huber"))
     ap.add_argument("--n_trials", type=int, default=1)
     ap.add_argument("--n_samples", nargs="+", type=int, required=True, help="z. B. 8 4 2 1")
@@ -339,8 +339,8 @@ def main():
         controlnet_cfg=controlnet_cfg,
         in_channels=2,          
         out_size=args.img_size,
-        target_T=256,           
-        stride_T=3              
+        target_T=64,           
+        stride_T=4              
     ).to(device)
     adapter.train()
     opt = torch.optim.AdamW(adapter.parameters(), lr=args.lr)
