@@ -280,6 +280,7 @@ def main():
     ap.add_argument("--n_samples", nargs="+", type=int, required=True, help="z. B. 8 4 2 1")
     ap.add_argument("--to_keep",   nargs="+", type=int, required=True, help="z. B. 6 3 2 1")
     ap.add_argument("--num_train_timesteps", type=int, default=1000)
+    ap.add_argument("--logit_scale", type=int, default=50)
     ap.add_argument("--version", type=str, default="2-1", help="Stable Diffusion Version (2-1, 2-0, etc.)", choices=("2-1", "2-0", '1-1', '1-2', '1-3', '1-4', '1-5'))
     # Training
     ap.add_argument("--epochs", type=int, default=10)
@@ -376,7 +377,7 @@ def main():
             if vol.dim() == 6:  # [B,1,1,T,H,W] -> [B,1,T,H,W]
                 vol = vol.squeeze(1)
 
-            opt.zero_grad(set_to_none=True)
+            opt.zero_grad()
 
             # Autocast nur, wenn use_amp=True (sonst no-op)
             with torch.amp.autocast("cuda", dtype=torch.float16, enabled=use_amp):
@@ -388,25 +389,39 @@ def main():
                 batch_errors_list = []
                 for b in range(lat.size(0)):
                     pred_idx, data, errors_per_prompt_single = eval_prob_adaptive_differentiable(
-                        unet=unet, latent=lat,
+                        unet=unet, latent=lat[b:b+1],
                         text_embeds=prompt_embeds, scheduler=scheduler,
                         args=eargs, latent_size=args.img_size // 8, all_noise=None
                     )
+                    print(f"errors_per_prompt_single (b={b}): {errors_per_prompt_single}")
                     batch_errors_list.append(errors_per_prompt_single)
-
                 errors_per_prompt_batch = torch.stack(batch_errors_list, dim=0)
                 class_errors_batch = pool_prompt_errors_to_class_errors_batch(
                     errors_per_prompt_batch, prompt_to_class, num_classes, reduce="mean"
                 )
-                logit_scale = 10.0
-                logits = (-class_errors_batch) * logit_scale   
+                logit_scale = float(args.logit_scale)
+                logits = (-class_errors_batch) * logit_scale
                 loss = F.cross_entropy(logits, label)
+                print(f"Loss: {loss}")
 
             if torch.isfinite(loss):
                 scaler.scale(loss).backward()
-                torch.nn.utils.clip_grad_norm_(adapter.parameters(), max_norm=1.0)
+                scaler.unscale_(opt)
+
+                print("[grad] img.grad is None?", img.grad is None)
+                if img.grad is not None:
+                    print("[grad] img.grad norm:", img.grad.norm().item())
+
+                # Optional: Grad am ersten Adapter-Parameter
+                first_param = next(adapter.parameters())
+                print("[grad] first adapter param grad is None?", first_param.grad is None)
+                if first_param.grad is not None:
+                    print("[grad] first adapter param grad norm:", first_param.grad.norm().item())
+
+                torch.nn.utils.clip_grad_norm_(adapter.parameters(), max_norm=0.5)
                 scaler.step(opt)
                 scaler.update()
+                print(f" Finiter Loss ({loss.item()}) in Epoche {epoch}. Optimizer-Step ausgeführt.")
             else:
                 print(f" Nicht-finiter Loss ({loss.item()}) in Epoche {epoch}. Überspringe Optimizer-Step.")
                 continue
