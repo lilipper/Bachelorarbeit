@@ -17,86 +17,26 @@ from transformers import logging as hf_logging
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from ControlNet import ControlNet
+from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper
 import process_rdf as prdf
 import time
 from diffusion.datasets import ThzDataset
+import csv
+from collections import defaultdict
+from sklearn.model_selection import StratifiedKFold, RepeatedStratifiedKFold
 
 
 
 hf_logging.set_verbosity_error()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-
-# ========= Dienstfunktionen =========
-
+# ========= Utils =========
 def set_seed(seed: int = 42):
     import random
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-
-# ========= deine ControlNet-Klasse (Adapter) einhängen =========
-
-class ControlNetAdapterWrapper(torch.nn.Module):
-    """
-    Nimmt Volumen [B,1,T,H,W] in [0,1] und gibt ein Bild [B,3,512,512] in [0,1] aus.
-    Reduziert T vor dem 3D-Netz per AvgPool, um Speicher zu schonen.
-    """
-    def __init__(self, controlnet_cfg, in_channels=2, out_size=512, target_T=256, mid_channels=8, stride_T=3):
-        super().__init__()
-        self.out_size = out_size
-        self.target_T = target_T
-        self.in_channels = in_channels
-
-        # Lernbarer T-Downsampler: erst Feature-Anhebung, dann stride in T
-        # stride_T=3 macht aus 1400 -> ~467 (1400//3); das ist schon ~64% Speicherersparnis.
-        # Du kannst stride_T=2 setzen, wenn du konservativer (mehr Info, mehr RAM) sein willst (-> 1400->700).
-        self.downT = nn.Sequential(
-            nn.Conv3d(in_channels, mid_channels, kernel_size=(5,3,3), stride=(stride_T,1,1), padding=(2,1,1), bias=False),
-            nn.SiLU(),
-            nn.Conv3d(mid_channels, in_channels, kernel_size=1, stride=1, padding=0, bias=False)
-        )
-
-        num_downsamples = len(controlnet_cfg.get("num_channels", ())) - 1
-        downsample_factor = 2 ** num_downsamples
-        final_depth = target_T // downsample_factor
-
-        print(f"Adapter konfiguriert: Eingangstiefe -> {stride_T}x Reduktion -> {target_T} -> ControlNet-Flaschenhals-Tiefe: {final_depth}")
-
-        # Schritt 3: Aktualisiere die ControlNet-Konfiguration und instanziiere das Netz
-        # Dies stellt sicher, dass das ControlNet immer korrekt gebaut wird.
-        cfg = controlnet_cfg.copy()
-        cfg['in_channels'] = self.in_channels
-        cfg['conditioning_embedding_in_channels'] = self.in_channels
-        cfg['final_depth'] = final_depth
-
-        self.net = ControlNet(**cfg)
-
-    def forward(self, vol):  # vol: [B,1,T,H,W]
-        # 1) Lernbares Downsampling in T:
-        vol = self.downT(vol)     # [B,1,T',H,W], T' ~= T/stride_T
-
-        # (Optional) sanfte Angleichung auf ein einheitliches Ziel-T (z.B. 500)
-        # Das ist linear (ohne Extra-Parameter) und sehr günstig:
-        if self.target_T is not None and vol.shape[2] != self.target_T:
-            vol = F.interpolate(vol, size=(self.target_T, vol.shape[-2], vol.shape[-1]),
-                                mode="trilinear", align_corners=False)
-
-        # 2) Stubs fürs 3D-ControlNet (ignoriert x/t/context intern)
-        B, C, Tp, H, W = vol.shape
-        x_stub = torch.zeros((B, C, Tp, H, W), device=vol.device, dtype=vol.dtype)
-        t_stub = torch.zeros((B,), device=vol.device, dtype=torch.long)
-
-        # 3) Dein ControlNet rechnet 3D->2D
-        rgb = self.net(x_stub, t_stub, controlnet_cond=vol, conditioning_scale=1.0, context=None)  # [B,3,h,w]
-
-        # 4) Final auf out_size bringen
-        if (rgb.shape[-2], rgb.shape[-1]) != (self.out_size, self.out_size):
-            rgb = F.interpolate(rgb, size=(self.out_size, self.out_size), mode="bilinear", align_corners=False)
-
-        return torch.sigmoid(rgb)
-    
 
 # ========= SD 2.1 base laden (eingefroren) =========
 
@@ -130,6 +70,22 @@ def build_sd2_1_base(dtype="float16", use_xformers=True):
     return vae, unet, tokenizer, text_encoder, scheduler
 
 # ========= Training / Evaluation =========
+
+def read_csv_pairs(csv_path):
+    rows = []
+    with open(csv_path, newline="") as f:
+        r = csv.reader(f); header = next(r)
+        i_f = header.index("filename"); i_l = header.index("label")
+        for line in r:
+            rows.append((line[i_f], int(line[i_l])))
+    return rows  # List[(filename, label)]
+
+def write_csv_pairs(csv_path, rows):
+    os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+    with open(csv_path, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["filename","label"])
+        w.writerows(rows)
 
 def load_class_text_embeds(classes, prompts, tokenizer, text_encoder):
     with torch.no_grad():
@@ -290,9 +246,9 @@ def main():
     ap.add_argument("--save_dir", type=str, default=f"./runs/checkpoints_adapter")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--use_xformers", action="store_true")
+    ap.add_argument("--n_splits", type=int, default=10, help=">1 aktiviert K-Fold Cross-Validation, z. B. 5")
     args = ap.parse_args()
 
-    set_seed(args.seed)
     from datetime import datetime
     from zoneinfo import ZoneInfo 
 
@@ -354,7 +310,7 @@ def main():
     class EArgs: pass
     eargs = EArgs()
     eargs.n_samples = args.n_samples
-    eargs.to_keep = [P] * len(eargs.n_samples)
+    eargs.to_keep = args.to_keep
     eargs.n_trials = args.n_trials
     eargs.batch_size = args.batch_size
     eargs.dtype = args.dtype
@@ -393,7 +349,6 @@ def main():
                         text_embeds=prompt_embeds, scheduler=scheduler,
                         args=eargs, latent_size=args.img_size // 8, all_noise=None
                     )
-                    print(f"errors_per_prompt_single (b={b}): {errors_per_prompt_single}")
                     batch_errors_list.append(errors_per_prompt_single)
                 errors_per_prompt_batch = torch.stack(batch_errors_list, dim=0)
                 class_errors_batch = pool_prompt_errors_to_class_errors_batch(
@@ -491,6 +446,48 @@ def main():
         
 
     print(f"Training beendet. Bestes Checkpoint: {best_path} (val_acc={best_val_acc:.4f})")
+
+    # ---------- END-EVAL BESTES MODELL ----------
+    print("End-Eval des besten Modells...")
+    ckpt = torch.load(best_path, map_location="cpu")
+    adapter = ControlNetAdapterWrapper(
+        controlnet_cfg=ckpt["controlnet_cfg"],
+        in_channels=2,
+        out_size=ckpt["img_size"],
+        target_T=64,
+        stride_T=4
+    ).to(device)
+    adapter.load_state_dict(ckpt["adapter_state_dict"], strict=True)
+    adapter.eval()
+    total, correct = 0, 0
+    with torch.no_grad():
+        for vol, label, filename in val_loader:
+            vol   = vol.to(device)
+            label = label.to(device).long()
+            if vol.dim() == 6:
+                vol = vol.squeeze(1)
+
+            with torch.amp.autocast('cuda', dtype=torch.float16, enabled=use_amp):
+                img  = adapter(vol)                       # [1,3,512,512]
+                x_in = (img * 2.0 - 1.0).to(dtype=vae.dtype)
+                lat  = vae.encode(x_in).latent_dist.mean * 0.18215
+
+            pred_idx, data, errors_per_prompt = eval_prob_adaptive_differentiable(
+                unet=unet, latent=lat, text_embeds=prompt_embeds,
+                scheduler=scheduler, args=eargs, latent_size=args.img_size // 8, all_noise=None
+            )
+
+            class_errors = pool_prompt_errors_to_class_errors(
+                errors_per_prompt.squeeze(0), prompt_to_class, num_classes, reduce="mean"
+            )
+            pred = torch.argmin(class_errors).item()
+            correct += int(pred == label.item())
+            total   += 1
+
+        val_acc = correct / max(1, total)
+    
+    print(f"End-Eval val_acc={val_acc:.4f} (bestes Modell)")
+
 
 
 if __name__ == "__main__":
