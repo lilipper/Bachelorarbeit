@@ -11,26 +11,28 @@ from diffusion.datasets import get_target_dataset
 def build_torchvision_backbone(
     arch: str,
     num_classes: int,
-    freeze_head: bool = True,
+    freeze_head: bool = False,
+    pretrained: bool = True,
 ) -> Tuple[nn.Module, Optional[object]]:
     """
     Gibt (model, preprocess) zurück.
     """
+    arch = arch.lower()
     if arch == "resnet50":
-        weights = tvm.ResNet50_Weights.IMAGENET1K_V1
+        weights = tvm.ResNet50_Weights.IMAGENET1K_V1 if pretrained else None
         m = tvm.resnet50(weights=weights)
         m.fc = nn.Linear(m.fc.in_features, num_classes)
         preprocess = weights
 
     elif arch == "convnext_tiny":
-        weights = tvm.ConvNeXt_Tiny_Weights.IMAGENET1K_V1 
+        weights = tvm.ConvNeXt_Tiny_Weights.IMAGENET1K_V1 if pretrained else None
         m = tvm.convnext_tiny(weights=weights)
         m.classifier[-1] = nn.Linear(m.classifier[-1].in_features, num_classes)
         preprocess = weights
 
     elif arch in ("vit_b_16", "vit_b_32"):
         WeightsEnum = tvm.ViT_B_16_Weights if arch == "vit_b_16" else tvm.ViT_B_32_Weights
-        weights = WeightsEnum.IMAGENET1K_V1 
+        weights = WeightsEnum.IMAGENET1K_V1 if pretrained else None
         ctor = tvm.vit_b_16 if arch == "vit_b_16" else tvm.vit_b_32
         m = ctor(weights=weights)
         # ViT-Kopf austauschen
@@ -135,7 +137,7 @@ def train_classifier(
             x, y = x.to(device, non_blocking=True), y.to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
             with torch.amp.autocast(device_type="cuda", enabled=(device.type == "cuda")):
-                x = adapter(x) if adapter else x  # bleibt [B,3,H,W]
+                x = adapter(x) if adapter else x  
                 logits = model(x)
                 loss = criterion(logits, y)
             scaler.scale(loss).backward()

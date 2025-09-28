@@ -1,4 +1,23 @@
-import os, argparse, torch, tqdm
+import torch, tqdm
+import os, copy, time, json, argparse, random
+from pathlib import Path
+from typing import Tuple, Optional, List
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader, Subset
+from torchvision import models as tvm, transforms as T
+
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import StratifiedKFold
+
+# ==== Dein Code/Imports aus dem Projekt ====
+import process_rdf as prdf
+from diffusion.datasets import get_target_dataset  # falls du das brauchst
+
+from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper
 from diffusion.datasets import get_target_dataset
 from diffusion.models import get_sd_model
 from pipeline_classifier_with_adapter.core.io import get_transform, load_prompts_csv, load_thz_indexed
@@ -66,8 +85,8 @@ def parse_args():
 
     return p.parse_args()
 
-def main():
-    args = parse_args()
+def main(args):
+    
     torch.backends.cudnn.benchmark = True
 
     # Dataset
@@ -197,4 +216,5 @@ def main():
     print(f"Final Acc: {100*correct/max(1,total):.2f}%")
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    main(args)

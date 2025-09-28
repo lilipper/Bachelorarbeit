@@ -27,7 +27,7 @@ class ControlNetAdapterWrapper(torch.nn.Module):
         downsample_factor = 2 ** num_downsamples
         final_depth = target_T // downsample_factor
 
-        print(f"\nAdapter konfiguriert: Eingangstiefe -> {stride_T}x Reduktion -> {target_T} -> ControlNet-Flaschenhals-Tiefe: {final_depth}")
+        print(f"Adapter konfiguriert: Eingangstiefe -> {stride_T}x Reduktion -> {target_T} -> ControlNet-Flaschenhals-Tiefe: {final_depth}")
 
         # Schritt 3: Aktualisiere die ControlNet-Konfiguration und instanziiere das Netz
         # Dies stellt sicher, dass das ControlNet immer korrekt gebaut wird.

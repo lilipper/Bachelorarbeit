@@ -154,6 +154,7 @@ class ThzDataset(Dataset):
         self.data_dir = data_dir
         self.labels_df = pd.read_csv(label_csv)
         self.class_to_idx = {label: i for i, label in enumerate(sorted(self.labels_df['label'].unique()))}
+        self.num_classes = len(self.class_to_idx)
         self.file_to_class = {row.filename: self.class_to_idx[row.label] for row in self.labels_df.itertuples()}
         self.files = list(self.file_to_class.keys())
         self.is_train = is_train

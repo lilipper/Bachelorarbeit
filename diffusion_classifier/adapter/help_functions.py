@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader, Dataset
 from transformers import logging as hf_logging
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
-from ControlNet import ControlNet
+from adapter.ControlNet import ControlNet
 from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper
 import process_rdf as prdf
 import time

@@ -15,7 +15,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from transformers import logging as hf_logging
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
-from eval_prob_adaptive import eval_prob_adaptive_differentiable
+from eval_prob_adaptive import eval_prob_adaptive
 from ControlNet import ControlNet
 from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper
 import process_rdf as prdf
@@ -59,7 +59,7 @@ def train_one_epoch(train_loader, adapter, vae, unet, prompt_embeds, prompt_to_c
 
             batch_errors_list = []
             for b in range(lat.size(0)):
-                _, _, errors_per_prompt_single = eval_prob_adaptive_differentiable(
+                _, _, errors_per_prompt_single = eval_prob_adaptive(
                     unet=unet, latent=lat[b:b+1], text_embeds=prompt_embeds,
                     scheduler=scheduler, args=eargs, latent_size=img_size // 8, all_noise=None
                 )
@@ -110,7 +110,7 @@ def validate(val_loader, adapter, vae, unet, prompt_embeds, prompt_to_class, num
             x_in = (img * 2.0 - 1.0).to(dtype=vae.dtype)
             lat  = vae.encode(x_in).latent_dist.mean * 0.18215
 
-        _, _, errors_per_prompt = eval_prob_adaptive_differentiable(
+        _, _, errors_per_prompt = eval_prob_adaptive(
             unet=unet, latent=lat, text_embeds=prompt_embeds,
             scheduler=scheduler, args=eargs, latent_size=img_size // 8, all_noise=None
         )
@@ -162,15 +162,9 @@ def main():
 
     # Final Eval
     ap.add_argument("--final_eval", action="store_true", help="Bestes CV-Modell am Ende auf data_test/val_csv evaluieren")
-    
+
     args = ap.parse_args()
     set_seed(args.cv_seed)
-
-    print("Train Adapter mit RSKF")
-    print(f"Trainingsdaten: {args.data_train}  CSV: {args.train_csv}")
-    if args.final_eval:
-        print(f"Finale Eval: {args.data_test}  CSV: {args.val_csv}")
-    print(f"Prompts: {args.prompts_csv}")
 
     stamp = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%y%m%d_%H%M")
     save_dir = os.path.join(args.save_dir, f"rskf_{args.cv_splits}x{args.cv_repeats}_{stamp}")
@@ -184,7 +178,7 @@ def main():
     num_classes     = pb.num_classes
     P               = len(pb.prompt_texts)
 
-    # EArgs für eval_prob_adaptive_differentiable
+    # EArgs für eval_prob_adaptive
     class EArgs: pass
     eargs = EArgs()
     eargs.n_samples = args.n_samples
