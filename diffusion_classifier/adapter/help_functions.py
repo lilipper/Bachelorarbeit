@@ -32,8 +32,18 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # ========= SD 2.1 base laden (eingefroren) =========
 
-def build_sd2_1_base(dtype="float16", use_xformers=True):
-    model_id = "stabilityai/stable-diffusion-2-1-base"
+def build_sd2_1_base(dtype="float16", use_xformers=True, train_all=False, version="2-1",):
+    MODEL_IDS = {
+    '1-1': "CompVis/stable-diffusion-v1-1",
+    '1-2': "CompVis/stable-diffusion-v1-2",
+    '1-3': "CompVis/stable-diffusion-v1-3",
+    '1-4': "CompVis/stable-diffusion-v1-4",
+    '1-5': "runwayml/stable-diffusion-v1-5",
+    '2-0': "stabilityai/stable-diffusion-2-base",
+    '2-1': "stabilityai/stable-diffusion-2-1-base"
+    }
+    assert version in MODEL_IDS.keys()
+    model_id = MODEL_IDS[version]
     scheduler = EulerDiscreteScheduler.from_pretrained(model_id, subfolder="scheduler")
     torch_dtype = torch.float32
     if dtype == "float16":
@@ -57,8 +67,9 @@ def build_sd2_1_base(dtype="float16", use_xformers=True):
         pass
 
     # einfrieren
-    for p in list(vae.parameters()) + list(unet.parameters()) + list(text_encoder.parameters()):
-        p.requires_grad = False
+    if not train_all:
+        for p in list(vae.parameters()) + list(unet.parameters()) + list(text_encoder.parameters()):
+            p.requires_grad = False
     return vae, unet, tokenizer, text_encoder, scheduler
 
 # ========= Training / Evaluation =========

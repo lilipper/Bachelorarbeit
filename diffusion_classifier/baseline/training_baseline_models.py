@@ -258,7 +258,7 @@ def main():
                 val_loader, model, use_amp,
                 bar_desc=f"[S{split_idx:03d}] E{epoch}/{args.epochs} • val"
             )
-            tqdm.write(f"[Split {split_idx:03d}] [E{epoch:02d}] "
+            print(f"[Split {split_idx:03d}] [E{epoch:02d}] "
                        f"train_loss={train_loss:.4f}  train_acc={train_acc:.4f}  "
                        f"val_acc={val_acc:.4f}  val_loss={val_loss:.4f}")
 
@@ -289,7 +289,7 @@ def main():
                     "target_T": 64,
                     "stride_T": 4,
                 }, adapter_path)
-                tqdm.write(f"-> [Split {split_idx:03d}] neues Best-Model: {best_path}")
+                print(f"-> [Split {split_idx:03d}] neues Best-Model: {best_path}")
 
         cv_scores.append(best_val_acc)
         if best_val_acc > best_global_acc:
@@ -298,9 +298,9 @@ def main():
 
     mean_acc = float(np.mean(cv_scores)) if len(cv_scores) > 0 else float("nan")
     std_acc  = float(np.std(cv_scores, ddof=1)) if len(cv_scores) > 1 else 0.0
-    tqdm.write(f"[RSKF] splits={args.cv_splits} repeats={args.cv_repeats}  "
+    print(f"[RSKF] splits={args.cv_splits} repeats={args.cv_repeats}  "
                f"mean_val_acc={mean_acc:.4f}  std={std_acc:.4f}  einzel={cv_scores}")
-    tqdm.write(f"[RSKF] best_overall_acc={best_global_acc:.4f}  ckpt={best_global_ckpt}")
+    print(f"[RSKF] best_overall_acc={best_global_acc:.4f}  ckpt={best_global_ckpt}")
 
     # Optionale finale Evaluierung
     if args.final_eval:
@@ -324,7 +324,7 @@ def main():
 
         use_amp_final = (device=="cuda")
         final_acc, _ = validate(final_loader, model, use_amp_final, bar_desc="[FINAL] val")
-        tqdm.write(f"[FINAL] accuracy on fixed set ({args.val_csv} @ {args.data_test}): {final_acc:.4f}")
+        print(f"[FINAL] accuracy: {final_acc:.4f}")
 
 if __name__ == "__main__":
     main()
