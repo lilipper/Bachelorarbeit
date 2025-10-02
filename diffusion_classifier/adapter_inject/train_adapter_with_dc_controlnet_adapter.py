@@ -81,7 +81,7 @@ def train_one_epoch(train_loader, front, cn2d, vae, unet, prompt_embeds, prompt_
                 _, _, evec = eval_prob_adaptive_differentiable(
                     unet=unet, latent=lat[b:b+1], text_embeds=prompt_embeds,
                     scheduler=scheduler, args=eargs, latent_size=latent_size, all_noise=None
-                )  # evec: [P] (per Prompt) ODER [C] (per Klasse), je nach deiner Implementierung
+                )  
 
             evec = evec.view(-1)  # 1D
             if evec.numel() == P:

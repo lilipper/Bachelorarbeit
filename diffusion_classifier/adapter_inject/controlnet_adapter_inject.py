@@ -21,6 +21,18 @@ class ControlNet2DInjectionSession:
 
     def __enter__(self):
         # Adapter auf UNet-Device/Typ
+        self._prev_ckpt_flag = (
+            getattr(self.unet, "is_gradient_checkpointing", False)
+            or getattr(self.unet, "gradient_checkpointing", False)
+        )
+        try:
+            self.unet.disable_gradient_checkpointing()
+        except Exception:
+            try:
+                self.unet.set_gradient_checkpointing(False)
+            except Exception:
+                if hasattr(self.unet, "gradient_checkpointing"):
+                    self.unet.gradient_checkpointing = False
         self.cn2d.to(self.dev, dtype=self.dt)
 
         # Pyramide bauen (im Graph!)
@@ -35,6 +47,15 @@ class ControlNet2DInjectionSession:
             h.remove()
         self.handles.clear()
         self.cond_pyr = None
+        if self._prev_ckpt_flag:
+            try:
+                self.unet.enable_gradient_checkpointing()
+            except Exception:
+                try:
+                    self.unet.set_gradient_checkpointing(True)
+                except Exception:
+                    if hasattr(self.unet, "gradient_checkpointing"):
+                        self.unet.gradient_checkpointing = True
 
     @staticmethod
     def _resize(feat, hw):
