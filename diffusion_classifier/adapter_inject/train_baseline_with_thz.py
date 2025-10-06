@@ -189,7 +189,7 @@ def main():
     parser.add_argument("--num_classes", type=int, default=2)
 
     # Training
-    parser.add_argument("--epochs", type=int, default=20)
+    parser.add_argument("--epochs", type=int, default=60)
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--num_workers", type=int, default=4)
 
