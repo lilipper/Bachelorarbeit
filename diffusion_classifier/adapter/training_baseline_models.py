@@ -61,6 +61,16 @@ class BackboneClassifier(nn.Module):
             self.backbone = models.vit_b_16(weights=weights)
             in_feat = self.backbone.heads.head.in_features
             self.backbone.heads.head = nn.Linear(in_feat, num_classes)
+        elif backbone == "vit_b32":
+            weights = models.ViT_B_32_Weights.IMAGENET1K_V1 if pretrained else None
+            self.backbone = models.vit_b_32(weights=weights)
+            in_feat = self.backbone.heads.head.in_features
+            self.backbone.heads.head = nn.Linear(in_feat, num_classes)
+        elif backbone == "convnext_tiny":
+            weights = models.ConvNeXt_Tiny_Weights.IMAGENET1K_V1 if pretrained else None
+            self.backbone = models.convnext_tiny(weights=weights, num_classes=2)
+            in_feat = self.backbone.classifier[2].in_features
+            self.backbone.classifier[2] = nn.Linear(in_feat, num_classes)
         else:
             raise ValueError("backbone must be one of {'resnet50','vit_b16'}")
 
@@ -110,12 +120,20 @@ def train_one_epoch(train_loader, model, use_amp, opt, scaler, bar_desc=None):
 
     return running_loss / max(1, n_seen), running_acc / max(1, n_seen)
 
+def get_formatstr(n):
+    # get the format string that pads 0s to the left of a number, which is at most n
+    digits = 0
+    while n > 0:
+        digits += 1
+        n //= 10
+    return f"{{:0{digits}d}}"
+
 @torch.no_grad()
-def validate(val_loader, model, use_amp, bar_desc=None):
+def validate(val_loader, model, use_amp, bar_desc=None, final_eval: bool = False, run_folder: str = None):
     model.eval()
     total, correct, loss_sum = 0, 0, 0.0
     it = tqdm(val_loader, desc=bar_desc or "val", leave=False, ncols=0)
-    for vol, label, _ in it:
+    for i, (vol, label, _) in enumerate(it):
         vol = vol.to(device)
         if vol.dim() == 6:          # [B, 1, 2, T, H, W] -> [B, 2, T, H, W]
             vol = vol.squeeze(1)
@@ -127,6 +145,9 @@ def validate(val_loader, model, use_amp, bar_desc=None):
         correct += (logits.argmax(1) == label).sum().item()
         total += label.size(0)
         it.set_postfix(acc=f"{correct/max(1,total):.4f}")
+        if final_eval:
+            formatstr = get_formatstr(len(it) - 1)
+            torch.save(dict(logits=logits.cpu(), label=label.cpu()), os.path.join(run_folder, formatstr.format(i) + '.pt'))
     return correct / max(1, total), loss_sum / max(1, total)
 
 # ========= Main mit RSKF =========
@@ -138,7 +159,7 @@ def main():
     ap.add_argument("--train_csv",  type=str, required=True)
     ap.add_argument("--val_csv",    type=str, default="")
     # Backbone
-    ap.add_argument("--backbone", type=str, default="resnet50", choices=("resnet50","vit_b16"))
+    ap.add_argument("--backbone", type=str, default="resnet50", choices=("resnet50","vit_b16","vit_b32","convnext_tiny"))
     ap.add_argument("--img_size", type=int, default=512, choices=(256, 512))
     ap.add_argument("--pretrained", action="store_true", help="ImageNet-Pretrained Gewichte")
     ap.add_argument("--train_all", action="store_true", help="Backbone komplett finetunen (statt nur Kopf)")
@@ -323,7 +344,7 @@ def main():
                                   num_workers=2, pin_memory=True)
 
         use_amp_final = (device=="cuda")
-        final_acc, _ = validate(final_loader, model, use_amp_final, bar_desc="[FINAL] val")
+        final_acc, _ = validate(final_loader, model, use_amp_final, bar_desc="[FINAL] val", final_eval=True, run_folder=os.path.join(fold_dir, "final_eval"))
         print(f"[FINAL] accuracy: {final_acc:.4f}")
 
 if __name__ == "__main__":
