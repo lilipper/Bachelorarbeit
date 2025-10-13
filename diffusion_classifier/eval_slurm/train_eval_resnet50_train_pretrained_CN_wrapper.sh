@@ -95,7 +95,6 @@ python adapter/training_baseline_models.py \
   --epochs 60 \
   --cv_repeats 5 \
   --batch_size 2 \
-  --lr 1e-4 \
   --dtype bfloat16 \
   --train_all \
   --final_eval \

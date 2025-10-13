@@ -343,8 +343,11 @@ def main():
         final_loader = DataLoader(final_ds, batch_size=1, shuffle=False,
                                   num_workers=2, pin_memory=True)
 
+        run_folder = os.path.join(save_dir, "final_eval")
+        os.makedirs(run_folder, exist_ok=True)
+        print(f"Finale Evaluation auf Testdaten mit {len(final_ds)} Samples, Ergebnisse in {run_folder}")
         use_amp_final = (device=="cuda")
-        final_acc, _ = validate(final_loader, model, use_amp_final, bar_desc="[FINAL] val", final_eval=True, run_folder=os.path.join(fold_dir, "final_eval"))
+        final_acc, _ = validate(final_loader, model, use_amp_final, bar_desc="[FINAL] val", final_eval=True, run_folder=run_folder)
         print(f"[FINAL] accuracy: {final_acc:.4f}")
 
 if __name__ == "__main__":

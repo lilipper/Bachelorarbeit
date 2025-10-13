@@ -92,10 +92,9 @@ python adapter/training_baseline_models.py \
   --val_csv    "$LCL_INPUT/jsons/test_labels.csv"  \
   --backbone vit_b_16 \
   --pretrained \
-  --epochs 100 \
+  --epochs 60 \
   --cv_repeats 5 \
   --batch_size 2 \
-  --lr 1e-4 \
   --dtype bfloat16 \
   --train_adapter \
   --final_eval \

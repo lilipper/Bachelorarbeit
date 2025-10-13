@@ -193,7 +193,7 @@ def main():
     parser.add_argument("--train_csv", type=str, required=True)
 
     # Model
-    parser.add_argument("--backbone", type=str, choices=("resnet50", "vit_b16", "vit_b32"), required=True)
+    parser.add_argument("--backbone", type=str, choices=("resnet50", "vit_b16", "vit_b32", "convnext_tiny"), required=True)
     parser.add_argument("--pretrained", action="store_true", help="Load ImageNet-1k pretrained weights")
     parser.add_argument("--num_classes", type=int, default=2)
 

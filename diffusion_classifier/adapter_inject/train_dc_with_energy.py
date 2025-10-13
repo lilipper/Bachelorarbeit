@@ -539,8 +539,8 @@ def main():
 
     # ------------- FINAL EVAL (optional) -------------
     if args.final_eval:
-        test_csv = args.test_csv if args.test_csv is not None else args.final_val_csv
-        assert args.data_test and test_csv, "--final_eval requires --data_test and (--test_csv or --final_val_csv)"
+        test_csv = args.test_csv if args.test_csv is not None else args.val_csv
+        assert args.data_test and test_csv, "--final_eval requires --data_test and (--test_csv or --val_csv)"
         print("[FINAL] Starting final evaluation...")
         print(f"[FINAL] Loading global best checkpoint: {best_global_ckpt}")
         ckpt = torch.load(best_global_ckpt, map_location="cpu")

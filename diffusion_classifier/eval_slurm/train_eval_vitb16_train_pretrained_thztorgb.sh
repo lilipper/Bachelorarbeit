@@ -95,7 +95,6 @@ python adapter_inject/train_baseline_with_thz.py \
   --epochs 60 \
   --cv_repeats 5 \
   --batch_size 2 \
-  --lr 1e-4 \
   --dtype bfloat16 \
   --learn_front \
   --train_backbone \
