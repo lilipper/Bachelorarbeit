@@ -2,11 +2,11 @@
 #SBATCH --job-name=resnet50-train-pretrained-thztorgb
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=48:00:00
+#SBATCH --time=30:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=logs/resnet50_train_pretrained_thztorgb_%j.out
-#SBATCH --error=logs/resnet50_train_pretrained_thztorgb_%j.err
+#SBATCH --output=final_logs/resnet50_train_pretrained_thztorgb_%j.out
+#SBATCH --error=final_logs/resnet50_train_pretrained_thztorgb_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 

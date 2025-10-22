@@ -14,10 +14,8 @@ import torch.nn.functional as F
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from transformers import logging as hf_logging
-from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
+from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler, StableDiffusionControlNetPipeline, ControlNetModel
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
-from adapter.ControlNet import ControlNet
-from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper
 import process_rdf as prdf
 import time
 from diffusion.datasets import ThzDataset
@@ -54,11 +52,20 @@ def build_sd2_1_base(dtype="float16", use_xformers=True, train_all=False, versio
     if use_xformers:
         try:
             pipe.enable_xformers_memory_efficient_attention()
+            pipe.enable_model_cpu_offload()
         except Exception:
             pass
     pipe = pipe.to(device)
     vae = pipe.vae.eval()
     unet = pipe.unet.eval()
+    controlnet = ControlNetModel.from_unet(
+            unet,
+            conditioning_channels=3,
+            controlnet_conditioning_channel_order="rgb",
+            load_weights_from_unet=True
+        ).to(device).eval()
+
+    print("[CN] cond_ch:", controlnet.config.conditioning_channels) 
     tokenizer = pipe.tokenizer
     text_encoder = pipe.text_encoder.eval()
     try:
@@ -70,7 +77,7 @@ def build_sd2_1_base(dtype="float16", use_xformers=True, train_all=False, versio
     if not train_all:
         for p in list(vae.parameters()) + list(unet.parameters()) + list(text_encoder.parameters()):
             p.requires_grad = False
-    return vae, unet, tokenizer, text_encoder, scheduler
+    return vae, unet, tokenizer, text_encoder, scheduler, controlnet
 
 # ========= Training / Evaluation =========
 

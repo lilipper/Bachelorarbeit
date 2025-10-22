@@ -1,4 +1,3 @@
-# train_thz_adapter_with_classifiers_cv.py
 import os
 import argparse
 import csv
@@ -10,6 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from torch.cuda.amp import GradScaler
 
 from sklearn.model_selection import RepeatedStratifiedKFold
 from torchvision import models as tv_models  # torchvision backbones
@@ -49,6 +49,7 @@ def build_backbone(name: str, num_classes: int, pretrained: bool = True):
       - resnet50  -> ResNet50_Weights.IMAGENET1K_V1
       - vit_b16   -> ViT_B_16_Weights.IMAGENET1K_SWAG_E2E_V1
       - vit_b32   -> ViT_B_32_Weights.IMAGENET1K_V1
+      - convnext_tiny -> ConvNeXt_Tiny_Weights.IMAGENET1K_V1
     Returns: (model, expected_input_size, (mean, std))
     """
     if name == "resnet50":
@@ -77,15 +78,15 @@ def build_backbone(name: str, num_classes: int, pretrained: bool = True):
         mean, std = _stats_from_weights(weights)
         print(f"[build_backbone] Built ViT-B/32 (pretrained={pretrained}) with ImageNet mean/std: {mean}, {std}")
         return model, 224, (mean, std)
-    
+
     elif name == "convnext_tiny":
         weights = tv_models.ConvNeXt_Tiny_Weights.IMAGENET1K_V1 if pretrained else None
-        model = tv_models.convnext_tiny(weights=weights, num_classes=2)
+        model = tv_models.convnext_tiny(weights=weights)  # don't set num_classes here
         in_feat = model.classifier[2].in_features
         model.classifier[2] = nn.Linear(in_feat, num_classes)
         mean, std = _stats_from_weights(weights)
         print(f"[build_backbone] Built ConvNeXt-Tiny (pretrained={pretrained}) with ImageNet mean/std: {mean}, {std}")
-        return model, 224, (mean, std)  
+        return model, 224, (mean, std)
 
     else:
         raise ValueError(f"Unknown backbone: {name}")
@@ -99,6 +100,7 @@ def normalize_batch(x, mean, std):
 
 
 # ----------------- Train / Validate -----------------
+
 def train_one_epoch(loader, front, backbone, criterion, opt, scaler,
                     torch_dtype, use_amp, img_out_size, learn_front: bool, mean_std):
     """One training epoch with AMP and ImageNet normalization."""
@@ -186,6 +188,7 @@ def validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, mean_s
 
 
 # ----------------------- Main -----------------------
+
 def main():
     parser = argparse.ArgumentParser(description="THz-Adapter + (torchvision ResNet/ViT) Classifier with RSKF + FinalEval")
     # Data
@@ -248,12 +251,8 @@ def main():
         "float32": torch.float32,
     }[args.dtype]
     use_amp = (device == "cuda") and (args.dtype in ("float16", "bfloat16"))
+    scaler_enabled = use_amp
     print(f"[AMP] device={device}  dtype={args.dtype}  use_amp={use_amp}")
-
-    if args.dtype == "float16" and device == "cuda":
-        scaler = torch.amp.GradScaler('cuda', enabled=True)
-    else:
-        scaler = torch.amp.GradScaler('cuda', enabled=False)
 
     torch.backends.cudnn.benchmark = False
 
@@ -282,68 +281,84 @@ def main():
     cv_scores = []
     best_global_acc = -1.0
     best_global_ckpt = None
-    front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
-    backbone, expected_size, mean_std = build_backbone(
-        args.backbone, args.num_classes, pretrained=args.pretrained
-    )
-    backbone = backbone.to(device)
 
-    # Optimizer params
-    params = []
-    if args.learn_front:
-        params.append({"params": front.parameters(), "lr": args.lr_front, "weight_decay": args.wd_front})
-        print("[OPT] Front parameters will be trained.")
-    else:
-        for p in front.parameters():
-            p.requires_grad_(False)
-        front.eval()
-        print("[OPT] Front is frozen.")
+    # ----------- Train across splits -----------
+    for split_idx, (idx_tr, idx_va) in enumerate(rskf.split(all_rows, labels), start=1):
+        print(f"\n===== [SPLIT {split_idx:03d}/{total_splits}] =====")
+        fold_dir = os.path.join(save_dir, f"split_{split_idx:03d}")
+        fold_ckpt = os.path.join(fold_dir, "best.pt")
+        os.makedirs(fold_dir, exist_ok=True)
+        print(f"[IO] Fold directory: {fold_dir}")
 
-    if args.train_backbone:
-        params.append({"params": backbone.parameters(), "lr": args.lr_backbone, "weight_decay": args.wd_backbone})
-        print("[OPT] Backbone parameters will be trained.")
-    else:
-        for p in backbone.parameters():
-            p.requires_grad_(False)
-        backbone.eval()
-        print("[OPT] Backbone is frozen.")
+        # (Re)build models per fold
+        front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
+        backbone, expected_size, mean_std = build_backbone(
+            args.backbone, args.num_classes, pretrained=args.pretrained
+        )
+        backbone = backbone.to(device)
+        img_out_size = expected_size if expected_size is not None else 224
 
-    if len(params) == 0:
-        raise ValueError("Nothing to train: enable --learn_front and/or --train_backbone.")
+        # Optimizer params per fold
+        params = []
+        if args.learn_front:
+            for p in front.parameters():
+                p.requires_grad_(True)
+            params.append({"params": front.parameters(), "lr": args.lr_front, "weight_decay": args.wd_front})
+            print("[OPT] Front parameters will be trained.")
+        else:
+            for p in front.parameters():
+                p.requires_grad_(False)
+            front.eval()
+            print("[OPT] Front is frozen.")
 
-    opt = torch.optim.AdamW(params)
-    criterion = nn.CrossEntropyLoss()
+        if args.train_backbone:
+            for p in backbone.parameters():
+                p.requires_grad_(True)
+            params.append({"params": backbone.parameters(), "lr": args.lr_backbone, "weight_decay": args.wd_backbone})
+            print("[OPT] Backbone parameters will be trained.")
+        else:
+            for p in backbone.parameters():
+                p.requires_grad_(False)
+            backbone.eval()
+            print("[OPT] Backbone is frozen.")
 
-    img_out_size = expected_size if expected_size is not None else 224
-    fold_ckpt = os.path.join(fold_dir, "best.pt")
-    best_val = -1.0
+        if len(params) == 0:
+            raise ValueError("Nothing to train: enable --learn_front and/or --train_backbone.")
 
-    # Iterate splits
-    for epoch in range(1, args.epochs + 1):
-        # Train epochs        
-        for split_idx, (idx_tr, idx_va) in enumerate(rskf.split(all_rows, labels), start=1):
-            print(f"\n===== [SPLIT {split_idx:03d}/{total_splits}] =====")
-            fold_dir = os.path.join(save_dir, f"split_{split_idx:03d}")
-            os.makedirs(fold_dir, exist_ok=True)
-            print(f"[IO] Fold directory: {fold_dir}")
+        opt = torch.optim.AdamW(params)
+        criterion = nn.CrossEntropyLoss()
+        scaler = GradScaler(enabled=scaler_enabled)
 
-            train_rows = [all_rows[i] for i in idx_tr]
-            val_rows = [all_rows[i] for i in idx_va]
-            fold_train_csv = os.path.join(fold_dir, "train.csv")
-            fold_val_csv = os.path.join(fold_dir, "val.csv")
-            write_csv_pairs(fold_train_csv, train_rows)
-            write_csv_pairs(fold_val_csv, val_rows)
-            print(f"[IO] Wrote fold train CSV: {fold_train_csv} (n={len(train_rows)})")
-            print(f"[IO] Wrote fold val CSV:   {fold_val_csv} (n={len(val_rows)})")
+        # Prepare split CSVs
+        train_rows = [all_rows[i] for i in idx_tr]
+        val_rows = [all_rows[i] for i in idx_va]
+        fold_train_csv = os.path.join(fold_dir, "train.csv")
+        fold_val_csv = os.path.join(fold_dir, "val.csv")
+        write_csv_pairs(fold_train_csv, train_rows)
+        write_csv_pairs(fold_val_csv, val_rows)
+        print(f"[IO] Wrote fold train CSV: {fold_train_csv} (n={len(train_rows)})")
+        print(f"[IO] Wrote fold val CSV:   {fold_val_csv} (n={len(val_rows)})")
 
-            # Build datasets/loaders (always from data_train root)
-            train_ds = ThzDataset(args.data_train, fold_train_csv, is_train=True)
-            val_ds = ThzDataset(args.data_train, fold_val_csv, is_train=False)
-            train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                                    num_workers=args.num_workers, pin_memory=True, drop_last=True)
-            val_loader = DataLoader(val_ds, batch_size=1, shuffle=False,
-                                    num_workers=args.num_workers, pin_memory=True)
-            print(f"[DataLoader] Train batches: ~{len(train_loader)} | Val samples: {len(val_loader)}")
+        # Build datasets/loaders (always from data_train root)
+        g = torch.Generator()
+        g.manual_seed(args.cv_seed + split_idx)
+
+        train_ds = ThzDataset(args.data_train, fold_train_csv, is_train=True)
+        val_ds = ThzDataset(args.data_train, fold_val_csv, is_train=False)
+        train_loader = DataLoader(
+            train_ds, batch_size=args.batch_size, shuffle=True,
+            num_workers=args.num_workers, pin_memory=(device == "cuda"), drop_last=True, generator=g
+        )
+        val_loader = DataLoader(
+            val_ds, batch_size=1, shuffle=False,
+            num_workers=args.num_workers, pin_memory=(device == "cuda")
+        )
+        print(f"[DataLoader] Train batches: ~{len(train_loader)} | Val samples: {len(val_loader)}")
+
+        # Reset best metric per fold
+        best_val = -1.0
+
+        for epoch in range(1, args.epochs + 1):
             print(f"\n[Epoch] Split {split_idx:03d} | Epoch {epoch:02d}/{args.epochs}")
             tr_loss, tr_acc = train_one_epoch(
                 train_loader, front, backbone, criterion, opt, scaler,
@@ -437,20 +452,22 @@ def main():
         # Test loader (always from data_test)
         final_ds = ThzDataset(args.data_test, test_csv, is_train=False)
         final_loader = DataLoader(final_ds, batch_size=1, shuffle=False,
-                                  num_workers=args.num_workers, pin_memory=True)
+                                  num_workers=args.num_workers, pin_memory=(device == "cuda"))
         print(f"[FINAL] Test set: {len(final_loader)} samples | CSV={test_csv} | ROOT={args.data_test}")
 
         # AMP settings for final eval
         use_amp_final = (device == "cuda") and (ckpt["dtype"] in ("float16", "bfloat16"))
         final_dtype = torch.float16 if ckpt["dtype"] == "float16" else (torch.bfloat16 if ckpt["dtype"] == "bfloat16" else torch.float32)
         print(f"[FINAL] AMP enabled={use_amp_final} dtype={ckpt['dtype']}")
+
         def get_formatstr(n):
-            # get the format string that pads 0s to the left of a number, which is at most n
+            # get the format string that pads 0s to the left for numbers up to n
             digits = 0
             while n > 0:
                 digits += 1
                 n //= 10
             return f"{{:0{digits}d}}"
+
         # Inference
         total, correct = 0, 0
         with torch.no_grad():
@@ -471,8 +488,11 @@ def main():
 
                 correct += (preds == label).sum().item()
                 total += label.numel()
-                formatstr = get_formatstr(len(final_loader) - 1)
-                torch.save(dict(preds=preds.cpu(), label=label.cpu()), os.path.join(final_eval_path,  formatstr.format(i) + '.pt'))
+                formatstr = get_formatstr(len(final_loader))
+                torch.save(
+                    dict(preds=preds.cpu(), label=label.cpu()),
+                    os.path.join(final_eval_path,  formatstr.format(i) + '.pt')
+                )
 
                 if i % 50 == 0 or i == 1:
                     print(f"[FINAL] step={i}  running_acc={correct/max(1,total):.4f}")

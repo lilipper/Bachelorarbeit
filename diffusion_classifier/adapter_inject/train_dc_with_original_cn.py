@@ -15,6 +15,7 @@ from sklearn.model_selection import RepeatedStratifiedKFold
 from tqdm.auto import tqdm
 
 from transformers import logging as hf_logging
+import diffusers
 from diffusers import ControlNetModel
 
 # --- Your modules (must exist in your project) ---
@@ -40,57 +41,18 @@ def set_seed(seed: int = 42):
     torch.cuda.manual_seed_all(seed)
 
 
-class UnetWithControl(nn.Module):
-    """
-    Wrap a frozen SD-UNet together with a (trainable) ControlNetModel.
-    Forward injects the ControlNet residuals into the UNet (official path).
-    """
-    def __init__(self, unet, controlnet, cond_scale: float = 1.0):
-        super().__init__()
-        self.unet = unet
-        self.controlnet = controlnet
-        self.cond_scale = float(cond_scale)
-
-    def forward(self, sample, timestep, encoder_hidden_states, controlnet_cond):
-        # Run ControlNet to get residuals
-        cn_out = self.controlnet(
-            sample=sample,
-            timestep=timestep,
-            encoder_hidden_states=encoder_hidden_states,
-            controlnet_cond=controlnet_cond,
-            conditioning_scale=self.cond_scale,
-            return_dict=True,
-        )
-        # Feed UNet with additional residuals
-        unet_out = self.unet(
-            sample,
-            timestep,
-            encoder_hidden_states=encoder_hidden_states,
-            down_block_additional_residuals=cn_out.down_block_res_samples,
-            mid_block_additional_residual=cn_out.mid_block_res_sample,
-            return_dict=True,
-        )
-        return unet_out  # has .sample
-
 
 def normalize_amp_and_scaler(dtype_str: str):
-    """Return (torch_dtype, use_amp, scaler_factory) based on CLI dtype."""
-    torch_dtype = {
-        "float16": torch.float16,
-        "bfloat16": torch.bfloat16,
-        "float32": torch.float32,
-    }[dtype_str]
+    torch_dtype = {"float16": torch.float16, "bfloat16": torch.bfloat16, "float32": torch.float32}[dtype_str]
     use_amp = (device == "cuda") and (dtype_str in ("float16", "bfloat16"))
-    if dtype_str == "float16" and device == "cuda":
-        scaler = torch.cuda.amp.GradScaler(enabled=True)
-    else:
-        scaler = torch.cuda.amp.GradScaler(enabled=False)
+    # GradScaler nur für float16 sinnvoll (bfloat16 braucht keinen Scaler)
+    scaler = torch.amp.GradScaler('cuda', enabled=(use_amp and dtype_str == "float16"))
     return torch_dtype, use_amp, scaler
 
 
 # ----------------- Train / Validate -----------------
 def train_one_epoch(
-    loader, front, unet_ctrl, vae, prompt_embeds, prompt_to_class, num_classes,
+    loader, front, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
     scheduler, eargs, img_size, logit_scale, torch_dtype, use_amp, opt, scaler,
     reduce="mean"
 ):
@@ -105,8 +67,8 @@ def train_one_epoch(
         front.train()
     else:
         front.eval()
-    unet_ctrl.controlnet.train()
-    unet_ctrl.unet.eval()  # UNet stays frozen
+    controlnet.train()
+    unet.eval()  # UNet stays frozen
 
     running_loss, running_acc, seen = 0.0, 0, 0
     latent_size = img_size // 8
@@ -122,40 +84,56 @@ def train_one_epoch(
         opt.zero_grad(set_to_none=True)
 
         with torch.autocast(device_type="cuda", dtype=torch_dtype, enabled=use_amp):
-            # Front: THz volume to RGB in [0,1]
-            img_rgb = front(vol)  # [B,3,H,W]
+            img_rgb = front(vol.float())
             if img_rgb.shape[-2:] != out_hw:
                 img_rgb = F.interpolate(img_rgb, size=out_hw, mode="bilinear", align_corners=False)
+        img_rgb = img_rgb.clamp(0, 1)
 
-            # Condition for ControlNet must be in [-1,1] with unet dtype
-            cond_rgb = (img_rgb * 2.0 - 1.0).to(dtype=unet_ctrl.unet.dtype)
+        # VAE-Encode in FP32 (Autocast AUS)
+        with torch.amp.autocast('cuda', enabled=False):
+            x_in = (img_rgb * 2.0 - 1.0).to(torch.float32)
+            lat  = vae.encode(x_in).latent_dist.mean.to(torch.float32) * 0.18215
 
-            # Encode through VAE to latents (normalized with 0.18215, SD convention)
-            x_in = (img_rgb * 2.0 - 1.0).to(dtype=vae.dtype)
-            lat = vae.encode(x_in).latent_dist.mean * 0.18215  # [B,4,h,w]
+            # --- ControlNet-Kanalzahl erkennen & passende Kondition vorbereiten ---
+            try:
+                cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
+            except Exception:
+                cn_in_ch = getattr(controlnet, "in_channels", 4)  # Fallback: latent
 
-            # Wrap callable UNet -> keeps eval_prob_adaptive_differentiable API
-            class _CallableUnet(nn.Module):
-                def __init__(self, unet_ctrl_ref, cond):
-                    super().__init__()
-                    self.ref = unet_ctrl_ref
-                    self.cond = cond
-                def forward(self, sample, timestep, encoder_hidden_states):
-                    return self.ref(sample, timestep, encoder_hidden_states, controlnet_cond=self.cond)
+            latent_hw = tuple(lat.shape[-2:])
+            if cn_in_ch == 3:
+                # Pixel-ControlNet: 3ch Kondition aus RGB ([-1,1]) auf Latent-HW
+                control_cond_full = (img_rgb * 2.0 - 1.0)                 # [B,3,H,W]
+                control_cond_lat  = F.interpolate(control_cond_full, size=latent_hw,
+                                                mode="bilinear", align_corners=False)  # [B,3,h,w]
+            else:
+                # Latent-ControlNet: keine externe Kondition übergeben (Funktion nutzt nl_sel)
+                control_cond_lat = None
 
-            # --- Robust per-sample evaluation to avoid batch collapsing inside eval_* ---
+            try:
+                cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
+            except Exception:
+                cn_in_ch = getattr(controlnet, "in_channels", 4)
+
+            if cn_in_ch == 3:
+                control_cond_img = (img_rgb * 2.0 - 1.0)  # [B,3,img_size,img_size]
+            else:
+                control_cond_img = None
+
             B = lat.size(0)
             errors_list = []
             for i in range(B):
-                callable_unet_i = _CallableUnet(unet_ctrl, cond_rgb[i:i+1])
+                cond_to_pass = control_cond_img[i:i+1] if control_cond_img is not None else None
                 _, _, epp_i = eval_prob_adaptive_differentiable(
-                    unet=callable_unet_i,
-                    latent=lat[i:i+1],               # [1,4,h,w]
+                    unet=unet,
+                    latent=lat[i:i+1],
                     text_embeds=prompt_embeds,
                     scheduler=scheduler,
                     args=eargs,
                     latent_size=latent_size,
-                    all_noise=None
+                    controlnet=controlnet,
+                    all_noise=None,
+                    controlnet_cond=cond_to_pass
                 )
                 if epp_i.dim() == 1:
                     epp_i = epp_i.unsqueeze(0)      # [1, P]
@@ -172,12 +150,48 @@ def train_one_epoch(
 
         # Optimizer step (AMP-aware)
         if scaler.is_enabled():
+            # Backward mit Skalenfaktor
             scaler.scale(loss).backward()
+
+            # WICHTIG: vor dem Step unscalen, damit p.grad "echte" Werte hat
+            scaler.unscale_(opt)
+            if step % 30 == 1:
+                # ---- Grad-Logging (vor dem Step!) ----
+                for name, p in list(controlnet.named_parameters())[:3]:
+                    g = None if p.grad is None else p.grad
+                    msg = "None" if g is None else f"mean={g.abs().mean().item():.4e} max={g.abs().max().item():.4e}"
+                    print(f"[DEBUG] grad ControlNet {name}: {msg}")
+
+                if eargs.learn_front:
+                    for name, p in list(front.named_parameters())[:3]:
+                        g = None if p.grad is None else p.grad
+                        msg = "None" if g is None else f"mean={g.abs().mean().item():.4e} max={g.abs().max().item():.4e}"
+                        print(f"[DEBUG] grad Front {name}: {msg}")
+
+            # Optional: NaN/Inf Check (früh erkennen)
+            # torch.nn.utils.clip_grad_norm_(itertools.chain(*[g['params'] for g in opt.param_groups]), max_norm=1e9)
+
+            # Jetzt erst der eigentliche Optimizer-Step
             scaler.step(opt)
             scaler.update()
         else:
             loss.backward()
+
+            # ---- Grad-Logging (vor dem Step!) ----
+            for name, p in list(controlnet.named_parameters())[:3]:
+                g = None if p.grad is None else p.grad
+                msg = "None" if g is None else f"mean={g.abs().mean().item():.4e} max={g.abs().max().item():.4e}"
+                print(f"[DEBUG] grad ControlNet {name}: {msg}")
+
+            if eargs.learn_front:
+                for name, p in list(front.named_parameters())[:3]:
+                    g = None if p.grad is None else p.grad
+                    msg = "None" if g is None else f"mean={g.abs().mean().item():.4e} max={g.abs().max().item():.4e}"
+                    print(f"[DEBUG] grad Front {name}: {msg}")
+            snap_before, _ = update_ratio(controlnet, None)
             opt.step()
+            _, ratio = update_ratio(controlnet, snap_before)
+            print(f"[STAT] controlnet avg update/param = {ratio:.3e}")
 
         # Metrics
         with torch.no_grad():
@@ -189,6 +203,11 @@ def train_one_epoch(
         if step % 10 == 1:
             print(f"[train_one_epoch] step={step}  "
                   f"avg_loss={running_loss/max(1,seen):.4f}  avg_acc={running_acc/max(1,seen):.4f}")
+            with torch.no_grad():
+                # Take first parameter of ControlNet
+                for any_name, any_param in controlnet.named_parameters():
+                    print(f"[DEBUG] sample weight after step: {any_param.view(-1)[0].item():.6f}")
+                    break
 
     epoch_loss = running_loss / max(1, seen)
     epoch_acc = running_acc / max(1, seen)
@@ -198,13 +217,13 @@ def train_one_epoch(
 
 @torch.no_grad()
 def validate(
-    loader, front, unet_ctrl, vae, prompt_embeds, prompt_to_class, num_classes,
-    scheduler, eargs, img_size, torch_dtype, use_amp, reduce="mean"
+    loader, front, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
+    scheduler, eargs, img_size, torch_dtype, use_amp,  reduce="mean"
 ):
     """Validation loop mirroring the training inference flow."""
     front.eval()
-    unet_ctrl.controlnet.eval()
-    unet_ctrl.unet.eval()
+    controlnet.eval()
+    unet.eval()
 
     latent_size = img_size // 8
     out_hw = (img_size, img_size)
@@ -218,35 +237,49 @@ def validate(
         label = label.to(device).long()
 
         with torch.autocast(device_type="cuda", dtype=torch_dtype, enabled=use_amp):
-            img_rgb = front(vol)  # [B,3,H,W]
+            img_rgb = front(vol.float())  # [B,3,H,W]
             if img_rgb.shape[-2:] != out_hw:
                 img_rgb = F.interpolate(img_rgb, size=out_hw, mode="bilinear", align_corners=False)
 
-            cond_rgb = (img_rgb * 2.0 - 1.0).to(dtype=unet_ctrl.unet.dtype)
-            x_in = (img_rgb * 2.0 - 1.0).to(dtype=vae.dtype)
-            lat = vae.encode(x_in).latent_dist.mean * 0.18215  # [B,4,h,w]
+        img_rgb = img_rgb.clamp(0, 1)
 
-            class _CallableUnet(nn.Module):
-                def __init__(self, unet_ctrl_ref, cond):
-                    super().__init__()
-                    self.ref = unet_ctrl_ref
-                    self.cond = cond
-                def forward(self, sample, timestep, encoder_hidden_states):
-                    return self.ref(sample, timestep, encoder_hidden_states, controlnet_cond=self.cond)
+        with torch.amp.autocast('cuda', enabled=False):
+            x_in = (img_rgb * 2.0 - 1.0).to(torch.float32)
+            lat  = vae.encode(x_in).latent_dist.mean.to(torch.float32) * 0.18215
 
-            # As in train: per-sample robust pass
+            # --- ControlNet-Kanalzahl erkennen & passende Kondition vorbereiten ---
+            try:
+                cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
+            except Exception:
+                cn_in_ch = getattr(controlnet, "in_channels", 4)
+
+            latent_hw = tuple(lat.shape[-2:])
+            if cn_in_ch == 3:
+                control_cond_full = (img_rgb * 2.0 - 1.0)
+                control_cond_lat  = F.interpolate(control_cond_full, size=latent_hw,
+                                                mode="bilinear", align_corners=False)
+            else:
+                control_cond_lat = None
+
+            if cn_in_ch == 3:
+                control_cond_img = (img_rgb * 2.0 - 1.0)  # [B,3,img_size,img_size]
+            else:
+                control_cond_img = None
+
             B = lat.size(0)
             errors_list = []
             for i in range(B):
-                callable_unet_i = _CallableUnet(unet_ctrl, cond_rgb[i:i+1])
+                cond_to_pass = control_cond_img[i:i+1] if control_cond_img is not None else None
                 _, _, epp_i = eval_prob_adaptive_differentiable(
-                    unet=callable_unet_i,
+                    unet=unet,
                     latent=lat[i:i+1],
                     text_embeds=prompt_embeds,
                     scheduler=scheduler,
                     args=eargs,
                     latent_size=latent_size,
-                    all_noise=None
+                    controlnet=controlnet,
+                    all_noise=None,
+                    controlnet_cond=cond_to_pass
                 )
                 if epp_i.dim() == 1:
                     epp_i = epp_i.unsqueeze(0)
@@ -268,6 +301,17 @@ def validate(
     print(f"[validate] Done. val_acc={val_acc:.4f}")
     return val_acc
 
+def update_ratio(mod, last_params=None):
+    ratios = []
+    cur = {n: p.detach().clone() for n,p in mod.named_parameters() if p.requires_grad}
+    if last_params is not None:
+        for n,p in mod.named_parameters():
+            if p.requires_grad:
+                upd = (cur[n] - last_params[n])
+                num = upd.norm().item()
+                den = (cur[n].norm().item() + 1e-12)
+                ratios.append(num / den)
+    return cur, (sum(ratios)/len(ratios) if ratios else None)
 
 # ----------------------- Main -----------------------
 def main():
@@ -282,26 +326,26 @@ def main():
     # Prompts / SD / Diffusion Classifier
     ap.add_argument("--prompts_csv", type=str, required=True, help="CSV with columns: prompt,classname,classidx")
     ap.add_argument("--version", type=str, default="2-1", choices=("2-1","2-0","1-1","1-2","1-3","1-4","1-5"))
-    ap.add_argument("--dtype", type=str, default="bfloat16", choices=("float16","float32","bfloat16"))
+    ap.add_argument("--dtype", type=str, default="float32", choices=("float16","float32","bfloat16"))
     ap.add_argument("--img_size", type=int, default=256, choices=(256,512))
     ap.add_argument("--num_train_timesteps", type=int, default=1000)
     ap.add_argument("--n_trials", type=int, default=1)
     ap.add_argument("--n_samples", nargs="+", type=int, required=True)
     ap.add_argument("--to_keep",   nargs="+", type=int, required=True)
     ap.add_argument("--loss", type=str, default="l2", choices=("l1","l2","huber"))
-    ap.add_argument("--logit_scale", type=float, default=80.0)
+    ap.add_argument("--logit_scale", type=float, default=60.0)
     ap.add_argument("--use_xformers", action="store_true")
 
     # Control / Front
-    ap.add_argument("--cond_scale", type=float, default=1.0, help="conditioning_scale for ControlNet")
+    ap.add_argument("--cond_scale", type=float, default=2.0, help="conditioning_scale for ControlNet")
     ap.add_argument("--learn_front", action="store_true")
-    ap.add_argument("--lr_front", type=float, default=1e-4)
+    ap.add_argument("--lr_front", type=float, default=1e-3)
     ap.add_argument("--wd_front", type=float, default=0.0)
-    ap.add_argument("--lr_controlnet", type=float, default=5e-5)
+    ap.add_argument("--lr_controlnet", type=float, default=5e-3)
     ap.add_argument("--wd_controlnet", type=float, default=0.0)
 
     # Training
-    ap.add_argument("--epochs", type=int, default=10)
+    ap.add_argument("--epochs", type=int, default=60)
     ap.add_argument("--batch_size", type=int, default=2)
     ap.add_argument("--num_workers", type=int, default=4)
 
@@ -314,14 +358,13 @@ def main():
     ap.add_argument("--final_eval", action="store_true",
                     help="After CV: load global best and evaluate on a fixed set.")
     ap.add_argument("--data_test", type=str, default=None, help="Test root dir.")
-    ap.add_argument("--test_csv", type=str, default=None, help="CSV (path,label) for test. If empty, fall back to --final_val_csv.")
-    ap.add_argument("--final_val_csv", type=str, default=None, help="Fallback CSV for final eval if --test_csv not set.")
+    ap.add_argument("--test_csv", type=str, default=None, help="CSV (path,label) for test. If empty, fall back to --val_csv.")
+    ap.add_argument("--val_csv", type=str, default=None, help="Fallback CSV for final eval if --test_csv not set.")
 
     # IO
     ap.add_argument("--save_dir", type=str, default="./runs/checkpoints_dc_rskf")
 
     args = ap.parse_args()
-
     # Print config
     print("========== CONFIG ==========")
     for k, v in vars(args).items():
@@ -344,24 +387,18 @@ def main():
 
     # --- Load SD backbone (frozen VAE/UNet/TextEncoder, scheduler) ---
     print("[SD] Building Stable Diffusion base...")
-    vae, unet, tokenizer, text_encoder, scheduler = build_sd2_1_base(
+    vae, unet, tokenizer, text_encoder, scheduler, controlnet = build_sd2_1_base(
         dtype=args.dtype, use_xformers=args.use_xformers, train_all=False, version=args.version
     )
-    unet.eval()
+    print("diffusers version:", diffusers.__version__)
+    print("controlnet class:", controlnet.__class__.__name__)
+    print("controlnet config in/out:", getattr(controlnet, "in_channels", None), getattr(controlnet, "out_channels", None))
+    print(controlnet.config)
+    unet = unet.to(device).eval()
+    vae = vae.to(device).eval()
+    controlnet = controlnet.to(device).eval()
+    scheduler.set_timesteps(args.num_train_timesteps)
     print("[SD] Done. UNet/VAEs are frozen.")
-
-    # --- ControlNet from UNet (official) ---
-    print("[ControlNet] Creating ControlNet from UNet...")
-    controlnet = ControlNetModel.from_unet(unet)
-    controlnet = controlnet.to(device, dtype=unet.dtype)
-    try:
-        controlnet.enable_gradient_checkpointing()
-        print("[ControlNet] Enabled gradient checkpointing.")
-    except Exception:
-        print("[ControlNet] Gradient checkpointing not available.")
-
-    # --- THz->RGB front ---
-    front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
 
     # --- Prompt bank & text embeddings ---
     print(f"[Prompts] Loading prompts from: {args.prompts_csv}")
@@ -369,7 +406,7 @@ def main():
     prompt_embeds = pb.to_text_embeds(tokenizer, text_encoder, device)
     prompt_to_class = pb.prompt_to_class.to(device)
     num_classes = pb.num_classes
-    print(f"[Prompts] Loaded {len(pb.prompts)} prompts over {num_classes} classes.")
+    print(f"[Prompts] Loaded {len(pb.prompt_texts)} prompts over {num_classes} classes.")
 
     # --- EArgs for eval_prob_adaptive_differentiable ---
     class EArgs: pass
@@ -382,7 +419,8 @@ def main():
     eargs.loss = args.loss
     eargs.num_train_timesteps = args.num_train_timesteps
     eargs.version = args.version
-    eargs.learn_front = args.learn_front  # used to toggle front.train/eval
+    eargs.learn_front = args.learn_front 
+    eargs.cond_scale = args.cond_scale
 
     # --- Read all train rows and prepare RSKF ---
     print(f"[IO] Reading training pairs from: {args.train_csv}")
@@ -390,11 +428,7 @@ def main():
     labels = [y for _, y in all_rows]
     print(f"[IO] Found {len(all_rows)} samples.")
 
-    rskf = RepeatedStratifiedKFold(
-        n_splits=args.cv_splits, n_repeats=args.cv_repeats, random_state=args.cv_seed
-    )
-    total_splits = args.cv_splits * args.cv_repeats
-    print(f"[CV] RSKF configured: splits={args.cv_splits}, repeats={args.cv_repeats}, total={total_splits}")
+    
 
     summary_rows = []
     cv_scores = []
@@ -402,9 +436,16 @@ def main():
     best_global_ckpt = None
 
     # Iterate RSKF folds
+    print("[Train] Starting epochs...")
+    rskf = RepeatedStratifiedKFold(
+    n_splits=args.cv_splits, n_repeats=args.cv_repeats, random_state=args.cv_seed
+    )
+    total_splits = args.cv_splits * args.cv_repeats
+    print(f"[CV] RSKF configured: splits={args.cv_splits}, repeats={args.cv_repeats}, total={total_splits}")
     for split_idx, (idx_tr, idx_va) in enumerate(rskf.split(all_rows, labels), start=1):
         print(f"\n===== [SPLIT {split_idx:03d}/{total_splits}] =====")
         fold_dir = os.path.join(save_dir, f"split_{split_idx:03d}")
+        fold_ckpt = os.path.join(fold_dir, "best_dc.pt")
         os.makedirs(fold_dir, exist_ok=True)
         print(f"[IO] Fold directory: {fold_dir}")
 
@@ -421,14 +462,19 @@ def main():
         train_ds = ThzDataset(args.data_train, fold_train_csv, is_train=True)
         val_ds = ThzDataset(root_eval, fold_val_csv, is_train=False)
         train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                                  num_workers=args.num_workers, pin_memory=True, drop_last=True)
+                                num_workers=args.num_workers, pin_memory=True, drop_last=True)
         val_loader = DataLoader(val_ds, batch_size=1, shuffle=False,
                                 num_workers=args.num_workers, pin_memory=True)
         print(f"[Data] Train batches: ~{len(train_loader)} | Val samples: {len(val_loader)}")
 
-        # Fresh ControlNet wrapper per fold (ControlNet is trainable)
-        unet_ctrl = UnetWithControl(unet=unet, controlnet=controlnet, cond_scale=args.cond_scale).to(device)
+        try:
+            controlnet.enable_gradient_checkpointing()
+            print("[ControlNet] Enabled gradient checkpointing.")
+        except Exception:
+            print("[ControlNet] Gradient checkpointing not available.")
 
+        # --- THz->RGB front ---
+        front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device, dtype=torch.float32)
         # Optimizer: train ControlNet (+ optionally front)
         param_groups = []
         if args.learn_front:
@@ -445,20 +491,27 @@ def main():
 
         opt = torch.optim.AdamW(param_groups)
 
+        print("[DEBUG] Trainable parameter groups:")
+        for name, p in list(front.named_parameters())[:3]:
+            print(" Front:", name, p.requires_grad)
+        for name, p in list(controlnet.named_parameters())[:3]:
+            print(" ControlNet:", name, p.requires_grad)
+        for name, p in list(unet.named_parameters())[:3]:
+            print(" UNet:", name, p.requires_grad)
+
         # Fold training
         best_val = -1.0
-        fold_ckpt = os.path.join(fold_dir, "best_dc.pt")
-        print("[Train] Starting epochs...")
+        
         for epoch in range(1, args.epochs + 1):
             print(f"\n[Epoch] Split {split_idx:03d} | Epoch {epoch:02d}/{args.epochs}")
             tr_loss, tr_acc = train_one_epoch(
-                train_loader, front, unet_ctrl, vae,
+                train_loader, front, unet, controlnet, vae,
                 prompt_embeds, prompt_to_class, num_classes,
                 scheduler, eargs, args.img_size, args.logit_scale,
                 torch_dtype, use_amp, opt, scaler, reduce="mean"
             )
             val_acc = validate(
-                val_loader, front, unet_ctrl, vae,
+                val_loader, front, unet, controlnet, vae,
                 prompt_embeds, prompt_to_class, num_classes,
                 scheduler, eargs, args.img_size, torch_dtype, use_amp, reduce="mean"
             )
@@ -518,8 +571,8 @@ def main():
 
     # ------------- FINAL EVAL (optional) -------------
     if args.final_eval:
-        test_csv = args.test_csv if args.test_csv is not None else args.final_val_csv
-        assert args.data_test and test_csv, "--final_eval requires --data_test and (--test_csv or --final_val_csv)"
+        test_csv = args.test_csv if args.test_csv is not None else args.val_csv
+        assert args.data_test and test_csv, "--final_eval requires --data_test and (--test_csv or --val_csv)"
         print("[FINAL] Starting final evaluation...")
         print(f"[FINAL] Loading global best checkpoint: {best_global_ckpt}")
         ckpt = torch.load(best_global_ckpt, map_location="cpu")
@@ -527,23 +580,15 @@ def main():
 
         # Rebuild SD base (frozen) exactly as during training
         print("[FINAL] Rebuilding SD base...")
-        vae_f, unet_f, tokenizer_f, text_encoder_f, scheduler_f = build_sd2_1_base(
+        vae_f, unet_f, tokenizer_f, text_encoder_f, scheduler_f, controlnet_f = build_sd2_1_base(
             dtype=ckpt["dtype"], use_xformers=False, train_all=False, version=ckpt["version"]
         )
         unet_f.eval()
-
-        # Rebuild ControlNet and THz front, load weights
-        print("[FINAL] Rebuilding ControlNet + Front and loading weights...")
-        controlnet_f = ControlNetModel.from_unet(unet_f).to(device, dtype=unet_f.dtype)
-        controlnet_f.load_state_dict(ckpt["controlnet_state_dict"], strict=False)
-        controlnet_f.eval()
 
         front_f = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
         front_f.load_state_dict(ckpt["front_state_dict"], strict=False)
         front_f.eval()
 
-        # Wrap UNet+Control
-        unet_ctrl_f = UnetWithControl(unet=unet_f, controlnet=controlnet_f, cond_scale=ckpt.get("cond_scale", 1.0)).to(device)
 
         # Load prompts again to get embeddings (they are not stored in the ckpt)
         print(f"[FINAL] Reloading prompts from: {ckpt['prompts_csv']}")
@@ -581,7 +626,7 @@ def main():
 
         # Run validate() on the fixed test set
         final_acc = validate(
-            final_loader, front_f, unet_ctrl_f, vae_f,
+            final_loader, front_f, unet_f, controlnet_f, vae_f,
             prompt_embeds_f, prompt_to_class_f, num_classes_f,
             scheduler_f, eargs_f, ckpt["img_size"],
             torch_dtype=final_torch_dtype, use_amp=use_amp_final, reduce="mean"

@@ -130,7 +130,7 @@ def eval_error(unet, scheduler, latent, all_noise, ts, noise_idxs,
             idx += len(batch_ts)
     return pred_errors
 
-def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args, latent_size=64, all_noise=None):
+def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args, latent_size=64, controlnet=None, all_noise=None, controlnet_cond=None):
     """
     Wie dein eval_prob_adaptive, aber:
       - verwendet eval_error_differentiable (keine no_grad/detach/cpu)
@@ -148,13 +148,18 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
 
     if all_noise is None:
         all_noise = torch.randn((max_n_samples * args.n_trials, 4, latent_size, latent_size), device=device)
+
     if args.dtype == 'float16':
         all_noise = all_noise.half()
         scheduler.alphas_cumprod = scheduler.alphas_cumprod.to(device).half()
     elif args.dtype == 'bfloat16':
         all_noise = all_noise.bfloat16()
         scheduler.alphas_cumprod = scheduler.alphas_cumprod.to(device).bfloat16()
+    else:
+        scheduler.alphas_cumprod = scheduler.alphas_cumprod.to(device).float()
 
+    if not hasattr(scheduler, "timesteps") or scheduler.timesteps is None:
+        scheduler.set_timesteps(int(T))
     data = dict()
     t_evaluated = set()
     remaining_prmpt_idxs = list(range(len(text_embeds)))
@@ -202,8 +207,9 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
         unet, scheduler, latent, all_noise,
         ts=global_ts, noise_idxs=global_noise_idxs,
         text_embeds=text_embeds, text_embed_idxs=global_text_embed_idxs,
-        batch_size=args.batch_size, dtype=args.dtype, loss=args.loss
-    )  # [L]
+        batch_size=args.batch_size, dtype=args.dtype, loss=args.loss, controlnet=controlnet,
+        conditioning_scale=args.cond_scale, controlnet_cond=controlnet_cond
+    ) 
 
     # Jetzt die Round-Logik „matchen“ (ohne detach)
     # und dabei data befüllen wie im Original
@@ -270,71 +276,111 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
     return pred_idx, data, errors_per_class
 
 
-def eval_error_differentiable(unet, scheduler, latent, all_noise, ts, noise_idxs,
-                              text_embeds, text_embed_idxs, batch_size=32, dtype='float32', loss='l2'):
+def eval_error_differentiable(
+    unet, scheduler, latent, all_noise, ts, noise_idxs,
+    text_embeds, text_embed_idxs, batch_size=32, dtype='float32', loss='l2',
+    controlnet=None, conditioning_scale: float = 1.0, controlnet_cond=None
+):
     """
-    Wie eval_error(...), nur OHNE inference_mode, OHNE detach/cpu.
-    Gibt einen 1D-Tensor auf dem selben device mit Gradients zurück.
-    Achtung: rechenintensiv – für Training besser kleinere Batches / weniger ts.
+    Differenzierbare Fehlerberechnung:
+      - scheduler.scale_model_input(...) für ControlNet & UNet
+      - robustes Handling für Pixel-(3ch) vs. Latent-(4ch) ControlNet
+      - timesteps als long, ggf. pro-unique-t Schritt mit skalierter Eingabe
     """
     assert len(ts) == len(noise_idxs) == len(text_embed_idxs)
     device = latent.device
-    # wichtig: auf dem gleichen Device & dtype bleiben
     pred_errors = []
 
-    idx = 0
-    # keine tqdm hier, damit es im Training einfacher ist
-    while idx < len(ts):
-        # Batch-Chunk
-        end = min(idx + batch_size, len(ts))
-        batch_ts_list = ts[idx:end]
-        batch_noise_idxs = noise_idxs[idx:end]
-        batch_text_idxs = text_embed_idxs[idx:end]
+    # Timesteps sicher initialisieren (für scale_model_input/index_for_timestep)
+    if not hasattr(scheduler, "timesteps") or scheduler.timesteps is None:
+        scheduler.set_timesteps(int(max(ts) + 1))
 
-        # -> Tensoren auf device (ohne detach)
-        batch_ts = torch.tensor(batch_ts_list, device=device, dtype=torch.long)
-        noise = all_noise[batch_noise_idxs]  # [B,4,latent_size,latent_size]
+    # erwartete Eingangs-Kanalzahl des ControlNet bestimmen (3 == Pixel, 4 == Latent)
+    cond_ch = None       # z.B. 3 (Pixel-CN)
+    sample_in_ch = None  # z.B. 4 (Latent-Sample)
+    if controlnet is not None:
+        try:
+            cond_ch = controlnet.config.conditioning_channels
+        except Exception:
+            cond_ch = 3
+        try:
+            sample_in_ch = controlnet.config.in_channels
+        except Exception:
+            sample_in_ch = 4
 
-        # noised_latent = sqrt(a) * latent + sqrt(1-a) * noise
+    idx_global = 0
+    total = len(ts)
+    while idx_global < total:
+        end = min(idx_global + batch_size, total)
+        batch_ts_list    = ts[idx_global:end]
+        batch_noise_idxs = noise_idxs[idx_global:end]
+        batch_text_idxs  = text_embed_idxs[idx_global:end]
+
+        # Timesteps (long), Noise & Alphas
+        batch_ts = torch.tensor(batch_ts_list, device=device, dtype=torch.long)   # [B]
+        noise    = all_noise[batch_noise_idxs]                                     # [B,4,h,w]
+
         alphas = scheduler.alphas_cumprod.to(device)[batch_ts].view(-1, 1, 1, 1)
         if dtype == 'float16':
-            noise = noise.half()
-            alphas = alphas.half()
+            noise  = noise.half();   alphas = alphas.half()
         elif dtype == 'bfloat16':
-            noise = noise.bfloat16()
-            alphas = alphas.bfloat16()
-            
-        noised_latent = latent * (alphas ** 0.5) + noise * ((1.0 - alphas) ** 0.5)
-
-        if dtype == 'bfloat16':
-            t_input = batch_ts.bfloat16()
-        elif dtype == 'float16':
-            t_input = batch_ts.half()
+            noise  = noise.bfloat16(); alphas = alphas.bfloat16()
         else:
-            t_input = batch_ts
+            noise  = noise.float();  alphas = alphas.float()
 
-        text_input = text_embeds[batch_text_idxs]  # shape [B, seq, hid]
+        noised_latent = latent * (alphas ** 0.5) + noise * ((1.0 - alphas) ** 0.5)  # [B,4,h,w]
+        text_input    = text_embeds[batch_text_idxs]                                 # [B, seq, hid]
 
-        # Vorhersage der Störung
-        noise_pred = unet(noised_latent, t_input, encoder_hidden_states=text_input).sample  # [B,4,*,*]
+        B = noised_latent.size(0)
+        errors_B = torch.empty(B, device=device, dtype=noise.dtype)
 
-        # Fehler nach deiner Losswahl
-        if loss == 'l2':
-            error = F.mse_loss(noise, noise_pred, reduction='none').mean(dim=(1, 2, 3))   # [B]
-        elif loss == 'l1':
-            error = F.l1_loss(noise, noise_pred, reduction='none').mean(dim=(1, 2, 3))    # [B]
-        elif loss == 'huber':
-            error = F.huber_loss(noise, noise_pred, reduction='none').mean(dim=(1, 2, 3)) # [B]
-        else:
-            raise NotImplementedError
+        # Pro unique timestep skalieren & vorwärts
+        unique_ts = torch.unique(batch_ts)
+        for t_val in unique_ts:
+            sel   = (batch_ts == t_val)
+            idxs  = sel.nonzero(as_tuple=True)[0]
 
-        pred_errors.append(error)  # NICHT detach/cpu!
+            nl_sel    = noised_latent[idxs]     # [b_t,4,h,w]
+            noise_sel = noise[idxs]             # [b_t,4,h,w]
+            txt_sel   = text_input[idxs]        # [b_t,seq,hid]
 
-        idx = end
+            # UNet-Input skalieren (ein Skalar-t)
+            lat_in  = scheduler.scale_model_input(nl_sel, t_val)
+            t_batch = torch.full((nl_sel.size(0),), int(t_val.item()), device=device, dtype=batch_ts.dtype)
 
-    # Konkatenieren auf dem Device, Gradients bleiben erhalten
-    pred_errors = torch.cat(pred_errors, dim=0)  # [len(ts)]
-    return pred_errors
+            if controlnet is None:
+                noise_pred_sel = unet(lat_in, t_batch, encoder_hidden_states=txt_sel).sample
+            else:
+                down_res, mid_res = controlnet(
+                    lat_in, t_batch,
+                    encoder_hidden_states=txt_sel,
+                    controlnet_cond=controlnet_cond,
+                    conditioning_scale=conditioning_scale,
+                    return_dict=False,
+                )
+                noise_pred_sel = unet(
+                    lat_in, t_batch, encoder_hidden_states=txt_sel,
+                    down_block_additional_residuals=down_res,
+                    mid_block_additional_residual=mid_res
+                ).sample
+
+            # Fehler pro Sample
+            if loss == 'l2':
+                err_sel = F.mse_loss(noise_sel, noise_pred_sel, reduction='none').mean(dim=(1, 2, 3))
+            elif loss == 'l1':
+                err_sel = F.l1_loss(noise_sel, noise_pred_sel, reduction='none').mean(dim=(1, 2, 3))
+            elif loss == 'huber':
+                err_sel = F.huber_loss(noise_sel, noise_pred_sel, reduction='none').mean(dim=(1, 2, 3))
+            else:
+                raise NotImplementedError
+
+            errors_B[idxs] = err_sel
+
+        pred_errors.append(errors_B)
+        idx_global = end
+
+    return torch.cat(pred_errors, dim=0)
+
 
 def group_errors_per_prompt_idx(ts, text_embed_idxs, pred_errors, remaining_prmpt_idxs):
     """
