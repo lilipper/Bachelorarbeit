@@ -93,6 +93,7 @@ python adapter_multichannel/train_dc_with_original_cn_multichannel.py \
   --n_samples 8 4 2 \
   --to_keep   3 2 1 \
   --cv_splits 3 \
+  --epochs 100 \
   --use_xformers \
   --learn_adapter \
   --final_eval

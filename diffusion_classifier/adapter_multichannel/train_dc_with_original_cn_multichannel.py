@@ -597,7 +597,6 @@ def main():
         eargs_f.num_train_timesteps = ckpt["num_train_timesteps"]
         eargs_f.version   = ckpt["version"]
         eargs_f.learn_adapter = False
-        eargs_f.lr_adapter
 
         # Run validate() on the fixed test set
         final_acc = validate(

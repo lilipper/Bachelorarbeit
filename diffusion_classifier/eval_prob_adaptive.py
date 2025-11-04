@@ -271,7 +271,8 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
 
     # Zusätzlich: Differenzierbare Fehler über ALLE Klassen (für Training)
     all_prompt_indices = list(range(len(text_embeds)))
-    errors_per_class = _mean_error_per_prompt(data, all_prompt_indices)  # [C], differentiable
+    errors_per_prompt = _mean_error_per_prompt(data, all_prompt_indices)  # [P], differentiable
+    errors_per_class = _mean_error_per_class(data, errors_per_prompt)  # [C], differentiable
 
     return pred_idx, data, errors_per_class
 
@@ -428,6 +429,21 @@ def _group_errors_by_prompt(ts, text_embed_idxs, pred_errors):
             'pred_errors': pred_errors[mask]        # [k]
         }
     return data
+
+
+def _mean_error_per_class(data, class_to_prompts, fill_value=float('inf')):
+    device = next(iter(data.values()))['pred_errors'].device if len(data) > 0 else torch.device('cpu')
+    class_ids = sorted(class_to_prompts.keys())
+    errs = []
+    for cid in class_ids:
+        pis = class_to_prompts[cid]
+        vals = [data[pi]['pred_errors'].mean()
+                for pi in pis if pi in data and 'pred_errors' in data[pi]]
+        if len(vals) == 0:
+            errs.append(torch.tensor(fill_value, device=device))
+        else:
+            errs.append(torch.stack(vals).mean())
+    return torch.stack(errs, dim=0)
 
 
 def _mean_error_per_prompt(data, prompt_indices):
