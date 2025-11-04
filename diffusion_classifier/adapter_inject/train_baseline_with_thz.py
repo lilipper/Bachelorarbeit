@@ -68,7 +68,7 @@ def build_backbone(name: str, num_classes: int, pretrained: bool = True):
         model.heads.head = nn.Linear(in_feat, num_classes)
         mean, std = _stats_from_weights(weights)
         print(f"[build_backbone] Built ViT-B/16 (pretrained={pretrained}) with ImageNet mean/std: {mean}, {std}")
-        return model, 224, (mean, std)
+        return model, 384, (mean, std)
 
     elif name == "vit_b32":
         weights = tv_models.ViT_B_32_Weights.IMAGENET1K_V1 if pretrained else None

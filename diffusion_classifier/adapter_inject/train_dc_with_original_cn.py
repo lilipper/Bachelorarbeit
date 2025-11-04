@@ -100,16 +100,6 @@ def train_one_epoch(
             except Exception:
                 cn_in_ch = getattr(controlnet, "in_channels", 4)  # Fallback: latent
 
-            latent_hw = tuple(lat.shape[-2:])
-            if cn_in_ch == 3:
-                # Pixel-ControlNet: 3ch Kondition aus RGB ([-1,1]) auf Latent-HW
-                control_cond_full = (img_rgb * 2.0 - 1.0)                 # [B,3,H,W]
-                control_cond_lat  = F.interpolate(control_cond_full, size=latent_hw,
-                                                mode="bilinear", align_corners=False)  # [B,3,h,w]
-            else:
-                # Latent-ControlNet: keine externe Kondition übergeben (Funktion nutzt nl_sel)
-                control_cond_lat = None
-
             try:
                 cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
             except Exception:
@@ -252,14 +242,6 @@ def validate(
                 cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
             except Exception:
                 cn_in_ch = getattr(controlnet, "in_channels", 4)
-
-            latent_hw = tuple(lat.shape[-2:])
-            if cn_in_ch == 3:
-                control_cond_full = (img_rgb * 2.0 - 1.0)
-                control_cond_lat  = F.interpolate(control_cond_full, size=latent_hw,
-                                                mode="bilinear", align_corners=False)
-            else:
-                control_cond_lat = None
 
             if cn_in_ch == 3:
                 control_cond_img = (img_rgb * 2.0 - 1.0)  # [B,3,img_size,img_size]
@@ -588,6 +570,9 @@ def main():
         front_f = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
         front_f.load_state_dict(ckpt["front_state_dict"], strict=False)
         front_f.eval()
+
+        controlnet_f.load_state_dict(ckpt["controlnet_state_dict"], strict=False)
+        controlnet_f.eval()
 
 
         # Load prompts again to get embeddings (they are not stored in the ckpt)

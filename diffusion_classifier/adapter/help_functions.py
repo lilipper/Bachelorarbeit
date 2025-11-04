@@ -52,7 +52,6 @@ def build_sd2_1_base(dtype="float16", use_xformers=True, train_all=False, versio
     if use_xformers:
         try:
             pipe.enable_xformers_memory_efficient_attention()
-            pipe.enable_model_cpu_offload()
         except Exception:
             pass
     pipe = pipe.to(device)

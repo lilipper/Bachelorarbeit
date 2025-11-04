@@ -168,30 +168,16 @@ class ThzDataset(Dataset):
         filepath = os.path.join(self.data_dir, filename)
         label = int(self.file_to_class[filename])
 
-        device = "cpu"  # Laden auf CPU, optional später im Loader auf GPU
-
-        # 1) Komplettes Volumen laden
+        device = "cpu"
         complex_raw_data, parameters = prdf.read_mat(filepath, device=device)
-
-        # 2) Signalverarbeitung
         T = int(parameters["NF"])
-        processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, T, device=device)  # [T,H,W], complex
-
-        # 3) Betrag² / max → normiert auf [0,1]
+        processed_data, max_val_abs = prdf.process_complex_data(complex_raw_data, T, device=device)  
         vol = torch.stack([processed_data.real, processed_data.imag], dim=0)
-        vol = vol / (max_val_abs + 1e-12)   # [T,H,W], float32
-
-        # 4) Flip entlang Höhe (dim=1) – entspricht torch.flipud
-        vol = torch.flip(vol, dims=[1])     # [T,H,W]
-
-        # 5) In Form [B,C,T,H,W] bringen
-        vol = vol.unsqueeze(0).contiguous().float()  # [1,1,T,H,W]
-
-        # 6) Optional weitere Transforms anwenden (z. B. Normierung, Augmentation)
+        vol = vol / (max_val_abs + 1e-12)
+        vol = torch.flip(vol, dims=[1])  
+        vol = vol.unsqueeze(0).contiguous().float() 
         if self.transform:
             vol = self.transform(vol)
-
-
         return vol, label, filename
 
 class ImageNetA(torch.utils.data.Dataset):

@@ -2,7 +2,7 @@
 #SBATCH --job-name=vit_b_16-train-pretrained-thztorgb
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=30:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
 #SBATCH --output=final_logs/vit_b_16_train_pretrained_thztorgb_%j.out
@@ -90,7 +90,7 @@ python adapter_inject/train_baseline_with_thz.py \
   --data_test  "$LCL_INPUT/test"  \
   --train_csv  "$LCL_INPUT/jsons/train_labels.csv" \
   --val_csv    "$LCL_INPUT/jsons/test_labels.csv"  \
-  --backbone vit_b_16 \
+  --backbone vit_b16 \
   --pretrained \
   --epochs 60 \
   --cv_repeats 5 \

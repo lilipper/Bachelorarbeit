@@ -2,7 +2,7 @@
 #SBATCH --job-name=train-dc-with-original-cn
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=36:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
 #SBATCH --output=final_logs/train_dc_with_original_cn_%j.out
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/outputs"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="baseline_extreme_${SLURM_JOB_ID}"
+RUN_NAME="train_dc_with_original_cn_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)

@@ -5,8 +5,8 @@
 #SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=logs/convnext_tiny_pretrained_cn_wrapper_%j.out
-#SBATCH --error=logs/convnext_tiny_pretrained_cn_wrapper_%j.err
+#SBATCH --output=final_logs/convnext_tiny_pretrained_cn_wrapper_%j.out
+#SBATCH --error=final_logs/convnext_tiny_pretrained_cn_wrapper_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -85,7 +85,7 @@ PY
 
 ########## 🚀 Training – liest/schreibt NUR auf lokaler SSD
 # WICHTIG: Pfade auf $LCL_INPUT und $LCL_RESULTS umbiegen
-python adapter/training_baseline_models.py \
+python adapter_multichannel/train_baseline_cn_adapter.py \
   --data_train "$LCL_INPUT/train" \
   --data_test  "$LCL_INPUT/test"  \
   --train_csv  "$LCL_INPUT/jsons/train_labels.csv" \
@@ -96,7 +96,8 @@ python adapter/training_baseline_models.py \
   --cv_repeats 5 \
   --batch_size 2 \
   --dtype bfloat16 \
-  --train_adapter \
+  --learn_front \
+  --train_backbone \
   --final_eval \
   --save_dir "$LCL_RESULTS"
 

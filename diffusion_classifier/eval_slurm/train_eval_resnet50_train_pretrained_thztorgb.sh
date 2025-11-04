@@ -2,7 +2,7 @@
 #SBATCH --job-name=resnet50-train-pretrained-thztorgb
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=30:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
 #SBATCH --output=final_logs/resnet50_train_pretrained_thztorgb_%j.out
