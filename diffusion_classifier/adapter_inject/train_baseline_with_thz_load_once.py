@@ -9,28 +9,19 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from torch.cuda.amp import GradScaler
 
 from sklearn.model_selection import RepeatedStratifiedKFold
 from torchvision import models as tv_models  # torchvision backbones
 
 # Your modules
 from diffusion.datasets import ThzDataset
-from adapter_inject.thz_front_rgb_head import THzToRGBHead
-from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper
+from thz_front_rgb_head import THzToRGBHead
 from adapter.help_functions import read_csv_pairs, write_csv_pairs
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-controlnet_cfg = dict(
-            spatial_dims=3,
-            num_res_blocks=(2, 2, 2, 2),
-            num_channels=(32, 64, 64, 64),
-            attention_levels=(False, False, False, False),
-            conditioning_embedding_in_channels=2,
-            conditioning_embedding_num_channels=(32, 64, 64, 64),
-            with_conditioning=False,
-        )
 
 # --------------------- Utilities ---------------------
 def set_seed(seed: int = 42):
@@ -106,6 +97,7 @@ def normalize_batch(x, mean, std):
     mean_t = x.new_tensor(mean).view(1, 3, 1, 1)
     std_t = x.new_tensor(std).view(1, 3, 1, 1)
     return (x - mean_t) / (std_t + 1e-6)
+
 
 # ----------------- Train / Validate -----------------
 
@@ -290,6 +282,15 @@ def main():
     best_global_acc = -1.0
     best_global_ckpt = None
 
+    # (Re)build models per fold
+    front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
+    backbone, expected_size, mean_std = build_backbone(
+        args.backbone, args.num_classes, pretrained=args.pretrained
+    )
+    backbone = backbone.to(device)
+    img_out_size = expected_size if expected_size is not None else 224
+
+
     # ----------- Train across splits -----------
     for split_idx, (idx_tr, idx_va) in enumerate(rskf.split(all_rows, labels), start=1):
         print(f"\n===== [SPLIT {split_idx:03d}/{total_splits}] =====")
@@ -297,22 +298,8 @@ def main():
         fold_ckpt = os.path.join(fold_dir, "best.pt")
         os.makedirs(fold_dir, exist_ok=True)
         print(f"[IO] Fold directory: {fold_dir}")
-        backbone, expected_size, mean_std = build_backbone(
-                    args.backbone, args.num_classes, pretrained=args.pretrained
-                )
-        # (Re)build models per fold
-        front = ControlNetAdapterWrapper(
-            controlnet_cfg=controlnet_cfg,
-            in_channels=2,
-            out_size=expected_size,
-            target_T=64,
-            stride_T=4
-        ).to(device)
-        
-        
-        backbone = backbone.to(device)
-        img_out_size = expected_size if expected_size is not None else 224
 
+        
         # Optimizer params per fold
         params = []
         if args.learn_front:
@@ -342,7 +329,7 @@ def main():
 
         opt = torch.optim.AdamW(params)
         criterion = nn.CrossEntropyLoss()
-        scaler = torch.amp.GradScaler('cuda', enabled=scaler_enabled)
+        scaler = GradScaler(enabled=scaler_enabled)
 
         # Prepare split CSVs
         train_rows = [all_rows[i] for i in idx_tr]
@@ -447,13 +434,7 @@ def main():
         print(f"[FINAL] Global best val_acc (from CV): {ckpt.get('best_val_acc', 'N/A')}")
 
         # Rebuild front/backbone and load state_dicts
-        front = ControlNetAdapterWrapper(
-            controlnet_cfg=controlnet_cfg,
-            in_channels=2,
-            out_size=expected_size,
-            target_T=64,
-            stride_T=4
-        ).to(device)
+        front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
         front.load_state_dict(ckpt["front_state_dict"], strict=False)
         front.eval()
         print("[FINAL] Loaded front weights.")
@@ -463,14 +444,10 @@ def main():
         num_classes = ckpt["num_classes"]
         imagenet_mean = tuple(ckpt["imagenet_mean"])
         imagenet_std = tuple(ckpt["imagenet_std"])
+        img_out_size = ckpt["img_out_size"]
 
-        backbone, img_out_size, _ = build_backbone(backbone_name, num_classes, pretrained=args.pretrained)
-        state_backbone = ckpt["backbone_state_dict"]
-
-        missing, unexpected = backbone.load_state_dict(state_backbone, strict=False)
-        if missing or unexpected:
-            print("[FINAL][WARN] load_state_dict: missing:", missing, "| unexpected:", unexpected)
-
+        backbone, _, _ = build_backbone(backbone_name, num_classes, pretrained=False)
+        backbone.load_state_dict(ckpt["backbone_state_dict"], strict=False)
         backbone = backbone.to(device).eval()
         print(f"[FINAL] Rebuilt backbone '{backbone_name}' and loaded weights.")
 

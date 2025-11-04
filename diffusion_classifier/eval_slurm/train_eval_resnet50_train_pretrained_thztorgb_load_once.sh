@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=resnet50-train-pretrained-thztorgb
+#SBATCH --job-name=resnet50-train-pretrained-thztorgb-load
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/resnet50_train_pretrained_thztorgb_%j.out
-#SBATCH --error=final_logs/resnet50_train_pretrained_thztorgb_%j.err
+#SBATCH --output=final_logs/resnet50_train_pretrained_thztorgb_load_once_%j.out
+#SBATCH --error=final_logs/resnet50_train_pretrained_thztorgb_load_once_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -23,8 +23,8 @@ WORKSPACE_BASE="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_
 INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
-OUTPUT_BASE="$WORKSPACE_BASE/final_eval"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="resnet50_train_pretrained_thztorgb_${SLURM_JOB_ID}"
+OUTPUT_BASE="$WORKSPACE_BASE/final_eval"
+RUN_NAME="resnet50_train_pretrained_thztorgb_load_once_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -85,7 +85,7 @@ PY
 
 ########## 🚀 Training – liest/schreibt NUR auf lokaler SSD
 # WICHTIG: Pfade auf $LCL_INPUT und $LCL_RESULTS umbiegen
-python adapter_inject/train_baseline_with_thz.py \
+python adapter_inject/train_baseline_with_thz_load_once.py \
   --data_train "$LCL_INPUT/train" \
   --data_test  "$LCL_INPUT/test"  \
   --train_csv  "$LCL_INPUT/jsons/train_labels.csv" \

@@ -2,7 +2,7 @@
 #SBATCH --job-name=train-dc-with-original-cn-multichannel-2
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=48:00:00
+#SBATCH --time=72:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
 #SBATCH --output=final_logs/train_dc_with_original_cn_multichannel_2_%j.out

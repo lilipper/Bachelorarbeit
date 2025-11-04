@@ -444,7 +444,7 @@ def main():
         imagenet_std = tuple(ckpt["imagenet_std"])
         img_out_size = ckpt["img_out_size"]
 
-        backbone, _, _ = build_backbone(backbone_name, num_classes, pretrained=False)
+        backbone, _, _ = build_backbone(backbone_name, num_classes, pretrained=args.pretrained)
         backbone.load_state_dict(ckpt["backbone_state_dict"], strict=False)
         backbone = backbone.to(device).eval()
         print(f"[FINAL] Rebuilt backbone '{backbone_name}' and loaded weights.")
