@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=convnext_tiny-pretrained-cn-wrapper-load-once
+#SBATCH --job-name=convnext_tiny-pretrained-cn-wrapper-load-once-more-repeats
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/convnext_tiny_pretrained_cn_wrapper_load_once_%j.out
-#SBATCH --error=final_logs/convnext_tiny_pretrained_cn_wrapper_load_once_%j.err
+#SBATCH --output=final_logs/convnext_tiny_pretrained_cn_wrapper_load_once_more_repeats_%j.out
+#SBATCH --error=final_logs/convnext_tiny_pretrained_cn_wrapper_load_once_more_repeats_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/final_eval"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="convnext_tiny_pretrained_cn_wrapper_load_once_${SLURM_JOB_ID}"
+RUN_NAME="convnext_tiny_pretrained_cn_wrapper_load_once_more_repeats_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -92,8 +92,9 @@ python adapter_multichannel/train_baseline_cn_adapter_load_once.py \
   --val_csv    "$LCL_INPUT/jsons/test_labels.csv"  \
   --backbone convnext_tiny \
   --pretrained \
-  --epochs 60 \
+  --epochs 30 \
   --cv_repeats 5 \
+  --cv_splits 10 \
   --batch_size 2 \
   --dtype bfloat16 \
   --learn_front \

@@ -1,0 +1,2273 @@
+=== Job gestartet: Mon Nov 10 11:03:59 AM CET 2025 ===
+Job-ID: 2086422 auf Node: uc3n078.localdomain
+[INFO] Benötigt: 35446224074 B, Frei: 15148210040832 B auf /scratch/slurm_tmpdir/job_2086422
+[INFO] Kopiere Daten nach lokale SSD ...
+         32,768   0%    0.00kB/s    0:00:00      272,691,012   1%  362.15MB/s    0:00:00 (xfr#1, to-chk=96/98)    349,138,756   1%  332.93MB/s    0:01:16      545,632,864   2%  363.61MB/s    0:00:01 (xfr#2, to-chk=95/98)    748,794,464   2%  357.22MB/s    0:01:10      818,417,625   3%  362.84MB/s    0:00:02 (xfr#3, to-chk=94/98)  1,090,854,769   4%  362.72MB/s    0:00:02 (xfr#4, to-chk=93/98)  1,094,819,697   4%  348.02MB/s    0:01:11    1,363,658,427   5%  362.75MB/s    0:00:03 (xfr#5, to-chk=92/98)  1,496,630,971   5%  356.82MB/s    0:01:08    1,636,332,727   6%  362.40MB/s    0:00:04 (xfr#6, to-chk=91/98)  1,908,518,178   7%  364.23MB/s    0:00:04 (xfr#7, to-chk=90/98)  1,908,813,090   7%  370.56MB/s    0:01:04    2,180,742,189   8%  365.63MB/s    0:00:05 (xfr#8, to-chk=89/98)  2,279,767,085   8%  363.74MB/s    0:01:04    2,452,780,084   9%  366.06MB/s    0:00:06 (xfr#9, to-chk=88/98)  2,676,618,292  10%  376.19MB/s    0:01:01    2,724,814,958  10%  365.17MB/s    0:00:07 (xfr#10, to-chk=87/98)  2,997,175,596  11%  366.26MB/s    0:00:07 (xfr#11, to-chk=86/98)  3,044,394,284  11%  368.10MB/s    0:01:02    3,269,586,787  12%  366.14MB/s    0:00:08 (xfr#12, to-chk=85/98)  3,437,064,035  12%  364.64MB/s    0:01:01    3,542,070,056  13%  365.62MB/s    0:00:09 (xfr#13, to-chk=84/98)  3,814,281,888  14%  366.39MB/s    0:00:09 (xfr#14, to-chk=83/98)  3,815,625,376  14%  366.09MB/s    0:01:00    4,086,621,496  15%  365.67MB/s    0:00:10 (xfr#15, to-chk=82/98)  4,194,723,128  15%  361.94MB/s    0:01:00    4,358,860,813  16%  365.47MB/s    0:00:11 (xfr#16, to-chk=81/98)  4,597,608,461  17%  370.32MB/s    0:00:57    4,631,773,976  17%  365.48MB/s    0:00:12 (xfr#17, to-chk=80/98)  4,904,629,785  18%  365.25MB/s    0:00:12 (xfr#18, to-chk=79/98)  4,951,586,329  18%  361.09MB/s    0:00:58    5,177,156,184  19%  365.64MB/s    0:00:13 (xfr#19, to-chk=78/98)  5,342,995,032  20%  364.43MB/s    0:00:56    5,450,061,653  20%  364.92MB/s    0:00:14 (xfr#20, to-chk=77/98)  5,722,664,754  21%  364.35MB/s    0:00:14 (xfr#21, to-chk=76/98)  5,722,959,666  21%  363.45MB/s    0:00:55    5,995,436,680  22%  364.28MB/s    0:00:15 (xfr#22, to-chk=75/98)  6,070,639,240  22%  350.32MB/s    0:00:56    6,268,148,355  23%  363.30MB/s    0:00:16 (xfr#23, to-chk=74/98)  6,443,752,067  24%  354.87MB/s    0:00:55    6,540,909,123  24%  361.95MB/s    0:00:17 (xfr#24, to-chk=73/98)  6,813,702,013  25%  361.00MB/s    0:00:18 (xfr#25, to-chk=72/98)  6,813,996,925  25%  347.41MB/s    0:00:55    7,085,530,778  26%  360.98MB/s    0:00:18 (xfr#26, to-chk=71/98)  7,146,053,274  27%  337.35MB/s    0:00:55    7,357,708,356  27%  359.65MB/s    0:00:19 (xfr#27, to-chk=70/98)  7,530,002,500  28%  345.95MB/s    0:00:53    7,629,928,849  28%  359.08MB/s    0:00:20 (xfr#28, to-chk=69/98)  7,901,892,363  29%  358.85MB/s    0:00:21 (xfr#29, to-chk=68/98)  7,902,187,275  29%  343.34MB/s    0:00:52    8,173,901,188  30%  358.52MB/s    0:00:21 (xfr#30, to-chk=67/98)  8,266,929,540  31%  344.43MB/s    0:00:51    8,446,960,088  31%  358.47MB/s    0:00:22 (xfr#31, to-chk=66/98)  8,653,693,400  32%  357.39MB/s    0:00:48    8,719,808,239  32%  358.21MB/s    0:00:23 (xfr#32, to-chk=65/98)  8,992,648,001  34%  357.75MB/s    0:00:23 (xfr#33, to-chk=64/98)  8,994,253,633  34%  347.11MB/s    0:00:49    9,265,947,355  35%  357.59MB/s    0:00:24 (xfr#34, to-chk=63/98)  9,365,070,555  35%  349.04MB/s    0:00:47    9,539,165,302  36%  357.45MB/s    0:00:25 (xfr#35, to-chk=62/98)  9,768,868,982  36%  358.36MB/s    0:00:45    9,812,438,441  37%  357.67MB/s    0:00:26 (xfr#36, to-chk=61/98) 10,085,662,333  38%  357.97MB/s    0:00:26 (xfr#37, to-chk=60/98) 10,089,102,973  38%  342.31MB/s    0:00:46   10,358,688,023  39%  357.02MB/s    0:00:27 (xfr#38, to-chk=59/98) 10,478,717,207  39%  354.01MB/s    0:00:44   10,631,546,722  40%  356.93MB/s    0:00:28 (xfr#39, to-chk=58/98) 10,885,793,634  41%  362.66MB/s    0:00:41   10,904,487,534  41%  357.27MB/s    0:00:29 (xfr#40, to-chk=57/98) 11,177,540,730  42%  357.36MB/s    0:00:29 (xfr#41, to-chk=56/98) 11,234,655,354  42%  349.56MB/s    0:00:42   11,450,463,674  43%  357.57MB/s    0:00:30 (xfr#42, to-chk=55/98) 11,614,860,730  43%  364.04MB/s    0:00:39   11,723,318,643  44%  357.15MB/s    0:00:31 (xfr#43, to-chk=54/98) 11,995,735,901  45%  356.85MB/s    0:00:32 (xfr#44, to-chk=53/98) 11,995,768,669  45%  359.63MB/s    0:00:39   12,268,247,897  46%  356.22MB/s    0:00:32 (xfr#45, to-chk=52/98) 12,319,824,729  46%  339.94MB/s    0:00:40   12,540,383,418  47%  356.19MB/s    0:00:33 (xfr#46, to-chk=51/98) 12,710,547,642  48%  349.87MB/s    0:00:38   12,812,625,750  48%  356.09MB/s    0:00:34 (xfr#47, to-chk=50/98) 13,084,820,724  49%  356.32MB/s    0:00:35 (xfr#48, to-chk=49/98) 13,086,000,372  49%  348.74MB/s    0:00:37   13,357,764,718  50%  356.40MB/s    0:00:35 (xfr#49, to-chk=48/98) 13,426,872,430  50%  341.46MB/s    0:00:37   13,632,033,333  51%  355.81MB/s    0:00:36 (xfr#50, to-chk=47/98) 13,841,191,477  52%  362.99MB/s    0:00:33   13,906,204,156  52%  356.22MB/s    0:00:37 (xfr#51, to-chk=46/98) 14,179,890,476  53%  356.61MB/s    0:00:37 (xfr#52, to-chk=45/98) 14,196,700,460  53%  345.10MB/s    0:00:34   14,453,286,294  54%  355.64MB/s    0:00:38 (xfr#53, to-chk=44/98) 14,587,012,502  55%  348.55MB/s    0:00:33   14,726,157,770  55%  355.53MB/s    0:00:39 (xfr#54, to-chk=43/98) 14,960,285,130  56%  356.07MB/s    0:00:31   14,999,414,046  56%  355.12MB/s    0:00:40 (xfr#55, to-chk=42/98) 15,273,137,095  57%  355.03MB/s    0:00:41 (xfr#56, to-chk=41/98) 15,276,118,983  57%  333.20MB/s    0:00:32   15,545,375,631  58%  354.65MB/s    0:00:41 (xfr#57, to-chk=40/98) 15,669,107,599  59%  351.31MB/s    0:00:29   15,817,226,259  59%  354.77MB/s    0:00:42 (xfr#58, to-chk=39/98) 16,065,509,395  60%  352.77MB/s    0:00:28   16,088,903,475  60%  354.81MB/s    0:00:43 (xfr#59, to-chk=38/98) 16,361,286,071  61%  354.31MB/s    0:00:44 (xfr#60, to-chk=37/98) 16,366,201,271  61%  335.45MB/s    0:00:29   16,633,749,065  62%  354.25MB/s    0:00:44 (xfr#61, to-chk=36/98) 16,756,366,921  63%  353.18MB/s    0:00:26   16,906,105,749  63%  354.19MB/s    0:00:45 (xfr#62, to-chk=35/98) 17,147,245,461  64%  352.68MB/s    0:00:25   17,179,104,552  64%  354.16MB/s    0:00:46 (xfr#63, to-chk=34/98) 17,451,525,232  65%  354.32MB/s    0:00:46 (xfr#64, to-chk=33/98) 17,505,494,128  66%  343.58MB/s    0:00:25   17,724,138,301  67%  354.60MB/s    0:00:47 (xfr#65, to-chk=32/98) 17,903,215,421  67%  366.73MB/s    0:00:22   17,996,833,126  68%  354.66MB/s    0:00:48 (xfr#66, to-chk=31/98) 18,269,127,131  69%  355.02MB/s    0:00:49 (xfr#67, to-chk=30/98) 18,270,732,763  69%  361.14MB/s    0:00:22   18,541,405,544  70%  354.36MB/s    0:00:49 (xfr#68, to-chk=29/98) 18,625,291,624  70%  352.57MB/s    0:00:21   18,813,560,621  71%  354.58MB/s    0:00:50 (xfr#69, to-chk=28/98) 18,995,521,325  71%  355.43MB/s    0:00:20   19,086,948,857  72%  354.23MB/s    0:00:51 (xfr#70, to-chk=27/98) 19,359,166,808  73%  354.32MB/s    0:00:52 (xfr#71, to-chk=26/98) 19,361,558,872  73%  347.78MB/s    0:00:19   19,631,952,502  74%  354.54MB/s    0:00:52 (xfr#72, to-chk=25/98) 19,736,253,046  74%  349.67MB/s    0:00:18   19,904,312,853  75%  354.45MB/s    0:00:53 (xfr#73, to-chk=24/98) 20,142,798,357  76%  362.07MB/s    0:00:17   20,176,560,571  76%  354.63MB/s    0:00:54 (xfr#74, to-chk=23/98) 20,449,134,441  77%  354.67MB/s    0:00:54 (xfr#75, to-chk=22/98) 20,461,684,585  77%  349.82MB/s    0:00:16   20,721,396,641  78%  354.41MB/s    0:00:55 (xfr#76, to-chk=21/98) 20,860,955,553  78%  357.75MB/s    0:00:15   20,993,787,149  79%  354.51MB/s    0:00:56 (xfr#77, to-chk=20/98) 21,258,028,301  80%  363.09MB/s    0:00:13   21,266,315,177  80%  354.56MB/s    0:00:57 (xfr#78, to-chk=19/98) 21,539,173,243  81%  354.69MB/s    0:00:57 (xfr#79, to-chk=18/98) 21,617,783,675  81%  351.93MB/s    0:00:13   21,811,551,531  82%  354.92MB/s    0:00:58 (xfr#80, to-chk=17/98) 22,003,539,243  83%  367.88MB/s    0:00:11   22,084,008,381  83%  354.82MB/s    0:00:59 (xfr#81, to-chk=16/98) 22,356,459,612  84%  354.63MB/s    0:01:00 (xfr#82, to-chk=15/98) 22,359,113,820  84%  352.69MB/s    0:00:11   22,629,639,304  85%  354.49MB/s    0:01:00 (xfr#83, to-chk=14/98) 22,735,938,696  85%  347.93MB/s    0:00:10   22,902,087,967  86%  354.40MB/s    0:01:01 (xfr#84, to-chk=13/98) 23,106,167,071  87%  350.39MB/s    0:00:09   23,174,688,959  87%  354.23MB/s    0:01:02 (xfr#85, to-chk=12/98) 23,446,721,976  88%  354.01MB/s    0:01:03 (xfr#86, to-chk=11/98) 23,447,803,320  88%  339.59MB/s    0:00:08   23,719,109,724  89%  353.36MB/s    0:01:04 (xfr#87, to-chk=10/98) 23,739,327,580  89%  328.00MB/s    0:00:08   23,991,619,802  90%  352.77MB/s    0:01:04 (xfr#88, to-chk=9/98)  24,064,528,602  90%  315.73MB/s    0:00:07   24,264,066,609  91%  352.09MB/s    0:01:05 (xfr#89, to-chk=8/98) 24,429,774,385  92%  314.55MB/s    0:00:06   24,537,189,045  92%  351.84MB/s    0:01:06 (xfr#90, to-chk=7/98) 24,809,815,735  93%  351.85MB/s    0:01:07 (xfr#91, to-chk=6/98) 24,809,848,503  93%  323.93MB/s    0:00:04   25,082,360,808  94%  351.85MB/s    0:01:07 (xfr#92, to-chk=5/98) 25,155,105,768  95%  337.72MB/s    0:00:03   25,355,074,437  95%  351.91MB/s    0:01:08 (xfr#93, to-chk=4/98) 25,517,308,805  96%  346.54MB/s    0:00:02   25,628,225,271  96%  351.66MB/s    0:01:09 (xfr#94, to-chk=3/98) 25,899,249,399  97%  350.53MB/s    0:00:01   25,901,555,282  97%  351.63MB/s    0:01:10 (xfr#95, to-chk=2/98) 26,174,806,566  98%  351.60MB/s    0:01:10 (xfr#96, to-chk=1/98) 26,201,872,934  99%  332.13MB/s    0:00:00   26,448,450,079 100%  351.22MB/s    0:01:11 (xfr#97, to-chk=0/98) 26,448,450,079 100%  351.18MB/s    0:01:11 (xfr#97, to-chk=0/98)
+
+Number of files: 98 (reg: 97, dir: 1)
+Number of created files: 97 (reg: 97)
+Number of deleted files: 0
+Number of regular files transferred: 97
+Total file size: 26,448,450,079 bytes
+Total transferred file size: 26,448,450,079 bytes
+Literal data: 26,448,450,079 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.003 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 26,454,914,667
+Total bytes received: 1,862
+
+sent 26,454,914,667 bytes  received 1,862 bytes  364,895,400.40 bytes/sec
+total size is 26,448,450,079  speedup is 1.00
+         32,768   0%    0.00kB/s    0:00:00      272,520,570   3%  356.96MB/s    0:00:00 (xfr#1, to-chk=32/34)    334,452,090   3%  318.93MB/s    0:00:26      545,313,185   6%  348.31MB/s    0:00:01 (xfr#2, to-chk=31/34)    721,342,881   8%  344.12MB/s    0:00:23      818,336,726   9%  350.90MB/s    0:00:02 (xfr#3, to-chk=30/34)  1,090,490,930  12%  350.98MB/s    0:00:02 (xfr#4, to-chk=29/34)  1,092,096,562  12%  347.16MB/s    0:00:22    1,362,718,050  15%  349.34MB/s    0:00:03 (xfr#5, to-chk=28/34)  1,448,897,890  16%  345.52MB/s    0:00:21    1,635,019,824  18%  352.13MB/s    0:00:04 (xfr#6, to-chk=27/34)  1,805,970,480  20%  350.93MB/s    0:00:20    1,908,041,944  21%  347.72MB/s    0:00:05 (xfr#7, to-chk=26/34)  2,165,991,640  24%  344.52MB/s    0:00:19    2,180,874,428  24%  344.85MB/s    0:00:06 (xfr#8, to-chk=25/34)  2,453,626,928  27%  341.95MB/s    0:00:06 (xfr#9, to-chk=24/34)  2,459,295,792  27%  326.21MB/s    0:00:19    2,725,685,220  30%  340.99MB/s    0:00:07 (xfr#10, to-chk=23/34)  2,863,572,964  31%  337.54MB/s    0:00:17    2,998,023,590  33%  344.26MB/s    0:00:08 (xfr#11, to-chk=22/34)  3,241,817,510  36%  342.59MB/s    0:00:16    3,270,949,905  36%  344.27MB/s    0:00:09 (xfr#12, to-chk=21/34)  3,544,126,110  39%  343.98MB/s    0:00:09 (xfr#13, to-chk=20/34)  3,568,439,966  39%  334.62MB/s    0:00:15    3,817,228,969  42%  343.50MB/s    0:00:10 (xfr#14, to-chk=19/34)  3,950,365,353  43%  355.77MB/s    0:00:13    4,090,111,343  45%  344.18MB/s    0:00:11 (xfr#15, to-chk=18/34)  4,322,829,679  48%  348.18MB/s    0:00:13    4,362,577,030  48%  344.18MB/s    0:00:12 (xfr#16, to-chk=17/34)  4,634,778,744  51%  344.67MB/s    0:00:12 (xfr#17, to-chk=16/34)  4,660,698,232  51%  338.54MB/s    0:00:12    4,908,056,721  54%  345.00MB/s    0:00:13 (xfr#18, to-chk=15/34)  5,040,963,729  56%  351.34MB/s    0:00:10    5,181,350,332  57%  345.13MB/s    0:00:14 (xfr#19, to-chk=14/34)  5,420,392,892  60%  350.74MB/s    0:00:09    5,454,810,811  60%  344.99MB/s    0:00:15 (xfr#20, to-chk=13/34)  5,726,923,393  63%  345.43MB/s    0:00:15 (xfr#21, to-chk=12/34)  5,760,248,449  64%  342.96MB/s    0:00:09    5,999,294,391  66%  345.55MB/s    0:00:16 (xfr#22, to-chk=11/34)  6,139,049,911  68%  352.73MB/s    0:00:07    6,271,674,600  69%  345.91MB/s    0:00:17 (xfr#23, to-chk=10/34)  6,520,416,488  72%  352.99MB/s    0:00:06    6,543,905,264  72%  345.96MB/s    0:00:18 (xfr#24, to-chk=9/34)   6,816,219,313  75%  346.28MB/s    0:00:18 (xfr#25, to-chk=8/34)  6,874,087,601  76%  346.85MB/s    0:00:05    7,088,573,778  78%  346.53MB/s    0:00:19 (xfr#26, to-chk=7/34)  7,247,400,274  80%  354.83MB/s    0:00:04    7,362,169,528  81%  346.55MB/s    0:00:20 (xfr#27, to-chk=6/34)  7,624,575,672  84%  354.44MB/s    0:00:03    7,634,567,872  84%  346.61MB/s    0:00:21 (xfr#28, to-chk=5/34)  7,906,873,442  87%  346.68MB/s    0:00:21 (xfr#29, to-chk=4/34)  7,964,774,498  88%  344.62MB/s    0:00:02    8,179,279,488  90%  346.85MB/s    0:00:22 (xfr#30, to-chk=3/34)  8,334,206,592  92%  348.21MB/s    0:00:01    8,451,669,834  93%  346.63MB/s    0:00:23 (xfr#31, to-chk=2/34)  8,701,886,282  96%  346.86MB/s    0:00:00    8,724,244,410  96%  346.16MB/s    0:00:24 (xfr#32, to-chk=1/34)  8,997,615,579 100%  346.19MB/s    0:00:24 (xfr#33, to-chk=0/34)  8,997,615,579 100%  346.07MB/s    0:00:24 (xfr#33, to-chk=0/34)
+
+Number of files: 34 (reg: 33, dir: 1)
+Number of created files: 33 (reg: 33)
+Number of deleted files: 0
+Number of regular files transferred: 33
+Total file size: 8,997,615,579 bytes
+Total transferred file size: 8,997,615,579 bytes
+Literal data: 8,997,615,579 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.002 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 8,999,814,908
+Total bytes received: 646
+
+sent 8,999,814,908 bytes  received 646 bytes  352,933,943.29 bytes/sec
+total size is 8,997,615,579  speedup is 1.00
+          1,943   1%    0.00kB/s    0:00:00            1,943   1%    0.00kB/s    0:00:00 (xfr#1, to-chk=7/9)          7,419   5%    5.22MB/s    0:00:00 (xfr#2, to-chk=6/9)         14,488  10%   11.96MB/s    0:00:00 (xfr#3, to-chk=5/9)         20,186  15%    8.70MB/s    0:00:00 (xfr#4, to-chk=4/9)         36,272  27%   16.37MB/s    0:00:00 (xfr#5, to-chk=3/9)         57,095  42%   17.53MB/s    0:00:00 (xfr#6, to-chk=2/9)         95,597  71%   22.33MB/s    0:00:00 (xfr#7, to-chk=1/9)        133,840 100%   25.16MB/s    0:00:00 (xfr#8, to-chk=0/9)        133,840 100%   25.16MB/s    0:00:00 (xfr#8, to-chk=0/9)
+
+Number of files: 9 (reg: 8, dir: 1)
+Number of created files: 8 (reg: 8)
+Number of deleted files: 0
+Number of regular files transferred: 8
+Total file size: 133,840 bytes
+Total transferred file size: 133,840 bytes
+Literal data: 133,840 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 134,461
+Total bytes received: 171
+
+sent 134,461 bytes  received 171 bytes  269,264.00 bytes/sec
+total size is 133,840  speedup is 0.99
+=== GPU-Check ===
+Mon Nov 10 11:05:36 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.195.03             Driver Version: 570.195.03     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    On  |   00000000:06:00.0 Off |                    0 |
+| N/A   45C    P0             69W /  415W |      27MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3518      G   /usr/libexec/Xorg                        17MiB |
++-----------------------------------------------------------------------------------------+
+torch.cuda.is_available: True
+device: NVIDIA H100
+capability: (9, 0)
+PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+3D conv smoke test OK: torch.Size([1, 16, 48, 48, 48])
+========== CONFIG ==========
+data_train: /scratch/slurm_tmpdir/job_2086422/job_2086422/input/train
+train_csv: /scratch/slurm_tmpdir/job_2086422/job_2086422/input/jsons/train_labels.csv
+backbone: vit_b32
+pretrained: True
+num_classes: 2
+epochs: 300
+batch_size: 2
+num_workers: 4
+learn_front: True
+lr_front: 0.0001
+wd_front: 0.0
+train_backbone: True
+lr_backbone: 0.0001
+wd_backbone: 0.01
+dtype: bfloat16
+seed: 42
+dropout_p: 0.2
+final_eval: True
+data_test: /scratch/slurm_tmpdir/job_2086422/job_2086422/input/test
+test_csv: None
+val_csv: /scratch/slurm_tmpdir/job_2086422/job_2086422/input/jsons/test_labels.csv
+save_dir: /scratch/slurm_tmpdir/job_2086422/job_2086422/results
+============================
+[AMP] device=cuda  dtype=bfloat16  use_amp=True
+[IO] Save directory: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107
+[build_backbone] Built ViT-B/32 (pretrained=True) with ImageNet mean/std: (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschenhals-Tiefe: 8
+[OPT] Front parameters will be trained.
+[OPT] Backbone parameters will be trained.
+[DataLoader] Train batches: ~48
+
+[Epoch] 01/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8672  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.9915  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.8702  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.8647  epoch_acc=0.4896
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.4896)
+
+[Epoch] 02/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7490  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7866  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7738  avg_acc=0.4250
+[train_one_epoch] Done. epoch_loss=0.7605  epoch_acc=0.4583
+
+[Epoch] 03/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6152  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7418  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7320  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.7465  epoch_acc=0.5000
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5000)
+
+[Epoch] 04/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6582  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7514  avg_acc=0.3750
+[train_one_epoch] step=40  avg_loss=0.7407  avg_acc=0.3750
+[train_one_epoch] Done. epoch_loss=0.7291  epoch_acc=0.4167
+
+[Epoch] 05/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.3867  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7806  avg_acc=0.3750
+[train_one_epoch] step=40  avg_loss=0.7346  avg_acc=0.4125
+[train_one_epoch] Done. epoch_loss=0.7736  epoch_acc=0.4167
+
+[Epoch] 06/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.4590  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7021  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7093  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.7030  epoch_acc=0.5417
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5417)
+
+[Epoch] 07/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.3896  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7170  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7130  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7020  epoch_acc=0.5312
+
+[Epoch] 08/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=1.2188  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7478  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7312  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7272  epoch_acc=0.5521
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5521)
+
+[Epoch] 09/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.3711  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6605  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.7061  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 10/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7279  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7198  avg_acc=0.4250
+[train_one_epoch] Done. epoch_loss=0.7227  epoch_acc=0.4062
+
+[Epoch] 11/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6777  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6766  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6902  epoch_acc=0.5417
+
+[Epoch] 12/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6592  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7154  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7278  avg_acc=0.4625
+[train_one_epoch] Done. epoch_loss=0.7181  epoch_acc=0.4792
+
+[Epoch] 13/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6426  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6973  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6955  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 14/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5645  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6728  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7305  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.7244  epoch_acc=0.4896
+
+[Epoch] 15/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6094  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7122  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.7104  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6966  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 16/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=1.0508  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7146  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.7171  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.7471  epoch_acc=0.5208
+
+[Epoch] 17/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.9131  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7409  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7363  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.7266  epoch_acc=0.4688
+
+[Epoch] 18/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5449  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6884  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.7054  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7231  epoch_acc=0.5104
+
+[Epoch] 19/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6777  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7384  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6963  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.7282  epoch_acc=0.5104
+
+[Epoch] 20/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.4170  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7603  avg_acc=0.3750
+[train_one_epoch] step=40  avg_loss=0.7210  avg_acc=0.4625
+[train_one_epoch] Done. epoch_loss=0.7307  epoch_acc=0.4688
+
+[Epoch] 21/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7705  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6412  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6840  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6919  epoch_acc=0.5417
+
+[Epoch] 22/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6855  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7204  avg_acc=0.3500
+[train_one_epoch] step=40  avg_loss=0.7145  avg_acc=0.3875
+[train_one_epoch] Done. epoch_loss=0.7227  epoch_acc=0.3958
+
+[Epoch] 23/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.4883  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6868  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7048  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.7128  epoch_acc=0.4271
+
+[Epoch] 24/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5430  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6755  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6962  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6974  epoch_acc=0.5521
+
+[Epoch] 25/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7480  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7023  avg_acc=0.4000
+[train_one_epoch] step=40  avg_loss=0.6963  avg_acc=0.4625
+[train_one_epoch] Done. epoch_loss=0.6991  epoch_acc=0.4792
+
+[Epoch] 26/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6855  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6990  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7099  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7074  epoch_acc=0.5000
+
+[Epoch] 27/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5586  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7028  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7149  avg_acc=0.4250
+[train_one_epoch] Done. epoch_loss=0.7194  epoch_acc=0.4375
+
+[Epoch] 28/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7871  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7101  avg_acc=0.3750
+[train_one_epoch] step=40  avg_loss=0.7020  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.7077  epoch_acc=0.4896
+
+[Epoch] 29/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5703  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6891  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6960  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6950  epoch_acc=0.5208
+
+[Epoch] 30/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6895  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6926  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6947  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6930  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 31/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.9004  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7071  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7174  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7080  epoch_acc=0.5521
+
+[Epoch] 32/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6767  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6928  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6977  epoch_acc=0.4792
+
+[Epoch] 33/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6852  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6971  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6978  epoch_acc=0.5417
+
+[Epoch] 34/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7852  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6965  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7025  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7062  epoch_acc=0.5104
+
+[Epoch] 35/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7285  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7060  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6950  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7014  epoch_acc=0.5208
+
+[Epoch] 36/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7734  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7071  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.7027  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6998  epoch_acc=0.4896
+
+[Epoch] 37/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7168  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7048  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7206  avg_acc=0.3875
+[train_one_epoch] Done. epoch_loss=0.6980  epoch_acc=0.4583
+
+[Epoch] 38/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=1.0449  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6776  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6908  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 39/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.9609  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7210  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.7272  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.7250  epoch_acc=0.4479
+
+[Epoch] 40/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6660  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6875  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6868  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6915  epoch_acc=0.5208
+
+[Epoch] 41/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8711  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7035  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6994  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6969  epoch_acc=0.5417
+
+[Epoch] 42/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8887  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7076  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6940  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6969  epoch_acc=0.5729
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5729)
+
+[Epoch] 43/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7188  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7125  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.7105  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.7053  epoch_acc=0.5000
+
+[Epoch] 44/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7285  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6444  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6947  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6942  epoch_acc=0.5625
+
+[Epoch] 45/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7188  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7428  avg_acc=0.3250
+[train_one_epoch] step=40  avg_loss=0.7317  avg_acc=0.4250
+[train_one_epoch] Done. epoch_loss=0.7210  epoch_acc=0.4688
+
+[Epoch] 46/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7266  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7075  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7016  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.7034  epoch_acc=0.5625
+
+[Epoch] 47/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7500  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7260  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.7085  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6980  epoch_acc=0.5104
+
+[Epoch] 48/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7039  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7011  epoch_acc=0.4896
+
+[Epoch] 49/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6250  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6655  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.7032  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7021  epoch_acc=0.5521
+
+[Epoch] 50/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7263  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7036  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.7018  epoch_acc=0.5833
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.5833)
+
+[Epoch] 51/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=1.1875  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7094  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.7115  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.7160  epoch_acc=0.5521
+
+[Epoch] 52/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6602  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6993  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.7113  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.7109  epoch_acc=0.4583
+
+[Epoch] 53/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7246  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6951  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6882  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7019  epoch_acc=0.5208
+
+[Epoch] 54/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7949  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6929  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6903  epoch_acc=0.5729
+
+[Epoch] 55/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7090  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6986  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6817  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6980  epoch_acc=0.5417
+
+[Epoch] 56/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6582  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6910  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6892  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6978  epoch_acc=0.5417
+
+[Epoch] 57/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5176  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7015  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7155  avg_acc=0.4375
+[train_one_epoch] Done. epoch_loss=0.7085  epoch_acc=0.4688
+
+[Epoch] 58/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7812  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6856  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7015  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7031  epoch_acc=0.5000
+
+[Epoch] 59/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7110  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.7129  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7127  epoch_acc=0.5104
+
+[Epoch] 60/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6719  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6854  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6986  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6910  epoch_acc=0.5417
+
+[Epoch] 61/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7266  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6678  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6954  epoch_acc=0.5625
+
+[Epoch] 62/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7305  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7079  avg_acc=0.3500
+[train_one_epoch] step=40  avg_loss=0.7022  avg_acc=0.4125
+[train_one_epoch] Done. epoch_loss=0.7021  epoch_acc=0.4167
+
+[Epoch] 63/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6738  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6682  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6796  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5521
+
+[Epoch] 64/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7832  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7031  avg_acc=0.3500
+[train_one_epoch] step=40  avg_loss=0.6987  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5000
+
+[Epoch] 65/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5391  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7199  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7003  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6977  epoch_acc=0.5417
+
+[Epoch] 66/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7148  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6970  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6934  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6925  epoch_acc=0.5312
+
+[Epoch] 67/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7754  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7007  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6931  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6914  epoch_acc=0.5312
+
+[Epoch] 68/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7188  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6606  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6936  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6925  epoch_acc=0.5521
+
+[Epoch] 69/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6523  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6927  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6976  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.6936  epoch_acc=0.4896
+
+[Epoch] 70/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5469  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6972  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6717  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.7047  epoch_acc=0.5521
+
+[Epoch] 71/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.4971  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6748  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6871  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5208
+
+[Epoch] 72/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6902  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6980  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6967  epoch_acc=0.5312
+
+[Epoch] 73/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5996  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6908  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7000  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6956  epoch_acc=0.5625
+
+[Epoch] 74/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8418  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6974  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.7047  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7012  epoch_acc=0.5208
+
+[Epoch] 75/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6211  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6834  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6920  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6896  epoch_acc=0.5417
+
+[Epoch] 76/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7715  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7076  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.7039  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7024  epoch_acc=0.5417
+
+[Epoch] 77/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7891  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7048  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6968  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6974  epoch_acc=0.5625
+
+[Epoch] 78/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6836  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6798  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6931  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6930  epoch_acc=0.5000
+
+[Epoch] 79/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7461  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6912  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6839  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6939  epoch_acc=0.5312
+
+[Epoch] 80/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7949  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7009  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6979  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.7037  epoch_acc=0.5625
+
+[Epoch] 81/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6055  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7164  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.7089  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.7046  epoch_acc=0.5104
+
+[Epoch] 82/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.4639  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6667  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6893  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6912  epoch_acc=0.5521
+
+[Epoch] 83/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7383  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7101  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.6944  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.7022  epoch_acc=0.5000
+
+[Epoch] 84/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6836  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7160  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6911  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7161  epoch_acc=0.5000
+
+[Epoch] 85/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7168  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6739  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6924  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6963  epoch_acc=0.4375
+
+[Epoch] 86/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7031  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6854  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6987  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6976  epoch_acc=0.5417
+
+[Epoch] 87/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7969  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7062  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.7012  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.7060  epoch_acc=0.5521
+
+[Epoch] 88/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6191  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6926  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6852  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7141  epoch_acc=0.5000
+
+[Epoch] 89/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.4521  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6873  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6996  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6972  epoch_acc=0.5625
+
+[Epoch] 90/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7910  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6900  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6981  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6985  epoch_acc=0.5625
+
+[Epoch] 91/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6309  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7043  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7006  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.7016  epoch_acc=0.4583
+
+[Epoch] 92/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8633  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7123  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6941  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6937  epoch_acc=0.5625
+
+[Epoch] 93/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8711  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6987  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6951  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6956  epoch_acc=0.5521
+
+[Epoch] 94/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6777  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6814  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6925  epoch_acc=0.5521
+
+[Epoch] 95/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7324  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6960  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6936  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6906  epoch_acc=0.5729
+
+[Epoch] 96/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8262  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7026  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7021  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6975  epoch_acc=0.5521
+
+[Epoch] 97/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6839  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6931  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6906  epoch_acc=0.5521
+
+[Epoch] 98/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7109  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6738  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.7088  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.7067  epoch_acc=0.5208
+
+[Epoch] 99/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6770  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6919  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6963  epoch_acc=0.5521
+
+[Epoch] 100/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6602  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6965  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6877  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6947  epoch_acc=0.5625
+
+[Epoch] 101/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7007  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.7101  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7053  epoch_acc=0.5104
+
+[Epoch] 102/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6621  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6943  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6853  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6840  epoch_acc=0.6042
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt  (acc=0.6042)
+
+[Epoch] 103/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6932  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.7027  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6999  epoch_acc=0.5208
+
+[Epoch] 104/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6797  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6876  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.7056  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7009  epoch_acc=0.5521
+
+[Epoch] 105/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6270  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7009  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7009  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.6955  epoch_acc=0.4688
+
+[Epoch] 106/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8691  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6569  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6954  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.7009  epoch_acc=0.5521
+
+[Epoch] 107/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7715  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7039  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.7083  avg_acc=0.4125
+[train_one_epoch] Done. epoch_loss=0.7011  epoch_acc=0.4479
+
+[Epoch] 108/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5156  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7124  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.7083  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6999  epoch_acc=0.5521
+
+[Epoch] 109/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5215  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6708  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6972  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6954  epoch_acc=0.5625
+
+[Epoch] 110/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6406  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6610  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6930  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6952  epoch_acc=0.5625
+
+[Epoch] 111/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6602  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6915  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6950  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.6900  epoch_acc=0.5104
+
+[Epoch] 112/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.9160  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7340  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7066  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6997  epoch_acc=0.5521
+
+[Epoch] 113/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6624  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.7090  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7037  epoch_acc=0.5625
+
+[Epoch] 114/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7148  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6971  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.6954  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6908  epoch_acc=0.5312
+
+[Epoch] 115/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5723  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7292  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6962  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6987  epoch_acc=0.5625
+
+[Epoch] 116/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5156  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6865  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6797  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6939  epoch_acc=0.5625
+
+[Epoch] 117/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8613  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6924  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.7015  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.7018  epoch_acc=0.5521
+
+[Epoch] 118/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6861  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6923  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6923  epoch_acc=0.5625
+
+[Epoch] 119/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5664  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6813  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6902  epoch_acc=0.5625
+
+[Epoch] 120/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6613  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6986  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6953  epoch_acc=0.5521
+
+[Epoch] 121/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6975  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6983  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6939  epoch_acc=0.5417
+
+[Epoch] 122/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7129  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5625
+
+[Epoch] 123/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5781  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6700  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6727  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5625
+
+[Epoch] 124/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5352  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6925  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6950  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6939  epoch_acc=0.5729
+
+[Epoch] 125/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5957  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6994  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6934  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+
+[Epoch] 126/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7109  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6856  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.7018  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6965  epoch_acc=0.5625
+
+[Epoch] 127/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5977  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6923  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6854  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5625
+
+[Epoch] 128/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6653  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6715  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6838  epoch_acc=0.5625
+
+[Epoch] 129/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6998  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6921  epoch_acc=0.5312
+
+[Epoch] 130/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7285  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6624  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6956  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6945  epoch_acc=0.5625
+
+[Epoch] 131/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6543  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6699  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6884  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6926  epoch_acc=0.5625
+
+[Epoch] 132/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7266  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6984  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6946  epoch_acc=0.5521
+
+[Epoch] 133/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5508  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6827  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6958  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6915  epoch_acc=0.5521
+
+[Epoch] 134/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7148  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6787  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6836  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+
+[Epoch] 135/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5664  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6776  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6969  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6936  epoch_acc=0.5625
+
+[Epoch] 136/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7324  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6380  avg_acc=0.7250
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6993  epoch_acc=0.5521
+
+[Epoch] 137/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6152  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6912  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6942  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6941  epoch_acc=0.5000
+
+[Epoch] 138/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6660  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6536  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6937  epoch_acc=0.5625
+
+[Epoch] 139/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6931  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6866  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 140/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6904  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6920  epoch_acc=0.5521
+
+[Epoch] 141/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6270  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6909  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6914  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6918  epoch_acc=0.5521
+
+[Epoch] 142/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6074  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6951  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6923  epoch_acc=0.5417
+
+[Epoch] 143/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7207  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7093  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6924  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.7010  epoch_acc=0.5312
+
+[Epoch] 144/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8633  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6856  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6951  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6950  epoch_acc=0.5625
+
+[Epoch] 145/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7910  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6960  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6967  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.7016  epoch_acc=0.5417
+
+[Epoch] 146/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6055  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6863  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6838  epoch_acc=0.5521
+
+[Epoch] 147/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7246  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6820  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6944  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6936  epoch_acc=0.5521
+
+[Epoch] 148/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6250  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6935  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6906  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5625
+
+[Epoch] 149/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6805  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5625
+
+[Epoch] 150/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7129  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6761  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6940  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6902  epoch_acc=0.5625
+
+[Epoch] 151/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5879  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6877  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6926  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6896  epoch_acc=0.5521
+
+[Epoch] 152/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6758  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6942  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5625
+
+[Epoch] 153/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6838  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6960  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6939  epoch_acc=0.5521
+
+[Epoch] 154/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6832  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6884  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6847  epoch_acc=0.5417
+
+[Epoch] 155/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6934  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6903  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+
+[Epoch] 156/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6914  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6806  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6928  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6925  epoch_acc=0.5521
+
+[Epoch] 157/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5801  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6835  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.7025  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6950  epoch_acc=0.5625
+
+[Epoch] 158/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6230  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6835  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6899  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5625
+
+[Epoch] 159/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6871  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6933  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6876  epoch_acc=0.5625
+
+[Epoch] 160/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6758  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6763  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6685  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5625
+
+[Epoch] 161/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8535  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6748  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6884  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6907  epoch_acc=0.5625
+
+[Epoch] 162/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7305  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7035  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6945  epoch_acc=0.5521
+
+[Epoch] 163/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6309  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7215  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7043  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6966  epoch_acc=0.5625
+
+[Epoch] 164/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6836  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7042  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6910  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5625
+
+[Epoch] 165/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6895  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6988  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6971  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6927  epoch_acc=0.5521
+
+[Epoch] 166/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5879  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7021  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6977  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.6922  epoch_acc=0.5104
+
+[Epoch] 167/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5703  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6580  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6978  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6952  epoch_acc=0.5625
+
+[Epoch] 168/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6908  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5625
+
+[Epoch] 169/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7031  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6935  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6969  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 170/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7227  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6646  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6999  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6984  epoch_acc=0.5521
+
+[Epoch] 171/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7016  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7011  avg_acc=0.4125
+[train_one_epoch] Done. epoch_loss=0.7015  epoch_acc=0.4375
+
+[Epoch] 172/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7121  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6944  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6913  epoch_acc=0.5625
+
+[Epoch] 173/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7129  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7084  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6935  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6923  epoch_acc=0.5521
+
+[Epoch] 174/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6777  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6566  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6795  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+
+[Epoch] 175/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7090  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6924  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6922  epoch_acc=0.5521
+
+[Epoch] 176/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7305  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6808  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6913  epoch_acc=0.5521
+
+[Epoch] 177/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6777  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6714  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6870  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6921  epoch_acc=0.5521
+
+[Epoch] 178/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7045  avg_acc=0.4000
+[train_one_epoch] step=40  avg_loss=0.7038  avg_acc=0.4250
+[train_one_epoch] Done. epoch_loss=0.6981  epoch_acc=0.4896
+
+[Epoch] 179/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6816  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6697  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6757  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5625
+
+[Epoch] 180/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7070  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6719  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6897  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6909  epoch_acc=0.5521
+
+[Epoch] 181/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7988  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6889  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6902  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5625
+
+[Epoch] 182/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5781  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7041  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6978  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6933  epoch_acc=0.5521
+
+[Epoch] 183/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6831  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6963  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6903  epoch_acc=0.5521
+
+[Epoch] 184/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7793  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6921  epoch_acc=0.5521
+
+[Epoch] 185/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6913  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6839  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+
+[Epoch] 186/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5645  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6716  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6877  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5625
+
+[Epoch] 187/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6761  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6906  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5625
+
+[Epoch] 188/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6925  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6880  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+
+[Epoch] 189/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6762  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6929  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6917  epoch_acc=0.5625
+
+[Epoch] 190/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7227  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6857  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6990  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6946  epoch_acc=0.5521
+
+[Epoch] 191/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5996  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6855  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6971  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6958  epoch_acc=0.5521
+
+[Epoch] 192/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6895  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6874  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6986  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6947  epoch_acc=0.5521
+
+[Epoch] 193/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6172  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6970  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6935  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5417
+
+[Epoch] 194/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6824  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6907  epoch_acc=0.5521
+
+[Epoch] 195/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6843  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6947  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6926  epoch_acc=0.5521
+
+[Epoch] 196/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6035  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7017  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6945  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6902  epoch_acc=0.5625
+
+[Epoch] 197/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6840  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5625
+
+[Epoch] 198/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7109  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7007  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6916  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6943  epoch_acc=0.5521
+
+[Epoch] 199/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5625  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6863  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6928  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 200/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7018  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6908  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+
+[Epoch] 201/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8320  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7009  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.7092  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.7211  epoch_acc=0.5000
+
+[Epoch] 202/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6484  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7433  avg_acc=0.3750
+[train_one_epoch] step=40  avg_loss=0.7407  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=0.7458  epoch_acc=0.4375
+
+[Epoch] 203/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7754  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6865  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6902  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6990  epoch_acc=0.5417
+
+[Epoch] 204/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7031  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6964  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7009  avg_acc=0.4375
+[train_one_epoch] Done. epoch_loss=0.6958  epoch_acc=0.4792
+
+[Epoch] 205/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7019  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6913  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6940  epoch_acc=0.5521
+
+[Epoch] 206/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5605  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6971  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6939  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6938  epoch_acc=0.5625
+
+[Epoch] 207/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8223  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6995  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6982  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6956  epoch_acc=0.5521
+
+[Epoch] 208/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5664  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6682  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6979  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6937  epoch_acc=0.5521
+
+[Epoch] 209/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6094  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7000  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7005  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6918  epoch_acc=0.5312
+
+[Epoch] 210/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7036  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6926  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6965  epoch_acc=0.5521
+
+[Epoch] 211/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6822  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6862  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 212/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6824  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6968  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6937  epoch_acc=0.5417
+
+[Epoch] 213/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6836  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6990  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6939  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+
+[Epoch] 214/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5586  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6905  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6853  epoch_acc=0.5625
+
+[Epoch] 215/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6615  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 216/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6813  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6909  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5625
+
+[Epoch] 217/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7109  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7030  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6954  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6936  epoch_acc=0.5521
+
+[Epoch] 218/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6944  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6915  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+
+[Epoch] 219/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7129  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6932  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6972  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5625
+
+[Epoch] 220/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8242  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6926  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6828  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 221/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5684  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6494  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6930  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 222/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7578  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6861  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+
+[Epoch] 223/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5723  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6893  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6889  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5625
+
+[Epoch] 224/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7005  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6939  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6923  epoch_acc=0.5521
+
+[Epoch] 225/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6829  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6848  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6927  epoch_acc=0.5625
+
+[Epoch] 226/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5703  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6731  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6781  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6827  epoch_acc=0.5625
+
+[Epoch] 227/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5547  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6788  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6928  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6876  epoch_acc=0.5625
+
+[Epoch] 228/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5957  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6741  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6913  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5521
+
+[Epoch] 229/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6661  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6712  avg_acc=0.6250
+[train_one_epoch] Done. epoch_loss=0.6926  epoch_acc=0.5625
+
+[Epoch] 230/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8301  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7026  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6983  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6959  epoch_acc=0.5625
+
+[Epoch] 231/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6843  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6932  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+
+[Epoch] 232/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8105  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7107  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6941  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6933  epoch_acc=0.5521
+
+[Epoch] 233/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7090  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6793  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6844  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6906  epoch_acc=0.5521
+
+[Epoch] 234/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6855  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6814  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6816  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 235/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8242  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6972  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6898  epoch_acc=0.5521
+
+[Epoch] 236/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6855  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6976  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6900  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5521
+
+[Epoch] 237/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6828  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5625
+
+[Epoch] 238/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8535  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6881  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6964  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6912  epoch_acc=0.5521
+
+[Epoch] 239/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7129  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7053  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7015  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6960  epoch_acc=0.5521
+
+[Epoch] 240/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6895  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6953  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.7006  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6952  epoch_acc=0.5521
+
+[Epoch] 241/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7070  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6838  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6850  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6903  epoch_acc=0.5521
+
+[Epoch] 242/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6706  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6787  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6923  epoch_acc=0.5521
+
+[Epoch] 243/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7091  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7013  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6956  epoch_acc=0.5521
+
+[Epoch] 244/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6803  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6846  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+
+[Epoch] 245/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8301  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6818  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6919  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6873  epoch_acc=0.5625
+
+[Epoch] 246/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7031  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7055  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6846  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5521
+
+[Epoch] 247/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8242  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6969  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6923  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6902  epoch_acc=0.5521
+
+[Epoch] 248/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7090  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6657  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6955  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6917  epoch_acc=0.5521
+
+[Epoch] 249/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5879  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6803  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6862  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+
+[Epoch] 250/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8359  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7077  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6980  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6927  epoch_acc=0.5521
+
+[Epoch] 251/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7031  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6881  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6902  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6921  epoch_acc=0.5521
+
+[Epoch] 252/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8184  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6948  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6907  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+
+[Epoch] 253/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6895  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7029  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6904  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5521
+
+[Epoch] 254/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6836  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6837  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6846  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6881  epoch_acc=0.5625
+
+[Epoch] 255/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5605  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6967  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6878  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6841  epoch_acc=0.5625
+
+[Epoch] 256/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6893  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6987  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5625
+
+[Epoch] 257/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6681  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6844  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6847  epoch_acc=0.5625
+
+[Epoch] 258/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5703  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6942  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6855  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6872  epoch_acc=0.5521
+
+[Epoch] 259/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7109  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6737  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6939  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6930  epoch_acc=0.5521
+
+[Epoch] 260/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6074  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6865  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6935  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6894  epoch_acc=0.5625
+
+[Epoch] 261/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7070  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6806  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6871  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6894  epoch_acc=0.5521
+
+[Epoch] 262/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6965  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6929  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6929  epoch_acc=0.5625
+
+[Epoch] 263/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7070  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6701  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6873  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5625
+
+[Epoch] 264/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6055  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7000  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6930  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5521
+
+[Epoch] 265/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7988  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6970  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6881  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+
+[Epoch] 266/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7070  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6729  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6913  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5625
+
+[Epoch] 267/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6818  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6740  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6855  epoch_acc=0.5625
+
+[Epoch] 268/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8398  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6918  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6936  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6861  epoch_acc=0.5625
+
+[Epoch] 269/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6850  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6920  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5625
+
+[Epoch] 270/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6914  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7146  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.6976  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6914  epoch_acc=0.5521
+
+[Epoch] 271/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6133  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6876  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+
+[Epoch] 272/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6984  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+
+[Epoch] 273/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5645  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6794  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6796  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6872  epoch_acc=0.5625
+
+[Epoch] 274/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6965  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6759  avg_acc=0.6250
+[train_one_epoch] Done. epoch_loss=0.6978  epoch_acc=0.5521
+
+[Epoch] 275/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8359  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6751  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6868  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6918  epoch_acc=0.5521
+
+[Epoch] 276/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7070  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6870  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6919  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5625
+
+[Epoch] 277/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7773  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7095  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6961  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5625
+
+[Epoch] 278/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5957  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6758  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6819  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6897  epoch_acc=0.5625
+
+[Epoch] 279/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5605  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6894  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6894  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5625
+
+[Epoch] 280/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6035  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6790  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6944  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6912  epoch_acc=0.5521
+
+[Epoch] 281/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6113  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6883  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6881  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5625
+
+[Epoch] 282/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6769  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+
+[Epoch] 283/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6855  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6774  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6851  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5521
+
+[Epoch] 284/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6751  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6926  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6908  epoch_acc=0.5521
+
+[Epoch] 285/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6289  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6768  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6894  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+
+[Epoch] 286/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7079  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6957  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6893  epoch_acc=0.5625
+
+[Epoch] 287/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8164  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6838  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6974  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6896  epoch_acc=0.5521
+
+[Epoch] 288/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7969  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6871  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6955  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5521
+
+[Epoch] 289/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7969  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6891  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6811  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6854  epoch_acc=0.5625
+
+[Epoch] 290/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6875  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6912  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6937  epoch_acc=0.5521
+
+[Epoch] 291/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5801  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6685  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6956  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6913  epoch_acc=0.5625
+
+[Epoch] 292/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6895  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6855  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5625
+
+[Epoch] 293/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6993  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6920  epoch_acc=0.5625
+
+[Epoch] 294/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7090  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6723  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6782  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5625
+
+[Epoch] 295/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5547  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6896  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6861  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6906  epoch_acc=0.5521
+
+[Epoch] 296/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7148  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6794  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6880  epoch_acc=0.5521
+
+[Epoch] 297/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7051  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6906  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6871  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6893  epoch_acc=0.5625
+
+[Epoch] 298/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6979  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5625
+
+[Epoch] 299/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5781  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7015  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6933  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 300/300
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6899  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[FINAL] Starting final evaluation...
+[FINAL] Loading global best checkpoint: /scratch/slurm_tmpdir/job_2086422/job_2086422/results/vit_b32_bfloat16_251110_1107/best model/best_checkpoint.pt
+[FINAL] Global best val_acc (from CV): 0.6041666666666666
+Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschenhals-Tiefe: 8
+[FINAL] Loaded front weights.
+[build_backbone] Built ViT-B/32 (pretrained=True) with ImageNet mean/std: (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+[FINAL] Rebuilt backbone 'vit_b32' and loaded weights.
+[FINAL] Test set: 33 samples | CSV=/scratch/slurm_tmpdir/job_2086422/job_2086422/input/jsons/test_labels.csv | ROOT=/scratch/slurm_tmpdir/job_2086422/job_2086422/input/test
+[FINAL] AMP enabled=True dtype=bfloat16
+[FINAL] step=1  running_acc=0.0000
+[FINAL] Accuracy on fixed set (/scratch/slurm_tmpdir/job_2086422/job_2086422/input/jsons/test_labels.csv @ /scratch/slurm_tmpdir/job_2086422/job_2086422/input/test): 0.5455
+=== Job beendet: Mon Nov 10 03:29:49 PM CET 2025 ===
+[INFO] Kopiere Ergebnisse zurück nach /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/vitb32_dropout_01_2086422 ...
+              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=34/38)         32,768   0%    0.00kB/s    0:00:00      361,462,484  99%  362.07MB/s    0:00:00 (xfr#1, to-chk=33/38)    361,462,484  99%  362.07MB/s    0:00:00 (xfr#1, to-chk=33/38)    361,463,886  99%  362.07MB/s    0:00:00 (xfr#2, to-chk=32/38)    361,465,288  99%  362.07MB/s    0:00:00 (xfr#3, to-chk=31/38)    361,466,690  99%  362.07MB/s    0:00:00 (xfr#4, to-chk=30/38)    361,468,092  99%  362.07MB/s    0:00:00 (xfr#5, to-chk=29/38)    361,469,494  99%  362.07MB/s    0:00:00 (xfr#6, to-chk=28/38)    361,470,896  99%  362.07MB/s    0:00:00 (xfr#7, to-chk=27/38)    361,472,298  99%  361.70MB/s    0:00:00 (xfr#8, to-chk=26/38)    361,473,700  99%  361.70MB/s    0:00:00 (xfr#9, to-chk=25/38)    361,475,102  99%  361.70MB/s    0:00:00 (xfr#10, to-chk=24/38)    361,476,504  99%  361.70MB/s    0:00:00 (xfr#11, to-chk=23/38)    361,477,906  99%  361.70MB/s    0:00:00 (xfr#12, to-chk=22/38)    361,479,308  99%  361.70MB/s    0:00:00 (xfr#13, to-chk=21/38)    361,480,710  99%  361.70MB/s    0:00:00 (xfr#14, to-chk=20/38)    361,482,112  99%  361.71MB/s    0:00:00 (xfr#15, to-chk=19/38)    361,483,514  99%  361.71MB/s    0:00:00 (xfr#16, to-chk=18/38)    361,484,916  99%  361.71MB/s    0:00:00 (xfr#17, to-chk=17/38)    361,486,318  99%  361.71MB/s    0:00:00 (xfr#18, to-chk=16/38)    361,487,720  99%  361.71MB/s    0:00:00 (xfr#19, to-chk=15/38)    361,489,122  99%  361.71MB/s    0:00:00 (xfr#20, to-chk=14/38)    361,490,524  99%  361.71MB/s    0:00:00 (xfr#21, to-chk=13/38)    361,491,926  99%  361.71MB/s    0:00:00 (xfr#22, to-chk=12/38)    361,493,328  99%  361.72MB/s    0:00:00 (xfr#23, to-chk=11/38)    361,494,730  99%  361.72MB/s    0:00:00 (xfr#24, to-chk=10/38)    361,496,132  99%  361.72MB/s    0:00:00 (xfr#25, to-chk=9/38)     361,497,534  99%  361.72MB/s    0:00:00 (xfr#26, to-chk=8/38)    361,498,936  99%  361.72MB/s    0:00:00 (xfr#27, to-chk=7/38)    361,500,338  99%  361.72MB/s    0:00:00 (xfr#28, to-chk=6/38)    361,501,740  99%  361.72MB/s    0:00:00 (xfr#29, to-chk=5/38)    361,503,142  99%  361.73MB/s    0:00:00 (xfr#30, to-chk=4/38)    361,504,544  99%  361.73MB/s    0:00:00 (xfr#31, to-chk=3/38)    361,505,946  99%  361.73MB/s    0:00:00 (xfr#32, to-chk=2/38)    361,507,348  99%  361.73MB/s    0:00:00 (xfr#33, to-chk=1/38)    361,508,750 100%  361.73MB/s    0:00:00 (xfr#34, to-chk=0/38)    361,508,750 100%  356.49MB/s    0:00:00 (xfr#34, to-chk=0/38)    361,508,750 100%  326.76MB/s    0:00:01 (xfr#34, to-chk=0/38)
+
+Number of files: 38 (reg: 34, dir: 4)
+Number of created files: 37 (reg: 34, dir: 3)
+Number of deleted files: 0
+Number of regular files transferred: 34
+Total file size: 361,508,750 bytes
+Total transferred file size: 361,508,750 bytes
+Literal data: 361,508,750 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.034 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 361,599,283
+Total bytes received: 685
+
+sent 361,599,283 bytes  received 685 bytes  241,066,645.33 bytes/sec
+total size is 361,508,750  speedup is 1.00
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc3n078
+Job ID: 2086422
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 18:24:03
+CPU Efficiency: 25.90% of 2-23:02:24 core-walltime
+Job Wall-clock time: 04:26:24
+Memory Utilized: 15.39 GB
+Memory Efficiency: 38.48% of 40.00 GB (40.00 GB/node)

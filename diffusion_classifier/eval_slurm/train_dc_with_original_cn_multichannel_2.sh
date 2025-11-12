@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=train-dc-with-original-cn-multichannel-2
+#SBATCH --job-name=train-dc-with-original-cn-multichannel-load-once
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
 #SBATCH --time=72:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/train_dc_with_original_cn_multichannel_2_%j.out
-#SBATCH --error=final_logs/train_dc_with_original_cn_multichannel_2_%j.err
+#SBATCH --output=final_logs/train_dc_with_original_cn_multichannel_load_once_%j.out
+#SBATCH --error=final_logs/train_dc_with_original_cn_multichannel_load_once_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/outputs"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="train_dc_with_original_cn_multichannel_2_${SLURM_JOB_ID}"
+RUN_NAME="train_dc_with_original_cn_multichannel_load_once_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -92,7 +92,9 @@ python adapter_multichannel/train_dc_with_original_cn_multichannel_2.py \
   --version 2-1 \
   --n_samples 8 4 2 \
   --to_keep   3 2 1 \
-  --cv_splits 3 \
+  --cv_splits 5 \
+  --cv_repeats 3 \
+  --epochs 20 \
   --use_xformers \
   --learn_adapter \
   --final_eval

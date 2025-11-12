@@ -269,12 +269,10 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
 
     pred_idx = remaining_prmpt_idxs[0]
 
-    # Zusätzlich: Differenzierbare Fehler über ALLE Klassen (für Training)
     all_prompt_indices = list(range(len(text_embeds)))
     errors_per_prompt = _mean_error_per_prompt(data, all_prompt_indices)  # [P], differentiable
-    errors_per_class = _mean_error_per_class(data, errors_per_prompt)  # [C], differentiable
 
-    return pred_idx, data, errors_per_class
+    return pred_idx, data, errors_per_prompt
 
 
 def eval_error_differentiable(
@@ -447,10 +445,6 @@ def _mean_error_per_class(data, class_to_prompts, fill_value=float('inf')):
 
 
 def _mean_error_per_prompt(data, prompt_indices):
-    """
-    Liefert Tensor [C] mit mittleren Fehlern pro Klasse/Prompt in Reihenfolge prompt_indices.
-    Fehlende Keys (falls adaptive Auswahl nicht alle enthält) werden mit +inf gefüllt.
-    """
     errs = []
     device = next(iter(data.values()))['pred_errors'].device if len(data) > 0 else torch.device('cpu')
     for pi in prompt_indices:
@@ -459,6 +453,40 @@ def _mean_error_per_prompt(data, prompt_indices):
         else:
             errs.append(torch.tensor(float('inf'), device=device))
     return torch.stack(errs, dim=0) 
+
+def mean_error_per_class_from_prompt_errors(
+    errors_per_prompt: torch.Tensor,        # [P]
+    prompt_to_class: torch.Tensor,          # [P] mit classidx je Prompt
+    num_classes: int = 2,
+    fill_value: float = float('inf'),
+):
+    """
+    Aggregiert mittlere Fehler je Klasse aus Fehlern je Prompt.
+    - errors_per_prompt: Tensor [P] (z. B. aus _mean_error_per_prompt)
+    - prompt_to_class:   Tensor [P] mit classidx pro Prompt (z. B. aus prompts_df.classidx)
+    - num_classes:       Anzahl Klassen (optional; sonst aus prompt_to_class abgeleitet)
+    - Rückgabe:          Tensor [C] mit Mittelwert je Klasse (fehlende -> +inf)
+    """
+    device = errors_per_prompt.device
+    if num_classes is None:
+        num_classes = int(prompt_to_class.max().item()) + 1
+
+    sums  = torch.zeros(num_classes, device=device, dtype=errors_per_prompt.dtype)
+    counts = torch.zeros(num_classes, device=device, dtype=errors_per_prompt.dtype)
+
+    # Fehlende Prompts hatten evtl. +inf → die ignorieren wir beim Mittelwert
+    finite_mask = torch.isfinite(errors_per_prompt)
+    if finite_mask.any():
+        cls_idx = prompt_to_class[finite_mask]
+        err_fin = errors_per_prompt[finite_mask]
+        sums.index_add_(0, cls_idx, err_fin)
+        one = torch.ones_like(err_fin)
+        counts.index_add_(0, cls_idx, one)
+
+    out = torch.full((num_classes,), fill_value, device=device, dtype=errors_per_prompt.dtype)
+    valid = counts > 0
+    out[valid] = sums[valid] / counts[valid]
+    return out
 
 def main():
     parser = argparse.ArgumentParser()

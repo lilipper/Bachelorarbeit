@@ -375,20 +375,20 @@ def main():
     labels = [y for _, y in all_rows]
     print(f"[IO] Found {len(all_rows)} samples.")
 
+    summary_rows = []
+    cv_scores = []
+    best_global_acc = -1.0
+    best_global_ckpt = None
+
+     # AMP / dtype
+    torch_dtype, use_amp, scaler = normalize_amp_and_scaler(args.dtype)
+    print(f"[AMP] device={device}  dtype={args.dtype}  use_amp={use_amp}")
+
     # --- Load SD backbone (frozen VAE/UNet/TextEncoder, scheduler) ---
     print("[SD] Building Stable Diffusion base...")
     vae, unet, tokenizer, text_encoder, scheduler, controlnet = build_sd2_1_base(
         dtype=args.dtype, use_xformers=args.use_xformers, train_all=False, version=args.version
     )
-
-    # --- Prompt bank & text embeddings ---
-    print(f"[Prompts] Loading prompts from: {args.prompts_csv}")
-    pb = PromptBank(args.prompts_csv)
-    prompt_embeds = pb.to_text_embeds(tokenizer, text_encoder, device)
-    prompt_to_class = pb.prompt_to_class.to(device)
-    num_classes = pb.num_classes
-    print(f"[Prompts] Loaded {len(pb.prompt_texts)} prompts over {num_classes} classes.")
-
     print("diffusers version:", diffusers.__version__)
     print("controlnet class:", controlnet.__class__.__name__)
     print("controlnet config in/out:", getattr(controlnet, "in_channels", None), getattr(controlnet, "out_channels", None))
@@ -399,18 +399,13 @@ def main():
     scheduler.set_timesteps(args.num_train_timesteps)
     print("[SD] Done. UNet/VAEs are frozen.")
 
-    try:
-        controlnet.enable_gradient_checkpointing()
-        print("[ControlNet] Enabled gradient checkpointing.")
-    except Exception:
-        print("[ControlNet] Gradient checkpointing not available.")
-
-    adapter = LatentMultiChannelAdapter(k_t=5, use_attn_pool=True).to(device)
-
-    summary_rows = []
-    cv_scores = []
-    best_global_acc = -1.0
-    best_global_ckpt = None
+    # --- Prompt bank & text embeddings ---
+    print(f"[Prompts] Loading prompts from: {args.prompts_csv}")
+    pb = PromptBank(args.prompts_csv)
+    prompt_embeds = pb.to_text_embeds(tokenizer, text_encoder, device)
+    prompt_to_class = pb.prompt_to_class.to(device)
+    num_classes = pb.num_classes
+    print(f"[Prompts] Loaded {len(pb.prompt_texts)} prompts over {num_classes} classes.")
 
     # Iterate RSKF folds
     print("[Train] Starting epochs...")
@@ -444,10 +439,14 @@ def main():
                                 num_workers=args.num_workers, pin_memory=True)
         print(f"[Data] Train batches: ~{len(train_loader)} | Val samples: {len(val_loader)}")
 
-         # AMP / dtype
-        torch_dtype, use_amp, scaler = normalize_amp_and_scaler(args.dtype)
-        print(f"[AMP] device={device}  dtype={args.dtype}  use_amp={use_amp}")
 
+        try:
+            controlnet.enable_gradient_checkpointing()
+            print("[ControlNet] Enabled gradient checkpointing.")
+        except Exception:
+            print("[ControlNet] Gradient checkpointing not available.")
+
+        adapter = LatentMultiChannelAdapter(k_t=5, use_attn_pool=True).to(device)
         param_groups = []
         if args.learn_adapter:
             param_groups.append({"params": adapter.parameters(), "lr": args.lr_adapter, "weight_decay": args.wd_adapter})
