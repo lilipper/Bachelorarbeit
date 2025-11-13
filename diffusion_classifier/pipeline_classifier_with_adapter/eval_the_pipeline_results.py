@@ -108,6 +108,8 @@ def evaluate_predictions(folder_path: str, prompts_csv_path: str, output_dir: st
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     cm_path = os.path.join(output_dir, "confusion_matrix.png")
     plt.savefig(cm_path, dpi=300)
+    cm_path_pdf = os.path.join(output_dir, "confusion_matrix.pdf")
+    plt.savefig(cm_path_pdf, bbox_inches="tight", pad_inches=0)
     print(f" Confusion matrix saved to: {cm_path}")
 
     # Optional: also save the text report for later reference

@@ -141,7 +141,7 @@ class LatentMultiChannelAdapter(nn.Module):
         super().__init__()
         self.use_attn_pool = use_attn_pool
         self.reduce_T_stride = reduce_T_stride
-        self.dropout = nn.Dropout3d(p=dropout_p)
+        # self.dropout = nn.Dropout3d(p=dropout_p)
         self.dw_t = nn.Conv3d(4, 4, kernel_size=(k_t,1,1), padding=(k_t//2,0,0), groups=4, bias=False)
         self.pw_mix = nn.Conv3d(4, 4, kernel_size=1)
         self.norm = nn.GroupNorm(4, 4)
@@ -157,12 +157,13 @@ class LatentMultiChannelAdapter(nn.Module):
         else:
             self.attn_mlp = None
         self.out_mix = nn.Conv2d(4, 4, kernel_size=1, bias=True)
+        self.dropout = nn.Dropout2d(p=dropout_p)
         
 
     def forward(self, latents):
         x = latents.permute(0, 2, 1, 3, 4).contiguous()
         residual = x
-        x = self.dropout(x)
+        # x = self.dropout(x)
         x = self.dw_t(x)
         x = self.pw_mix(x)
         x = self.norm(F.gelu(x) + residual)
@@ -175,6 +176,7 @@ class LatentMultiChannelAdapter(nn.Module):
         else:
             x = F.adaptive_avg_pool3d(x, output_size=(1, None, None)).squeeze(2)
         x = self.out_mix(x)
+        x = self.dropout(x)
         return x
 
 
@@ -671,6 +673,7 @@ def main():
         eargs_f.num_train_timesteps = ckpt["num_train_timesteps"]
         eargs_f.version   = ckpt["version"]
         eargs_f.learn_adapter = False
+        eargs_f.cond_scale = ckpt["cond_scale"]
 
         # Run validate() on the fixed test set
         final_acc = validate(

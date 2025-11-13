@@ -1,0 +1,26 @@
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_fwd")
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_bwd")
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/generative/networks/layers/vector_quantizer.py:86: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @torch.cuda.amp.autocast(enabled=False)
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/generative/networks/layers/vector_quantizer.py:124: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @torch.cuda.amp.autocast(enabled=False)
+Traceback (most recent call last):
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/adapter_multichannel/train_baseline_cn_without_cv_and_dropout.py", line 506, in <module>
+    main()
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/adapter_multichannel/train_baseline_cn_without_cv_and_dropout.py", line 394, in main
+    tr_loss, tr_acc = train_one_epoch(
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/adapter_multichannel/train_baseline_cn_without_cv_and_dropout.py", line 200, in train_one_epoch
+    logits = backbone(img_in)
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torchvision/models/vision_transformer.py", line 291, in forward
+    x = self._process_input(x)
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torchvision/models/vision_transformer.py", line 271, in _process_input
+    torch._assert(h == self.image_size, f"Wrong image height! Expected {self.image_size} but got {h}!")
+  File "/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torch/__init__.py", line 1777, in _assert
+    assert condition, message
+AssertionError: Wrong image height! Expected 224 but got 384!

@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=train-dc-dropout
+#SBATCH --job-name=train-dc-dropout-2d
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
 #SBATCH --time=72:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/train_dc_dropout_%j.out
-#SBATCH --error=final_logs/train_dc_dropout_%j.err
+#SBATCH --output=final_logs/train_dc_dropout_2d_%j.out
+#SBATCH --error=final_logs/train_dc_dropout_2d_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/outputs"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="train_dc_dropout_${SLURM_JOB_ID}"
+RUN_NAME="train_dc_dropout_2d_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -92,9 +92,9 @@ python adapter_multichannel/train_dc_with_original_cn_multichannel_dropout.py \
   --version 2-1 \
   --n_samples 8 4 2 \
   --to_keep   3 2 1 \
-  --epochs 150 \
-  --dropout_p 0.25 \
-  --dropout_p_controlnet 0.25 \
+  --epochs 200 \
+  --dropout_p 0.1 \
+  --dropout_p_controlnet 0.1 \
   --controlnet_spatial_dropout \
   --use_xformers \
   --learn_adapter \

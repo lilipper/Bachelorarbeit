@@ -9,7 +9,11 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import models as tvm, transforms as T
 
+from pytorch_grad_cam import GradCAM, GradCAMPlusPlus
+from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+
 import numpy as np
+from skimage import io
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 
@@ -19,6 +23,7 @@ from adapter_inject.thz_front_rgb_head import THzToRGBHead
 
 # ==== Dein Code/Imports aus dem Projekt ====
 import process_rdf as prdf
+import matplotlib.pyplot as plt
 from diffusion.datasets import get_target_dataset  # falls du das brauchst
 
 from diffusion.datasets import get_target_dataset
@@ -31,9 +36,43 @@ from pipeline_classifier_with_adapter.eval_the_pipeline_results import evaluate_
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+def _get_cam_target_layers(backbone):
+    name = backbone.__class__.__name__.lower()
+    if hasattr(backbone, "layer4"):
+        return [backbone.layer4[-1]]
+    if "convnext" in name and hasattr(backbone, "features"):
+        return [backbone.features[-1]]
+    if hasattr(backbone, "features"):
+        return [backbone.features]
+    return [backbone]
+
+def _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path, alpha=0.35):
+    cam = cam01
+    cam = cam - cam.min()
+    cam = cam / (cam.max() + 1e-8)
+    io.imsave(cam_path, (cam * 65535).astype(np.uint16), check_contrast=False)
+    cam_rgb = np.repeat(cam[..., None], 3, axis=2)
+    over = (1 - alpha) * rgb01 + alpha * cam_rgb
+    over = np.clip(over, 0.0, 1.0)
+    io.imsave(overlay_path, (over * 65535).astype(np.uint16), check_contrast=False)
+    plt.imshow(rgb01)
+    plt.imshow(cam01, cmap='jet', alpha=0.35)
+    plt.axis('off')
+    plt.tight_layout()
+    plt.savefig(cam_path.replace('.tif', '.pdf'), bbox_inches='tight', pad_inches=0)
+    plt.close()
+
 def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
                   img_out_size, final_dtype, use_amp_final, output_dir):
     total, correct = 0, 0
+    image_dir = os.path.join(output_dir, 'images')
+    os.makedirs(image_dir, exist_ok=True)
+    cams_dir = os.path.join(output_dir, "images_grad_cams")
+    os.makedirs(cams_dir, exist_ok=True)
+    target_layers = _get_cam_target_layers(backbone)
+    CamCls = GradCAMPlusPlus
+    cam = CamCls(model=backbone, target_layers=target_layers, use_cuda=(device=="cuda"))
+    formatstr = get_formatstr(len(loader) - 1)
     with torch.no_grad():
         for i, (vol, label, _) in enumerate(loader, start=1):
             vol = vol.to(device)
@@ -47,19 +86,42 @@ def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
                     img_rgb = F.interpolate(img_rgb, size=(img_out_size, img_out_size),
                                             mode="bilinear", align_corners=False)
                 img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
+                img_np = img_rgb.squeeze(0).detach().cpu().numpy()  
+                img_np = np.transpose(img_np, (1, 2, 0)) 
+                img_np = img_np - img_np.min()
+                img_np = img_np / (img_np.max() + 1e-8)
+                save_path = os.path.join(image_dir, f"sample_{label.item()}.tiff")
+                io.imsave(save_path, img_np, check_contrast=False)
                 logits = backbone(img_in)
                 preds = torch.argmax(logits, dim=1)
+                targets = [ClassifierOutputTarget(int(preds.item()))]
+                grayscale_cam = cam(input_tensor=img_in, targets=targets)[0]
+                rgb01 = img_rgb.squeeze(0).detach().cpu().numpy()
+                rgb01 = np.transpose(rgb01, (1, 2, 0))
+                rgb01 = np.clip(rgb01, 0.0, 1.0)
+                cam_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_cam.tiff")
+                overlay_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_overlay.tiff")
+                _save_cam_tiffs(grayscale_cam, rgb01, cam_path, overlay_path)
 
             correct += (preds == label).sum().item()
             total += label.numel()
             formatstr = get_formatstr(len(loader) - 1)
             torch.save(dict(pred=preds.detach().cpu(), label=label.cpu()), os.path.join(output_dir,  formatstr.format(i) + '.pt'))
 
+def encode_all_frames_with_vae(frames_vae, vae, scaling=0.18215):
+    posterior = vae.encode(frames_vae).latent_dist.mean.to(torch.float32)
+    latents = posterior * scaling
+    return latents
+
 def validate_dc(
     loader, front, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
     scheduler, eargs, img_size, torch_dtype, use_amp,  reduce="mean", output_dir=None
 ):
-    """Validation loop mirroring the training inference flow."""
+    image_dir = os.path.join(output_dir, 'images')
+    os.makedirs(image_dir, exist_ok=True)
+    cams_dir = os.path.join(output_dir, "images_grad_cams")
+    os.makedirs(cams_dir, exist_ok=True)
+
     front.eval()
     controlnet.eval()
     unet.eval()
@@ -76,35 +138,39 @@ def validate_dc(
             vol = vol.squeeze(1)
         label = label.to(device).long()
 
-        with torch.autocast(device_type="cuda", dtype=torch_dtype, enabled=use_amp):
-            img_rgb = front(vol.float())  # [B,3,H,W]
-            if img_rgb.shape[-2:] != out_hw:
-                img_rgb = F.interpolate(img_rgb, size=out_hw, mode="bilinear", align_corners=False)
-
-        img_rgb = img_rgb.clamp(0, 1)
-
-        with torch.amp.autocast('cuda', enabled=False):
-            x_in = (img_rgb * 2.0 - 1.0).to(torch.float32)
-            lat  = vae.encode(x_in).latent_dist.mean.to(torch.float32) * 0.18215
-
-            # --- ControlNet-Kanalzahl erkennen & passende Kondition vorbereiten ---
+        with torch.autocast(device_type="cuda" if device=="cuda" else "cpu", dtype=torch_dtype, enabled=use_amp):
+            x = vol.mean(dim=1)
+            B, T, H, W = x.shape
+            frames = x.unsqueeze(2).repeat(1,1,3,1,1).view(B*T,3,H,W)
+            frames = F.interpolate(frames, size=out_hw, mode="bilinear", align_corners=False)
+            frames = frames.clamp(0,1)*2-1
+            lat_chunks = []
+            bt = frames.shape[0]
+            chunk = getattr(eargs, "vae_chunk", 256)
+            with torch.no_grad():
+                for s in range(0, bt, chunk):
+                    lat_chunks.append(encode_all_frames_with_vae(frames[s:s+chunk], vae, scaling=0.18215))
+            latents_flat = torch.cat(lat_chunks, dim=0)
+            lat_stack = latents_flat.view(B, T, 4, latent_size, latent_size)
+            lat = front(lat_stack)
             try:
                 cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
             except Exception:
                 cn_in_ch = getattr(controlnet, "in_channels", 4)
 
-            latent_hw = tuple(lat.shape[-2:])
             if cn_in_ch == 3:
-                control_cond_full = (img_rgb * 2.0 - 1.0)
-                control_cond_lat  = F.interpolate(control_cond_full, size=latent_hw,
-                                                mode="bilinear", align_corners=False)
-            else:
-                control_cond_lat = None
-
-            if cn_in_ch == 3:
-                control_cond_img = (img_rgb * 2.0 - 1.0)  # [B,3,img_size,img_size]
+                with torch.no_grad():
+                    control_cond_img = vae.decode(lat / 0.18215).sample
             else:
                 control_cond_img = None
+
+            imgs01 = ((control_cond_img.detach().float().clamp(-1, 1) + 1.0) / 2.0).cpu() 
+            Bc = imgs01.shape[0]
+            for bi in range(Bc):
+                arr = imgs01[bi].numpy() 
+                arr = np.transpose(arr, (1, 2, 0))  
+                save_path = os.path.join(image_dir, f"{formatstr.format(step)}_{label.item()}_{bi:02d}.tiff")
+                io.imsave(save_path, arr, check_contrast=False)
 
             B = lat.size(0)
             errors_list = []
@@ -129,7 +195,40 @@ def validate_dc(
             class_errors_batch = pool_prompt_errors_to_class_errors_batch(
                 errors_per_prompt, prompt_to_class, num_classes, reduce=reduce
             )  # [B, C]
-            preds = torch.argmin(class_errors_batch, dim=1)  # [B]
+            preds = torch.argmin(class_errors_batch, dim=1)  
+
+            if control_cond_img is None:
+                with torch.no_grad():
+                    decoded = vae.decode(lat / 0.18215).sample
+                img_for_cam = ((decoded.clamp(-1, 1) + 1.0) / 2.0).detach()
+            else:
+                img_for_cam = ((control_cond_img.clamp(-1, 1) + 1.0) / 2.0).detach()
+
+            img_for_cam = img_for_cam.clone().to(lat.device).requires_grad_(True)
+
+            loss_list = []
+            for bi in range(class_errors_batch.size(0)):
+                c = int(preds[bi].item())
+                loss_list.append(class_errors_batch[bi, c])
+            loss = torch.stack(loss_list).mean()
+
+            for p in unet.parameters():
+                p.requires_grad_(False)
+            if controlnet is not None:
+                for p in controlnet.parameters():
+                    p.requires_grad_(False)
+
+            grads = torch.autograd.grad(loss, img_for_cam, retain_graph=False, create_graph=False)[0]
+            sal = grads.abs().sum(dim=1)
+            sal = sal / (sal.amax(dim=(1, 2), keepdim=True) + 1e-8)
+
+            for bi in range(sal.size(0)):
+                cam01 = sal[bi].detach().cpu().numpy()
+                rgb01 = img_for_cam[bi].detach().cpu().numpy()
+                rgb01 = np.transpose(rgb01, (1, 2, 0))
+                cam_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_cam_errgrad.tiff")
+                overlay_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_overlay_errgrad.tiff")
+                _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path)
 
         correct += (preds == label).sum().item()
         total += label.numel()
@@ -152,7 +251,7 @@ def parse_args():
     # Auswahl
     p.add_argument('--classifier', required=True, choices=('diffusion', 'resnet50', "vit_b_16", "vit_b_32", "convnext_tiny"))       # z. B. diffusion, resnet50
     p.add_argument('--train_head', action='store_true')  # nur für torchvision-classifier
-    p.add_argument('--adapter', action='store_true')  # z. B. feedback rgb
+    p.add_argument('--adapter', required=True, choices=("rgb", "cn_wrapper", "latent"))  # z. B. feedback rgb
 
     # Diffusion/Eval
     p.add_argument('--version',  type=str, default='2-1')
@@ -190,7 +289,7 @@ def main(args):
     # Dataset
     ds = get_target_dataset(args.dataset, train=args.split=='train', transform=get_transform(args.img_size))
     ds_loader = DataLoader(ds, batch_size=1, shuffle=False,
-                                  num_workers=args.num_workers, pin_memory=True)
+                                  num_workers=args.n_workers, pin_memory=True)
     if args.dtype=='float16': embeds = embeds.half()
 
     # Ausgabeordner

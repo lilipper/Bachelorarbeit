@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=convnext_tiny_dropout_01
+#SBATCH --job-name=convnext_tiny_dropout_untrained
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/convnext_tiny_dropout_01_%j.out
-#SBATCH --error=final_logs/convnext_tiny_dropout_01_%j.err
+#SBATCH --output=final_logs/convnext_tiny_dropout_untrained_%j.out
+#SBATCH --error=final_logs/convnext_tiny_dropout_untrained_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/final_eval"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="convnext_tiny_dropout_01_${SLURM_JOB_ID}"
+RUN_NAME="convnext_tiny_dropout_untrained_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -91,7 +91,6 @@ python adapter_multichannel/train_baseline_cn_without_cv_and_dropout.py \
   --train_csv  "$LCL_INPUT/jsons/train_labels.csv" \
   --val_csv    "$LCL_INPUT/jsons/test_labels.csv"  \
   --backbone convnext_tiny \
-  --pretrained \
   --epochs 700 \
   --dropout_p 0.1 \
   --batch_size 2 \
