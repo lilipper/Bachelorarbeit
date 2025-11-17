@@ -405,7 +405,7 @@ def main():
                 "img_out_size": img_out_size,
                 "learn_front": args.learn_front,
                 "train_backbone": args.train_backbone,
-                "front_state_dict": front.state_dict(),
+                "adapter_state_dict": front.state_dict(),
                 "backbone_state_dict": backbone.state_dict(),
                 "num_classes": args.num_classes,
                 "imagenet_mean": mean_std[0],
@@ -430,7 +430,7 @@ def main():
             target_T=64,
             stride_T=4
         ).to(device)
-        front.load_state_dict(ckpt["front_state_dict"], strict=False)
+        front.load_state_dict(ckpt["adapter_state_dict"], strict=False)
         front.eval()
         print("[FINAL] Loaded front weights.")
         final_eval_path = os.path.join(save_dir, "final_eval")

@@ -15,11 +15,11 @@ from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 import numpy as np
 from skimage import io
 import pandas as pd
-from sklearn.model_selection import StratifiedKFold
 
-from eval_prob_adaptive import eval_prob_adaptive_differentiable, pool_prompt_errors_to_class_errors_batch
-from transformers import logging as hf_logging
+from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from adapter_inject.thz_front_rgb_head import THzToRGBHead
+from adapter_multichannel.train_baseline_cn_without_cv_and_dropout import ControlNetAdapterWrapper
+from adapter_multichannel.train_dc_with_original_cn_multichannel_dropout import LatentMultiChannelAdapter
 
 # ==== Dein Code/Imports aus dem Projekt ====
 import process_rdf as prdf
@@ -27,7 +27,6 @@ import matplotlib.pyplot as plt
 from diffusion.datasets import get_target_dataset  # falls du das brauchst
 
 from diffusion.datasets import get_target_dataset
-from diffusion.models import get_sd_model
 from pipeline_classifier_with_adapter.core.io import get_transform, load_prompts_csv, load_thz_indexed
 from adapter.help_functions import build_sd2_1_base, load_class_text_embeds, PromptBank
 from diffusion.utils import LOG_DIR, get_formatstr
@@ -36,8 +35,31 @@ from pipeline_classifier_with_adapter.eval_the_pipeline_results import evaluate_
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+def _is_vit_backbone(backbone):
+    name = backbone.__class__.__name__.lower()
+    return ("visiontransformer" in name) or ("vit" in name)
+
+
+def vit_reshape_transform(tensor):
+   
+    B, seq_len, C = tensor.shape
+    n_patches = seq_len - 1  
+    h = w = int(n_patches ** 0.5)  
+    x = tensor[:, 1:, :]             
+    x = x.reshape(B, h, w, C)        
+    x = x.permute(0, 3, 1, 2)         
+    return x
+
+
 def _get_cam_target_layers(backbone):
     name = backbone.__class__.__name__.lower()
+
+    if _is_vit_backbone(backbone):
+        try:
+            last_block = list(backbone.encoder.layers.children())[-1]
+            return [last_block.ln_1]
+        except Exception:
+            return [backbone.encoder]
     if hasattr(backbone, "layer4"):
         return [backbone.layer4[-1]]
     if "convnext" in name and hasattr(backbone, "features"):
@@ -45,6 +67,7 @@ def _get_cam_target_layers(backbone):
     if hasattr(backbone, "features"):
         return [backbone.features]
     return [backbone]
+
 
 def _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path, alpha=0.35):
     cam = cam01
@@ -59,7 +82,7 @@ def _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path, alpha=0.35):
     plt.imshow(cam01, cmap='jet', alpha=0.35)
     plt.axis('off')
     plt.tight_layout()
-    plt.savefig(cam_path.replace('.tif', '.pdf'), bbox_inches='tight', pad_inches=0)
+    plt.savefig(cam_path.replace('.tiff', '.pdf'), bbox_inches='tight', pad_inches=0)
     plt.close()
 
 def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
@@ -71,42 +94,50 @@ def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
     os.makedirs(cams_dir, exist_ok=True)
     target_layers = _get_cam_target_layers(backbone)
     CamCls = GradCAMPlusPlus
-    cam = CamCls(model=backbone, target_layers=target_layers, use_cuda=(device=="cuda"))
+    is_vit = _is_vit_backbone(backbone)
+    cam = CamCls(
+        model=backbone,
+        target_layers=target_layers,
+        reshape_transform=vit_reshape_transform if is_vit else None
+    )
     formatstr = get_formatstr(len(loader) - 1)
-    with torch.no_grad():
-        for i, (vol, label, _) in enumerate(loader, start=1):
-            vol = vol.to(device)
-            if vol.dim() == 6:
-                vol = vol.squeeze(1)
-            label = label.to(device).long()
+    for i, (vol, label, _) in enumerate(loader, start=1):
+        vol = vol.to(device)
+        if vol.dim() == 6:
+            vol = vol.squeeze(1)
+        label = label.to(device).long()
 
-            with torch.autocast(device_type="cuda", dtype=final_dtype, enabled=use_amp_final):
-                img_rgb = front(vol)
-                if img_rgb.shape[-2] != img_out_size or img_rgb.shape[-1] != img_out_size:
-                    img_rgb = F.interpolate(img_rgb, size=(img_out_size, img_out_size),
-                                            mode="bilinear", align_corners=False)
-                img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
-                img_np = img_rgb.squeeze(0).detach().cpu().numpy()  
-                img_np = np.transpose(img_np, (1, 2, 0)) 
-                img_np = img_np - img_np.min()
-                img_np = img_np / (img_np.max() + 1e-8)
-                save_path = os.path.join(image_dir, f"sample_{label.item()}.tiff")
-                io.imsave(save_path, img_np, check_contrast=False)
-                logits = backbone(img_in)
-                preds = torch.argmax(logits, dim=1)
-                targets = [ClassifierOutputTarget(int(preds.item()))]
-                grayscale_cam = cam(input_tensor=img_in, targets=targets)[0]
-                rgb01 = img_rgb.squeeze(0).detach().cpu().numpy()
-                rgb01 = np.transpose(rgb01, (1, 2, 0))
-                rgb01 = np.clip(rgb01, 0.0, 1.0)
-                cam_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_cam.tiff")
-                overlay_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_overlay.tiff")
-                _save_cam_tiffs(grayscale_cam, rgb01, cam_path, overlay_path)
+        with torch.autocast(device_type="cuda", dtype=final_dtype, enabled=use_amp_final):
+            img_rgb = front(vol)
+            if img_rgb.shape[-2] != img_out_size or img_rgb.shape[-1] != img_out_size:
+                img_rgb = F.interpolate(img_rgb, size=(img_out_size, img_out_size),
+                                        mode="bilinear", align_corners=False)
+            img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
+            img_np = img_rgb.squeeze(0).detach().cpu().numpy()  
+            img_np = np.transpose(img_np, (1, 2, 0)) 
+            img_np = img_np - img_np.min()
+            img_np = img_np / (img_np.max() + 1e-8)
+            save_path = os.path.join(image_dir, f"sample_{label.item()}.tiff")
+            io.imsave(save_path, img_np, check_contrast=False)
+            logits = backbone(img_in)
+            preds = torch.argmax(logits, dim=1)
+            targets = [ClassifierOutputTarget(int(preds.item()))]
+            grayscale_cam = cam(input_tensor=img_in, targets=targets)[0]
+            rgb01 = img_rgb.squeeze(0).detach().cpu().numpy()
+            rgb01 = np.transpose(rgb01, (1, 2, 0))
+            rgb01 = np.clip(rgb01, 0.0, 1.0)
+            cam_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_cam.tiff")
+            overlay_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_overlay.tiff")
+            _save_cam_tiffs(grayscale_cam, rgb01, cam_path, overlay_path)
 
-            correct += (preds == label).sum().item()
-            total += label.numel()
-            formatstr = get_formatstr(len(loader) - 1)
-            torch.save(dict(pred=preds.detach().cpu(), label=label.cpu()), os.path.join(output_dir,  formatstr.format(i) + '.pt'))
+        correct += (preds == label).sum().item()
+        total += label.numel()
+        formatstr = get_formatstr(len(loader) - 1)
+        torch.save(dict(pred=preds.detach().cpu(), label=label.cpu()), os.path.join(output_dir,  formatstr.format(i) + '.pt'))
+    final_acc = correct / max(1, total)
+    print(f"[validate_base] Done. val_acc={final_acc:.4f}")
+    return final_acc
+
 
 def encode_all_frames_with_vae(frames_vae, vae, scaling=0.18215):
     posterior = vae.encode(frames_vae).latent_dist.mean.to(torch.float32)
@@ -159,8 +190,10 @@ def validate_dc(
                 cn_in_ch = getattr(controlnet, "in_channels", 4)
 
             if cn_in_ch == 3:
-                with torch.no_grad():
-                    control_cond_img = vae.decode(lat / 0.18215).sample
+                control_cond_img = vae.decode(lat / 0.18215).sample  # ohne no_grad
+                control_cond_img = ((control_cond_img.clamp(-1, 1) + 1.0) / 2.0)
+                control_cond_img = control_cond_img.to(lat.device)
+                control_cond_img.requires_grad_(True)
             else:
                 control_cond_img = None
 
@@ -176,7 +209,7 @@ def validate_dc(
             errors_list = []
             for i in range(B):
                 cond_to_pass = control_cond_img[i:i+1] if control_cond_img is not None else None
-                _, _, epp_i = eval_prob_adaptive_differentiable(
+                _, _, class_errors_i = eval_prob_adaptive_differentiable(
                     unet=unet,
                     latent=lat[i:i+1],
                     text_embeds=prompt_embeds,
@@ -187,15 +220,11 @@ def validate_dc(
                     all_noise=None,
                     controlnet_cond=cond_to_pass
                 )
-                if epp_i.dim() == 1:
-                    epp_i = epp_i.unsqueeze(0)
-                errors_list.append(epp_i)
-            errors_per_prompt = torch.cat(errors_list, dim=0)  # [B, P]
+                errors_list.append(class_errors_i)
 
-            class_errors_batch = pool_prompt_errors_to_class_errors_batch(
-                errors_per_prompt, prompt_to_class, num_classes, reduce=reduce
-            )  # [B, C]
-            preds = torch.argmin(class_errors_batch, dim=1)  
+            errors = torch.stack(errors_list, dim=0).to(label.dtype if label.is_floating_point() else torch.float32)
+            logits = -errors
+            preds = torch.argmax(logits, dim=1) 
 
             if control_cond_img is None:
                 with torch.no_grad():
@@ -206,11 +235,8 @@ def validate_dc(
 
             img_for_cam = img_for_cam.clone().to(lat.device).requires_grad_(True)
 
-            loss_list = []
-            for bi in range(class_errors_batch.size(0)):
-                c = int(preds[bi].item())
-                loss_list.append(class_errors_batch[bi, c])
-            loss = torch.stack(loss_list).mean()
+            B = errors.size(0)  
+            loss = errors[torch.arange(B, device=errors.device), preds].mean()
 
             for p in unet.parameters():
                 p.requires_grad_(False)
@@ -232,52 +258,29 @@ def validate_dc(
 
         correct += (preds == label).sum().item()
         total += label.numel()
-
+        torch.save(dict(errors=errors.detach().cpu(), pred=preds.detach().cpu(), label=label), fname)
         if step % 20 == 1:
             print(f"[validate] step={step}  running_acc={correct/max(1,total):.4f}")
 
     val_acc = correct / max(1, total)
     print(f"[validate] Done. val_acc={val_acc:.4f}")
-    torch.save(dict(errors=errors_per_prompt.detach().cpu(), pred=preds.detach().cpu(), label=label), fname)
+    
     return val_acc
 
 def parse_args():
     p = argparse.ArgumentParser()
     # Daten
-    p.add_argument('--dataset', required=True)
+    p.add_argument('--dataset', default='thz_for_adapter', type=str)
     p.add_argument('--pretrained_path', default=None, required=True)
     p.add_argument('--split', default='test', choices=['train','test'])
-    p.add_argument('--img_size', type=int, default=512)
     # Auswahl
-    p.add_argument('--classifier', required=True, choices=('diffusion', 'resnet50', "vit_b_16", "vit_b_32", "convnext_tiny"))       # z. B. diffusion, resnet50
-    p.add_argument('--train_head', action='store_true')  # nur für torchvision-classifier
-    p.add_argument('--adapter', required=True, choices=("rgb", "cn_wrapper", "latent"))  # z. B. feedback rgb
-
-    # Diffusion/Eval
-    p.add_argument('--version',  type=str, default='2-1')
-    p.add_argument('--prompt_path', required=True)
-    p.add_argument('--dtype', default='float16', choices=('float16','float32'))
-    p.add_argument('--n_trials', type=int, default=2)
-    p.add_argument('--n_samples', nargs='+', type=int, default=[8,16,32])
-    p.add_argument('--to_keep', nargs='+', type=int, default=[4,3,1])
-    p.add_argument('--loss', default='l2', choices=('l1','l2','huber'))
-    p.add_argument('--noise_path', default=None)
-    # THz
-    p.add_argument('--thz_path', default=None)
-    # Adapter-Args
-    p.add_argument('--feedback_ckpt', default=None)
-    p.add_argument('--rgb_dir', default=None)
+    p.add_argument('--classifier', required=True, choices=('diffusion', 'resnet50', "vit_b_16", "vit_b_32", "convnext_tiny")) 
+    p.add_argument('--adapter', required=True, choices=("rgb", "cn_wrapper", "latent"))  
 
     #output
-    p.add_argument('--output_dir', default='./data')
+    p.add_argument('--output_dir', default='./results_eval_pipeline', type=str)
 
-    #for diffusion-classifier
-    p.add_argument('--batch_size', '-b', type=int, default=32)
-    p.add_argument('--subset_path', type=str, default=None)
-    p.add_argument('--interpolation', type=str, default='bicubic')
-    p.add_argument('--extra', type=str, default=None)
     p.add_argument('--n_workers', type=int, default=1)
-    p.add_argument('--worker_idx', type=int, default=0)
 
     return p.parse_args()
 
@@ -286,11 +289,12 @@ def main(args):
     torch.backends.cudnn.benchmark = True
 
     ckpt = torch.load(args.pretrained_path, map_location='cpu')
+    img_size_ckpt = ckpt["img_size"] if "img_size" in ckpt else ckpt.get("img_out_size", 224)
     # Dataset
-    ds = get_target_dataset(args.dataset, train=args.split=='train', transform=get_transform(args.img_size))
+    ds = get_target_dataset(args.dataset, train=args.split=='train')
     ds_loader = DataLoader(ds, batch_size=1, shuffle=False,
                                   num_workers=args.n_workers, pin_memory=True)
-    if args.dtype=='float16': embeds = embeds.half()
+    if ckpt["dtype"]=='float16': embeds = embeds.half()
 
     # Ausgabeordner
     from datetime import datetime
@@ -301,13 +305,7 @@ def main(args):
     os.makedirs(output_dir, exist_ok=True)
     result_dir = os.path.join(output_dir, 'results')
     os.makedirs(result_dir, exist_ok=True)
-    # Adapter bauen
-    adapter = None
-    if args.adapter:
-        print("Lade RGB-Adapter...")
-        front_f = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
-        front_f.load_state_dict(ckpt["front_state_dict"], strict=False)
-        front_f.eval()
+    
 
     # Classifier bauen
     'TODO: Mehrere Classifier unterstützen'
@@ -317,8 +315,11 @@ def main(args):
         vae_f, unet_f, tokenizer_f, text_encoder_f, scheduler_f, controlnet_f = build_sd2_1_base(
             dtype=ckpt["dtype"], use_xformers=False, train_all=False, version=ckpt["version"]
         )
-        unet_f.eval()
-        pb_f = PromptBank(args.prompt_path)
+        unet_f = unet_f.to(device).eval()
+        vae_f = vae_f.to(device).eval()
+        controlnet_f.base.load_state_dict(ckpt["controlnet_state_dict"], strict=False)
+        controlnet_f = controlnet_f.to(device).eval()
+        pb_f = PromptBank(ckpt["prompts_csv"])
         prompt_embeds_f = pb_f.to_text_embeds(tokenizer_f, text_encoder_f, device)
         prompt_to_class_f = pb_f.prompt_to_class.to(device)
         num_classes_f = pb_f.num_classes
@@ -328,11 +329,46 @@ def main(args):
         num_classes = ckpt["num_classes"]
         imagenet_mean = tuple(ckpt["imagenet_mean"])
         imagenet_std = tuple(ckpt["imagenet_std"])
-        img_out_size = ckpt["img_out_size"]
 
-        backbone, _, _ = build_backbone(backbone_name, num_classes, pretrained=False)
+        backbone, expected_size, mean_std = build_backbone(backbone_name, num_classes, pretrained=True)
         backbone.load_state_dict(ckpt["backbone_state_dict"], strict=False)
         backbone = backbone.to(device).eval()
+
+    # Adapter bauen
+    adapter = None
+    weights_adapter = ckpt["adapter_state_dict"] if "adapter_state_dict" in ckpt else ckpt["front_state_dict"]
+    if args.adapter == "rgb":
+        print("Lade RGB-Adapter...")
+        front_f = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
+        front_f.load_state_dict(weights_adapter, strict=False, assign=True)
+        front_f.eval()
+    elif args.adapter == "cn_wrapper":
+        print("Lade ControlNet-Wrapper Adapter...")
+        controlnet_cfg = dict(
+            spatial_dims=3,
+            num_res_blocks=(2, 2, 2, 2),
+            num_channels=(32, 64, 64, 64),
+            attention_levels=(False, False, False, False),
+            conditioning_embedding_in_channels=2,
+            conditioning_embedding_num_channels=(32, 64, 64, 64),
+            with_conditioning=False,
+        )
+        front_f = ControlNetAdapterWrapper(
+            controlnet_cfg=controlnet_cfg,
+            in_channels=2,
+            out_size=expected_size,
+            target_T=64,
+            stride_T=4
+        ).to(device)
+        front_f.load_state_dict(weights_adapter, strict=False, assign=True)
+        front_f.eval()
+    elif args.adapter == "latent":
+        print("Lade Latent-Adapter...")
+        front_f = LatentMultiChannelAdapter(k_t=5, use_attn_pool=True).to(device)
+        front_f.load_state_dict(weights_adapter, strict=False, assign=True)
+        front_f.eval()
+    else:
+        raise ValueError(f"Unbekannter Adapter-Typ: {args.adapter}")
 
     if args.classifier == "diffusion":
         class FE: pass
@@ -355,29 +391,30 @@ def main(args):
         final_acc = validate_dc(
         ds_loader, front_f, unet_f, controlnet_f, vae_f,
         prompt_embeds_f, prompt_to_class_f, num_classes_f,
-        scheduler_f, eargs_f, ckpt["img_size"],
+        scheduler_f, eargs_f, img_size_ckpt,
         torch_dtype=final_torch_dtype, use_amp=use_amp_final, reduce="mean", output_dir=result_dir
         )
         print(f"Final Accuracy: {final_acc:.4f}")
         
         
     else:
-        validate_base(
-            ds_loader, front_f if args.adapter else nn.Identity(),
+        final_acc = validate_base(
+            ds_loader, front_f,
             backbone, imagenet_mean, imagenet_std,
-            img_out_size, final_dtype=torch.float32,
+            img_size_ckpt, final_dtype=torch.float32,
             use_amp_final=False,
             output_dir=result_dir
         )
-        
+        print(f"Final Accuracy: {final_acc:.4f}")
     try: 
         evaluate_predictions(
             result_dir,
-            args.prompt_path,
-            output_dir=os.path.join(output_dir, "evaluation")
+            output_dir=os.path.join(output_dir, "evaluation"),
+            prompts_csv_path=ckpt.get("prompts_csv", None)
         )
+        print(f"Results evaluation completed successfully.")
     except Exception as e:
-        print(f"Fehler bei der Auswertung der Vorhersagen: {e}")
+        print(f"Error in evaluation: {e}")
 
 
 if __name__ == "__main__":

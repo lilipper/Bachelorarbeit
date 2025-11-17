@@ -18,3 +18,4 @@ diffusion_classifier\runs
 *.safethensors
 *.pt
 */Slurm
+*/results_eval_pipeline

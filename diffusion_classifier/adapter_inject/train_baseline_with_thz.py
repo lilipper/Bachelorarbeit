@@ -16,7 +16,7 @@ from torchvision import models as tv_models  # torchvision backbones
 
 # Your modules
 from diffusion.datasets import ThzDataset
-from thz_front_rgb_head import THzToRGBHead
+from adapter_inject.thz_front_rgb_head import THzToRGBHead
 from adapter.help_functions import read_csv_pairs, write_csv_pairs
 
 

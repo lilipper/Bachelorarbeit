@@ -92,7 +92,7 @@ python adapter_multichannel/train_dc_with_original_cn_multichannel_dropout.py \
   --version 2-1 \
   --n_samples 8 4 2 \
   --to_keep   3 2 1 \
-  --epochs 200 \
+  --epochs 123 \
   --dropout_p 0.1 \
   --dropout_p_controlnet 0.1 \
   --controlnet_spatial_dropout \
