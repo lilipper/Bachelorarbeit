@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=train-dc-dropout-2d-SGD
+#SBATCH --job-name=vitb16_dropout_pretrained-SGD
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
-#SBATCH --time=72:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/train_dc_dropout_2d_SGD_%j.out
-#SBATCH --error=final_logs/train_dc_dropout_2d_SGD_%j.err
+#SBATCH --output=final_logs/vitb16_dropout_pretrained_SGD_%j.out
+#SBATCH --error=final_logs/vitb16_dropout_pretrained_SGD_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -23,8 +23,8 @@ WORKSPACE_BASE="/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_
 INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
-OUTPUT_BASE="$WORKSPACE_BASE/outputs"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="train_dc_dropout_2d_SGD_${SLURM_JOB_ID}"
+OUTPUT_BASE="$WORKSPACE_BASE/final_eval"                       # Ziel für Ergebnisse auf Workspace
+RUN_NAME="vitb16_dropout_pretrained_SGD_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -83,21 +83,21 @@ if torch.cuda.is_available():
     y = m(x); print("3D conv smoke test OK:", y.shape)
 PY
 
-python adapter_multichannel/train_dc_with_original_cn_multichannel_dropout.py \
+########## 🚀 Training – liest/schreibt NUR auf lokaler SSD
+# WICHTIG: Pfade auf $LCL_INPUT und $LCL_RESULTS umbiegen
+python adapter_multichannel/train_baseline_cn_without_cv_and_dropout_2.py \
   --data_train "$LCL_INPUT/train" \
   --data_test  "$LCL_INPUT/test"  \
   --train_csv  "$LCL_INPUT/jsons/train_labels.csv" \
-  --test_csv    "$LCL_INPUT/jsons/test_labels.csv"  \
-  --prompts_csv /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/prompts/thz_prompts.csv \
-  --version 2-1 \
-  --n_samples 8 4 2 \
-  --to_keep   3 2 1 \
-  --epochs 200 \
+  --val_csv    "$LCL_INPUT/jsons/test_labels.csv"  \
+  --backbone vit_b16 \
+  --epochs 600 \
   --dropout_p 0.1 \
-  --dropout_p_controlnet 0.1 \
-  --controlnet_spatial_dropout \
-  --use_xformers \
-  --learn_adapter \
+  --batch_size 2 \
+  --dtype bfloat16 \
+  --learn_front \
+  --pretrained \
+  --train_backbone \
   --final_eval \
   --save_dir "$LCL_RESULTS"
 

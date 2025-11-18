@@ -19,3 +19,5 @@ diffusion_classifier\runs
 *.pt
 */Slurm
 */results_eval_pipeline
+*/results_for_thesis_evaluation
+*/log_curves

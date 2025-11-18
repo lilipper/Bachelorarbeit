@@ -460,7 +460,7 @@ def main():
         param_groups.append({"params": controlnet.parameters(), "lr": args.lr_controlnet, "weight_decay": args.wd_controlnet})
         print("[OPT] ControlNet parameters will be trained.")
 
-        opt = torch.optim.AdamW(param_groups)
+        opt = torch.optim.SGD(param_groups, momentum=0.9)
 
         print("[DEBUG] Trainable parameter groups:")
         for name, p in list(adapter.named_parameters())[:3]:

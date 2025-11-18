@@ -25,7 +25,7 @@ def evaluate_predictions(folder_path: str, output_dir: str, prompts_csv_path: st
     for f in tqdm(files, desc="Loading results"):
         try:
             data = torch.load(os.path.join(folder_path, f), map_location=torch.device("cpu"))
-            all_preds.append(data["pred"])
+            all_preds.append(data["pred"]) if "pred" in data else all_preds.append(data["preds"])
             all_labels.append(data["label"])
         except Exception as e:
             print(f"\nWarning: Could not load or parse file {f}. Error: {e}")

@@ -1,3 +1,5 @@
+import os
+from eval_the_pipeline_results import evaluate_predictions
 import torch, tqdm
 import os, copy, time, json, argparse, random
 from pathlib import Path
@@ -6,21 +8,36 @@ from typing import Tuple, Optional, List
 from eval_pipeline import main as pipeline
 
 
+folders_cv_repeated = [ 
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/convnext_tiny_pretrained_cn_wrapper_2017198",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/resnet50_train_pretrained_cn_wrapper_2017199",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vit_b_32_pretrained_cn_wrapper_2011485",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vitb16_pretrained_cn_wrapper_2050294",
+]
+
+folder_cv_one =[
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/convnext_tiny_pretrained_cn_wrapper_load_once_2033949",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/resnet50_train_pretrained_cn_wrapper_load_once_2033950",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vit_b_32_pretrained_cn_wrapper_load_once_2033952",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vitb16_pretrained_cn_wrapper_load_once_2051710",
+]
+
+folder_cv_one_long =[
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/convnext_tiny_pretrained_cn_wrapper_load_once_more_repeats_2071823",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/resnet50_train_pretrained_cn_wrapper_load_once_more_repeats_2071824",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vit_b_32_pretrained_cn_wrapper_load_once_more_repeats_2071826",
+    r"/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vitb16_pretrained_cn_wrapper_load_once_more_repeats_2071825",
+]
+
+all_folders = folder_cv_one + folders_cv_repeated + folder_cv_one_long
+
+                
+        
+
+
+
 models = {
-    #Dropout Models
-    'vit_b_32_pretrained_dropout_cn': {
-        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/vitb32_dropout_01_2099564/vit_b32_bfloat16_251112_0137/best model/best_checkpoint.pt',
-        'classifier' : 'vit_b_32',
-        'adapter' : 'cn_wrapper',
-    },
-    'vit_b_32_untrained_dropout_cn': {
-        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/vitb32_dropout_untrained_2109807/vit_b32_bfloat16_251112_1219/best model/best_checkpoint.pt',
-        'classifier' : 'vit_b_32',
-        'adapter' : 'cn_wrapper',
-    },
-
-
-    # CV Models
+       # CV Models
     'vit_b16_pretrained_cn': {
         'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/b_cv/vitb16_pretrained_cn_wrapper_2050294/vit_b16_bfloat16_251104_1455/split_004/best.pt',
         'classifier' : 'vit_b_16',
@@ -91,14 +108,9 @@ models = {
     },
     }
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--pretrained_model_name", type=str, required=True, help="Name of pretrained model"
-    )
-    args = parser.parse_args()
-    print(f"Starting pipeline evaluation with model: {args.pretrained_model_name}")
-    model_info = models[args.pretrained_model_name]
+def main(pretrained_model_name):
+    print(f"Starting pipeline evaluation with model: {pretrained_model_name}")
+    model_info = models[pretrained_model_name]
     class FE: pass
     p_args = FE()
     p_args.pretrained_path = model_info['path']
@@ -114,5 +126,7 @@ def main():
     pipeline(p_args)
     print("Pipeline evaluation completed.")
 
-if __name__ == "__main__":
-    main()
+
+for model_name in models.keys():
+    print(f"Evaluating model: {model_name}")
+    main(model_name)

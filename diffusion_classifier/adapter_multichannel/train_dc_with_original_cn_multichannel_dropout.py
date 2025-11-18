@@ -15,10 +15,11 @@ from transformers import logging as hf_logging
 import diffusers
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler, ControlNetModel
 
-# --- Your modules (must exist in your project) ---
 from diffusion.datasets import ThzDataset
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from adapter.help_functions import PromptBank
+
+from pipeline_classifier_with_adapter.eval_the_pipeline_results import evaluate_predictions
 
 hf_logging.set_verbosity_error()
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -124,7 +125,6 @@ def build_sd2_1_base(dtype="float16", use_xformers=True, train_all=False, versio
     except Exception:
         pass
 
-    # einfrieren
     if not train_all:
         for p in list(vae.parameters()) + list(unet.parameters()) + list(text_encoder.parameters()):
             p.requires_grad = False
@@ -274,7 +274,6 @@ def train_one_epoch(
             if eargs.learn_adapter:
                 torch.nn.utils.clip_grad_norm_(adapter.parameters(), 1.0)
             if step % 30 == 1:
-                # ---- Grad-Logging (vor dem Step!) ----
                 for name, p in list(controlnet.named_parameters())[:3]:
                     g = None if p.grad is None else p.grad
                     msg = "None" if g is None else f"mean={g.abs().mean().item():.4e} max={g.abs().max().item():.4e}"
@@ -294,7 +293,6 @@ def train_one_epoch(
             if eargs.learn_adapter:
                 torch.nn.utils.clip_grad_norm_(adapter.parameters(), 1.0)
 
-            # ---- Grad-Logging (vor dem Step!) ----
             for name, p in list(controlnet.named_parameters())[:3]:
                 g = None if p.grad is None else p.grad
                 msg = "None" if g is None else f"mean={g.abs().mean().item():.4e} max={g.abs().max().item():.4e}"
@@ -333,13 +331,20 @@ def train_one_epoch(
 @torch.no_grad()
 def validate(
     loader, adapter, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
-    scheduler, eargs, img_size, torch_dtype, use_amp,  reduce="mean"
+    scheduler, eargs, img_size, torch_dtype, use_amp, save_dir, reduce="mean", save_preds=False
 ):
     """Validation loop mirroring the training inference flow."""
     adapter.eval()
     controlnet.eval()
     unet.eval()
 
+    def get_formatstr(n):
+            digits = 0
+            while n > 0:
+                digits += 1
+                n //= 10
+            return f"{{:0{digits}d}}"
+    
     latent_size = img_size // 8
     out_hw = (img_size, img_size)
 
@@ -397,7 +402,12 @@ def validate(
             errors = torch.stack(errors_list, dim=0).to(label.dtype if label.is_floating_point() else torch.float32)
             logits = -errors
             preds = torch.argmax(logits, dim=1)
-
+            if save_preds:
+                formatstr = get_formatstr(len(loader))
+                torch.save(
+                        dict(preds=preds.cpu(), label=label.cpu()),
+                        os.path.join(save_dir,  formatstr.format(i) + '.pt')
+                    )
         correct += (preds == label).sum().item()
         total += label.numel()
 
@@ -442,6 +452,9 @@ def main():
     ap.add_argument("--loss", type=str, default="l2", choices=("l1","l2","huber"))
     ap.add_argument("--logit_scale", type=float, default=60.0)
     ap.add_argument("--use_xformers", action="store_true")
+    
+    ap.add_argument("--acc_threshold", type=float, default=0.98)
+    ap.add_argument("--loss_threshold", type=float, default=0.05)
 
     # Control / Adapter
     ap.add_argument("--cond_scale", type=float, default=2.0, help="conditioning_scale for ControlNet")
@@ -480,6 +493,9 @@ def main():
     for k, v in vars(args).items():
         print(f"{k}: {v}")
     print("============================")
+
+    acc_threshold = args.acc_threshold
+    loss_threshold = args.loss_threshold
 
     set_seed(args.cv_seed)
 
@@ -569,7 +585,7 @@ def main():
     param_groups.append({"params": controlnet.base.parameters(), "lr": args.lr_controlnet, "weight_decay": args.wd_controlnet})
     print("[OPT] ControlNet parameters will be trained.")
 
-    opt = torch.optim.AdamW(param_groups)
+    opt = torch.optim.SGD(param_groups, momentum=0.9)
 
     print("[DEBUG] Trainable parameter groups:")
     for name, p in list(adapter.named_parameters())[:3]:
@@ -591,7 +607,7 @@ def main():
             torch_dtype, use_amp, opt, scaler, reduce="mean"
         )
         print(f"[Epoch] Result: train_loss={tr_loss:.4f}  train_acc={tr_acc:.4f}")
-
+        
         if tr_acc >= best_val:
             best_val = tr_acc
             torch.save({
@@ -611,6 +627,10 @@ def main():
                 "logit_scale": args.logit_scale,
             }, model_path)
             print(f"[Checkpoint] Saved best fold checkpoint: {model_path}  (val_acc={best_val:.4f})")
+        if tr_acc >= acc_threshold and tr_loss <= loss_threshold:
+            print(f"[Epoch {epoch}] Reached thresholds: acc {tr_acc:.4f} >= {acc_threshold}, loss {tr_loss:.4f} <= {loss_threshold}. Stopping training.")
+            break
+
     # ------------- FINAL EVAL (optional) -------------
     if args.final_eval:
         test_csv = args.test_csv if args.test_csv is not None else args.val_csv
@@ -620,7 +640,6 @@ def main():
         ckpt = torch.load(model_path, map_location="cpu")
         print(f"[FINAL] Global best val_acc (from CV): {ckpt.get('best_val_acc','N/A')}")
 
-        # Rebuild SD base (frozen) exactly as during training
         print("[FINAL] Rebuilding SD base...")
         vae_f, unet_f, tokenizer_f, text_encoder_f, scheduler_f, controlnet_f = build_sd2_1_base(
             dtype=ckpt["dtype"], use_xformers=False, train_all=False, version=ckpt["version"]
@@ -674,15 +693,21 @@ def main():
         eargs_f.version   = ckpt["version"]
         eargs_f.learn_adapter = False
 
+        result_dir = os.path.join(save_dir, "final_results")
+        os.makedirs(result_dir, exist_ok=True)
+        print(f"[FINAL] Result directory: {result_dir}")
         # Run validate() on the fixed test set
         final_acc = validate(
             final_loader, adapter_f, unet_f, controlnet_f, vae_f,
             prompt_embeds_f, prompt_to_class_f, num_classes_f,
             scheduler_f, eargs_f, ckpt["img_size"],
-            torch_dtype=final_torch_dtype, use_amp=use_amp_final, reduce="mean"
+            torch_dtype=final_torch_dtype, use_amp=use_amp_final, reduce="mean", save_dir=result_dir, save_preds=True
         )
         print(f"[FINAL] accuracy on fixed set ({test_csv} @ {final_root}): {final_acc:.4f}")
-
+        eval_dir=os.path.join(save_dir, "eval_results")
+        os.makedirs(eval_dir, exist_ok=True)
+        print(f"[FINAL] Evaluation directory: {eval_dir}")
+        evaluate_predictions(result_dir, eval_dir, test_csv)
 
 if __name__ == "__main__":
     main()

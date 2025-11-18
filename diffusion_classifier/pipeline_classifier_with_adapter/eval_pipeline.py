@@ -17,17 +17,16 @@ from skimage import io
 import pandas as pd
 
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
-from adapter_inject.thz_front_rgb_head import THzToRGBHead
 from adapter_multichannel.train_baseline_cn_without_cv_and_dropout import ControlNetAdapterWrapper
+from adapter.ControlNet_Adapter_wrapper import ControlNetAdapterWrapper as old_ControlNetAdapterWrapper
 from adapter_multichannel.train_dc_with_original_cn_multichannel_dropout import LatentMultiChannelAdapter
 
-# ==== Dein Code/Imports aus dem Projekt ====
+
 import process_rdf as prdf
 import matplotlib.pyplot as plt
-from diffusion.datasets import get_target_dataset  # falls du das brauchst
+from diffusion.datasets import get_target_dataset  
 
 from diffusion.datasets import get_target_dataset
-from pipeline_classifier_with_adapter.core.io import get_transform, load_prompts_csv, load_thz_indexed
 from adapter.help_functions import build_sd2_1_base, load_class_text_embeds, PromptBank
 from diffusion.utils import LOG_DIR, get_formatstr
 from adapter_inject.train_baseline_with_thz import build_backbone, normalize_batch
@@ -267,6 +266,66 @@ def validate_dc(
     
     return val_acc
 
+def old_validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, imagenet_mean, imagenet_std, output_dir=None):
+    """Validation loop with AMP and ImageNet normalization."""
+
+    image_dir = os.path.join(output_dir, 'images')
+    os.makedirs(image_dir, exist_ok=True)
+    cams_dir = os.path.join(output_dir, "images_grad_cams")
+    os.makedirs(cams_dir, exist_ok=True)
+    target_layers = _get_cam_target_layers(backbone)
+    CamCls = GradCAMPlusPlus
+    is_vit = _is_vit_backbone(backbone)
+    cam = CamCls(
+        model=backbone,
+        target_layers=target_layers,
+        reshape_transform=vit_reshape_transform if is_vit else None
+    )
+    front.to(device).eval()
+    backbone.to(device).eval()
+    total, correct = 0, 0
+    print("[validate] Starting validation iteration...")
+    for step, (vol, label, _) in enumerate(loader, start=1):
+        formatstr = get_formatstr(len(loader) - 1)
+        vol = vol.to(device)
+        if vol.dim() == 6:
+            vol = vol.squeeze(1)
+        label = label.to(device).long()
+
+        with torch.autocast(device_type="cuda", dtype=torch_dtype, enabled=use_amp):
+            img_rgb = front(vol)
+            if img_out_size is not None and (img_rgb.shape[-2] != img_out_size or img_rgb.shape[-1] != img_out_size):
+                img_rgb = F.interpolate(img_rgb, size=(img_out_size, img_out_size),
+                                        mode="bilinear", align_corners=False)
+            img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
+            img_np = img_rgb.squeeze(0).detach().cpu().numpy()  
+            img_np = np.transpose(img_np, (1, 2, 0)) 
+            img_np = img_np - img_np.min()
+            img_np = img_np / (img_np.max() + 1e-8)
+            save_path = os.path.join(image_dir, f"sample_{label.item()}.tiff")
+            io.imsave(save_path, img_np, check_contrast=False)
+            logits = backbone(img_in)
+            preds = torch.argmax(logits, dim=1)
+            targets = [ClassifierOutputTarget(int(preds.item()))]
+            grayscale_cam = cam(input_tensor=img_in, targets=targets)[0]
+            rgb01 = img_rgb.squeeze(0).detach().cpu().numpy()
+            rgb01 = np.transpose(rgb01, (1, 2, 0))
+            rgb01 = np.clip(rgb01, 0.0, 1.0)
+            cam_path = os.path.join(cams_dir, f"{formatstr.format(step)}_lbl{label.item()}_cam.tiff")
+            overlay_path = os.path.join(cams_dir, f"{formatstr.format(step)}_lbl{label.item()}_overlay.tiff")
+            _save_cam_tiffs(grayscale_cam, rgb01, cam_path, overlay_path)
+
+        correct += (preds == label).sum().item()
+        total += label.numel()
+        
+        torch.save(dict(pred=preds.detach().cpu(), label=label.cpu()), os.path.join(output_dir,  formatstr.format(step) + '.pt'))
+        if step % 50 == 0 or step == 1:
+            print(f"[validate] step={step}  running_acc={correct/max(1,total):.4f}")
+
+    val_acc = correct / max(1, total)
+    print(f"[validate] Done. val_acc={val_acc:.4f}")
+    return val_acc
+
 def parse_args():
     p = argparse.ArgumentParser()
     # Daten
@@ -275,7 +334,7 @@ def parse_args():
     p.add_argument('--split', default='test', choices=['train','test'])
     # Auswahl
     p.add_argument('--classifier', required=True, choices=('diffusion', 'resnet50', "vit_b_16", "vit_b_32", "convnext_tiny")) 
-    p.add_argument('--adapter', required=True, choices=("rgb", "cn_wrapper", "latent"))  
+    p.add_argument('--adapter', required=True, choices=("rgb", "cn_wrapper", "latent", "old_cn_wrapper"))  
 
     #output
     p.add_argument('--output_dir', default='./results_eval_pipeline', type=str)
@@ -337,9 +396,23 @@ def main(args):
     # Adapter bauen
     adapter = None
     weights_adapter = ckpt["adapter_state_dict"] if "adapter_state_dict" in ckpt else ckpt["front_state_dict"]
-    if args.adapter == "rgb":
-        print("Lade RGB-Adapter...")
-        front_f = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device)
+    if args.adapter == "old_cn_wrapper":
+        controlnet_cfg = dict(
+            spatial_dims=3,
+            num_res_blocks=(2, 2, 2, 2),
+            num_channels=(32, 64, 64, 64),
+            attention_levels=(False, False, False, False),
+            conditioning_embedding_in_channels=2,
+            conditioning_embedding_num_channels=(32, 64, 64, 64),
+            with_conditioning=False,
+        )
+        front_f = old_ControlNetAdapterWrapper(
+            controlnet_cfg=controlnet_cfg,
+            in_channels=2,
+            out_size=expected_size,
+            target_T=64,
+            stride_T=4
+        ).to(device)
         front_f.load_state_dict(weights_adapter, strict=False, assign=True)
         front_f.eval()
     elif args.adapter == "cn_wrapper":
@@ -398,13 +471,16 @@ def main(args):
         
         
     else:
-        final_acc = validate_base(
-            ds_loader, front_f,
-            backbone, imagenet_mean, imagenet_std,
-            img_size_ckpt, final_dtype=torch.float32,
-            use_amp_final=False,
-            output_dir=result_dir
-        )
+        if args.adapter == "old_cn_wrapper":
+            final_acc = old_validate(ds_loader, front_f, backbone, torch.float32, False, img_size_ckpt, imagenet_mean, imagenet_std, output_dir=result_dir)
+        else:    
+            final_acc = validate_base(
+                ds_loader, front_f,
+                backbone, imagenet_mean, imagenet_std,
+                img_size_ckpt, final_dtype=torch.float32,
+                use_amp_final=False,
+                output_dir=result_dir
+            )
         print(f"Final Accuracy: {final_acc:.4f}")
     try: 
         evaluate_predictions(

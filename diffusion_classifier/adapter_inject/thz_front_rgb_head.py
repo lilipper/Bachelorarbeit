@@ -69,4 +69,4 @@ class THzToRGBHead(nn.Module):
         x = self.depth_projection(x).squeeze(2)
         x = self.refine2d(x)
         x = self.head(x)
-        return x.sigmoid()
+        return x
