@@ -1,4 +1,3 @@
-<div align="center">
 # This is my working folder
 
 ## Folders
@@ -20,7 +19,7 @@ The following folders are created or adapted by myself:
   - I just added my prompts 
 
 
-
+<div align="center">
 
 # Below the read me of the Paper I started from
 <!-- TITLE -->
