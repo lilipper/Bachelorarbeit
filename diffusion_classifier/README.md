@@ -1,4 +1,23 @@
 <div align="center">
+# This is my working folder
+
+## Folders
+The following folders are created or adapted by myself:
+- adapter
+  - First experiments, can be ignored
+- adapter_inject
+  - Second experiments, can be ignored
+- adapter_multichannel
+  - This is the most important one, here you can find the important trainings
+- datasets
+  - I just added my Dataset here with the others
+- final_logs
+  - This are the trainings logs
+- pipeline_classifier_with_adapter
+  - This is the pipeline I created
+  - You find here also my evaluation scripts
+- prompts
+  - I just added my prompts 
 
 
 
