@@ -2271,3 +2271,2417 @@ Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschen
 
 [Epoch] 291/600
 [train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6989  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6861  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 292/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6894  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6868  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 293/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7052  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6929  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6876  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 294/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6919  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6935  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6900  epoch_acc=0.5521
+
+[Epoch] 295/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6903  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6842  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 296/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5664  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6868  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 297/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6830  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 298/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6838  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 299/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 300/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7036  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6869  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 301/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7129  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6913  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6905  epoch_acc=0.5521
+
+[Epoch] 302/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7031  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6802  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6941  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6907  epoch_acc=0.5521
+
+[Epoch] 303/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7988  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6849  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6805  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6876  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 304/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5684  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6700  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6837  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6868  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 305/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6990  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6926  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6893  epoch_acc=0.5521
+
+[Epoch] 306/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6991  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6894  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 307/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6803  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6827  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 308/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5781  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6711  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6843  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 309/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6723  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6866  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 310/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6870  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6868  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 311/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6508  avg_acc=0.7000
+[train_one_epoch] step=40  avg_loss=0.6868  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6914  epoch_acc=0.5521
+
+[Epoch] 312/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7322  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.7121  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7085  epoch_acc=0.5521
+
+[Epoch] 313/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.7065  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.7139  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 314/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7188  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6835  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6937  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6973  epoch_acc=0.5521
+
+[Epoch] 315/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6825  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 316/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6074  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6793  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6879  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6900  epoch_acc=0.5521
+
+[Epoch] 317/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5977  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6940  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6908  epoch_acc=0.5521
+
+[Epoch] 318/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6904  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6967  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6914  epoch_acc=0.5521
+
+[Epoch] 319/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6997  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 320/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8164  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7000  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6878  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6898  epoch_acc=0.5521
+
+[Epoch] 321/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6900  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6894  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6867  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 322/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5879  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6956  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6895  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 323/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6761  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 324/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5684  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7101  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6928  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6915  epoch_acc=0.5521
+
+[Epoch] 325/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6914  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6943  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 326/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 327/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7013  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6929  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6917  epoch_acc=0.5521
+
+[Epoch] 328/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6949  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6879  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 329/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5996  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6959  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6949  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 330/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7057  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 331/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6828  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6866  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 332/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5703  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 333/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8281  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6841  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6908  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5521
+
+[Epoch] 334/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6908  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 335/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6907  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6930  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6897  epoch_acc=0.5521
+
+[Epoch] 336/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6900  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6894  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 337/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6588  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6858  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6905  epoch_acc=0.5521
+
+[Epoch] 338/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8027  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6847  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 339/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6800  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6901  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6893  epoch_acc=0.5521
+
+[Epoch] 340/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5977  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7020  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6910  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6900  epoch_acc=0.5521
+
+[Epoch] 341/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6016  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6729  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6879  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6897  epoch_acc=0.5521
+
+[Epoch] 342/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6634  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6794  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6911  epoch_acc=0.5521
+
+[Epoch] 343/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6983  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6875  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 344/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6720  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6928  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6878  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 345/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7988  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6988  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6871  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 346/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6899  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6922  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 347/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6998  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 348/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6969  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6850  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6900  epoch_acc=0.5521
+
+[Epoch] 349/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7045  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6923  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6868  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 350/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6898  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5521
+
+[Epoch] 351/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8164  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7029  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6908  epoch_acc=0.5521
+
+[Epoch] 352/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6880  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6854  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6856  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 353/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6894  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6910  epoch_acc=0.5521
+
+[Epoch] 354/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6792  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6869  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 355/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7013  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6906  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6897  epoch_acc=0.5521
+
+[Epoch] 356/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6958  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 357/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7052  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6903  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5521
+
+[Epoch] 358/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6949  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6868  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 359/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7076  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 360/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6687  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6914  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6903  epoch_acc=0.5521
+
+[Epoch] 361/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6653  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6910  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6902  epoch_acc=0.5521
+
+[Epoch] 362/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8027  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6990  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6850  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6873  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 363/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6994  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6923  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 364/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6857  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 365/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6861  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 366/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5801  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6847  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6840  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6893  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 367/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6980  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6920  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5521
+
+[Epoch] 368/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6862  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 369/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5723  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6933  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6881  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 370/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5879  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6950  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6872  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 371/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6866  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 372/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6732  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6794  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 373/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5801  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6820  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6878  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5521
+
+[Epoch] 374/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7007  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6933  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6879  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 375/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6903  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5521
+
+[Epoch] 376/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8242  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6767  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6858  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 377/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5801  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6121  avg_acc=0.7750
+[train_one_epoch] step=40  avg_loss=0.7078  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.7048  epoch_acc=0.5521
+
+[Epoch] 378/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6934  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6793  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.7136  epoch_acc=0.5000
+
+[Epoch] 379/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7008  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6983  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6960  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 380/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6953  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6306  avg_acc=0.7250
+[train_one_epoch] step=40  avg_loss=0.6988  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6985  epoch_acc=0.5521
+
+[Epoch] 381/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7188  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6947  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6975  avg_acc=0.4750
+[train_one_epoch] Done. epoch_loss=0.6977  epoch_acc=0.4792
+
+[Epoch] 382/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6701  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6796  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6906  epoch_acc=0.5521
+
+[Epoch] 383/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6767  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6855  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6878  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 384/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8027  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6879  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6856  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6878  epoch_acc=0.5521
+
+[Epoch] 385/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5957  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6725  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6842  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6894  epoch_acc=0.5521
+
+[Epoch] 386/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6791  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6843  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6867  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 387/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6838  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 388/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7093  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6876  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5521
+
+[Epoch] 389/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7034  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 390/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6766  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6863  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 391/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6941  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 392/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6728  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6874  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 393/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6716  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6671  avg_acc=0.6375
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 394/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8320  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7022  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6882  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 395/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6602  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6878  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5521
+
+[Epoch] 396/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6864  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 397/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6553  avg_acc=0.7000
+[train_one_epoch] step=40  avg_loss=0.6824  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6905  epoch_acc=0.5521
+
+[Epoch] 398/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8066  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7080  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6857  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6880  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 399/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6830  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6787  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 400/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5762  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6994  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6844  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 401/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7090  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6916  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 402/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6604  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6932  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 403/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6784  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 404/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6802  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6861  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 405/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6998  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6915  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 406/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6879  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6856  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 407/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6769  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6864  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 408/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7004  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6924  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 409/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6920  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 410/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8145  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7048  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6941  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 411/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6772  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 412/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5762  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6707  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6732  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.6873  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 413/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8301  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6840  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6867  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 414/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 415/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8145  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 416/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6838  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 417/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6646  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6841  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6897  epoch_acc=0.5521
+
+[Epoch] 418/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 419/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7056  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5521
+
+[Epoch] 420/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6652  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6801  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 421/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5781  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6837  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 422/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6830  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6806  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 423/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8184  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6776  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6922  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 424/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 425/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6862  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 426/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7097  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6900  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6894  epoch_acc=0.5521
+
+[Epoch] 427/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6838  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 428/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6948  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 429/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6861  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 430/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6861  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 431/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6786  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6839  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 432/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7058  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6924  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 433/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6944  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6799  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 434/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6829  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 435/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 436/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6780  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6735  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 437/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6823  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6795  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6879  epoch_acc=0.5521
+
+[Epoch] 438/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8164  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7099  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6885  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6903  epoch_acc=0.5521
+
+[Epoch] 439/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6843  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6929  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6895  epoch_acc=0.5521
+
+[Epoch] 440/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6987  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6859  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 441/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6994  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6881  epoch_acc=0.5521
+
+[Epoch] 442/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6947  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 443/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 444/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8125  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 445/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6930  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6908  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 446/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6987  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6869  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6868  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 447/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8184  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7069  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6927  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6894  epoch_acc=0.5521
+
+[Epoch] 448/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6895  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6944  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 449/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 450/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6655  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6900  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 451/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6607  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6814  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6873  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 452/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6990  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6965  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 453/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5957  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6602  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6846  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6873  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 454/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8164  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6800  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 455/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7054  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 456/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8125  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6940  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 457/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6883  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6695  avg_acc=0.6250
+[train_one_epoch] Done. epoch_loss=0.6899  epoch_acc=0.5521
+
+[Epoch] 458/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5664  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6762  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6854  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6878  epoch_acc=0.5521
+
+[Epoch] 459/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6995  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 460/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6718  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6816  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 461/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 462/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5977  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6668  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6808  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 463/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7050  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6916  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 464/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7100  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6969  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6893  epoch_acc=0.5521
+
+[Epoch] 465/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6788  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6867  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 466/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6945  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 467/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6856  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6854  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 468/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6770  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 469/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6836  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 470/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 471/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6944  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6861  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 472/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7056  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 473/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 474/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6788  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6876  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 475/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8164  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7050  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 476/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 477/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 478/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6884  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 479/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7000  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6797  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6859  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 480/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6945  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6863  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 481/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6768  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6949  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 482/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7094  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6869  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6867  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 483/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6708  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6804  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6901  epoch_acc=0.5521
+
+[Epoch] 484/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6856  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6878  epoch_acc=0.5521
+
+[Epoch] 485/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6678  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6900  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 486/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6672  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6893  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 487/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6914  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 488/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6611  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6842  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 489/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6662  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6807  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 490/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6665  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 491/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6604  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6836  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 492/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7088  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 493/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7988  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7029  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6908  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 494/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6796  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 495/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6830  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6796  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 496/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5742  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6824  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6940  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 497/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6585  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6849  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6875  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 498/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6998  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 499/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8125  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7107  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6897  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 500/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6595  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6959  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6896  epoch_acc=0.5521
+
+[Epoch] 501/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8066  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6779  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 502/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6940  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 503/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6938  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6913  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6880  epoch_acc=0.5521
+
+[Epoch] 504/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6591  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6866  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 505/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6840  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6892  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 506/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6718  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6836  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 507/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 508/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 509/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6837  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 510/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6988  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6895  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 511/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7969  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7033  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 512/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 513/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5977  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6745  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 514/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6649  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6833  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 515/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6884  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6855  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6880  epoch_acc=0.5521
+
+[Epoch] 516/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7093  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 517/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6529  avg_acc=0.7000
+[train_one_epoch] step=40  avg_loss=0.6875  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 518/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6999  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6895  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 519/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 520/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6836  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6895  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 521/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6841  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6871  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 522/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6881  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6884  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6857  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 523/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6768  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 524/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 525/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7135  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 526/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6912  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 527/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6827  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 528/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7099  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 529/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6712  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6923  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 530/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6881  epoch_acc=0.5521
+
+[Epoch] 531/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6671  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6748  avg_acc=0.6125
+[train_one_epoch] Done. epoch_loss=0.6897  epoch_acc=0.5521
+
+[Epoch] 532/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6933  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6906  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 533/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 534/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6937  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 535/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6900  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6896  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 536/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7106  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6796  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6903  epoch_acc=0.5521
+
+[Epoch] 537/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6943  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6861  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 538/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6774  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6773  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 539/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6863  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 540/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6828  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6864  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 541/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6945  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6919  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 542/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6918  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6865  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 543/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6774  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6831  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 544/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6667  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6918  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 545/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6781  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 546/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6723  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6863  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 547/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6660  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6805  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5521
+
+[Epoch] 548/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6938  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 549/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6885  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6769  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 550/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 551/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 552/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 553/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6779  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 554/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6830  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6809  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6868  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 555/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6719  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 556/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7087  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7010  avg_acc=0.4875
+[train_one_epoch] Done. epoch_loss=0.6881  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 557/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6055  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6844  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6837  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6890  epoch_acc=0.5521
+
+[Epoch] 558/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6466  avg_acc=0.7250
+[train_one_epoch] step=40  avg_loss=0.6843  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6870  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 559/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6727  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6916  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 560/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6780  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 561/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8086  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6776  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6831  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 562/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6939  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6864  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 563/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6940  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6891  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 564/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6773  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6863  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 565/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6944  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6885  epoch_acc=0.5521
+
+[Epoch] 566/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6830  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6913  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 567/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8008  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6834  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 568/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7243  avg_acc=0.3750
+[train_one_epoch] step=40  avg_loss=0.6944  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 569/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7148  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6883  epoch_acc=0.5521
+
+[Epoch] 570/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7004  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6918  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 571/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7107  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6865  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6888  epoch_acc=0.5521
+
+[Epoch] 572/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6647  avg_acc=0.6500
+[train_one_epoch] step=40  avg_loss=0.6861  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6884  epoch_acc=0.5521
+
+[Epoch] 573/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6946  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6866  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 574/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6996  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 575/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6997  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6941  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6862  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 576/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7004  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6893  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 577/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6717  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6799  avg_acc=0.5875
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 578/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5820  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6941  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6887  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 579/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6991  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6920  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6867  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 580/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6771  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 581/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6582  avg_acc=0.6750
+[train_one_epoch] step=40  avg_loss=0.6869  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6891  epoch_acc=0.5521
+
+[Epoch] 582/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7154  avg_acc=0.4250
+[train_one_epoch] step=40  avg_loss=0.6921  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6889  epoch_acc=0.5521
+
+[Epoch] 583/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6993  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6882  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6855  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 584/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5898  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7002  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6835  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6887  epoch_acc=0.5521
+
+[Epoch] 585/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6825  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6855  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6880  epoch_acc=0.5521
+
+[Epoch] 586/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6827  avg_acc=0.5750
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6881  epoch_acc=0.5521
+
+[Epoch] 587/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5918  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6549  avg_acc=0.7000
+[train_one_epoch] step=40  avg_loss=0.6786  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6874  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 588/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5840  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7055  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6925  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6892  epoch_acc=0.5521
+
+[Epoch] 589/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5938  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6878  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6933  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6877  epoch_acc=0.5521
+
+[Epoch] 590/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8047  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6884  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6831  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6859  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 591/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6884  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6859  avg_acc=0.5625
+[train_one_epoch] Done. epoch_loss=0.6882  epoch_acc=0.5521
+
+[Epoch] 592/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7046  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.6890  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6863  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 593/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8066  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6990  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6884  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6878  epoch_acc=0.5521
+
+[Epoch] 594/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6999  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6917  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.6861  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 595/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6382  avg_acc=0.7500
+[train_one_epoch] step=40  avg_loss=0.6875  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6923  epoch_acc=0.5521
+
+[Epoch] 596/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6992  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6735  avg_acc=0.6250
+[train_one_epoch] step=40  avg_loss=0.6782  avg_acc=0.6000
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 597/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5859  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6889  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6832  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6860  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 598/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8105  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.6994  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6968  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6886  epoch_acc=0.5521
+
+[Epoch] 599/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.5977  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.6888  avg_acc=0.5500
+[train_one_epoch] step=40  avg_loss=0.6886  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=0.6858  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+
+[Epoch] 600/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7012  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7108  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6947  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6866  epoch_acc=0.5625
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt  (acc=0.5625)
+[FINAL] Starting final evaluation...
+[FINAL] Loading global best checkpoint: /scratch/slurm_tmpdir/job_2172773/job_2172773/results/vit_b16_bfloat16_251118_1242/best model/best_checkpoint.pt
+[FINAL] Global best val_acc (from CV): 0.5625
+Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschenhals-Tiefe: 8
+[FINAL] Loaded front weights.
+[build_backbone] Built ViT-B/16 (pretrained=True) with ImageNet mean/std: (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+[FINAL] Rebuilt backbone 'vit_b16' and loaded weights.
+[FINAL] Test set: 33 samples | CSV=/scratch/slurm_tmpdir/job_2172773/job_2172773/input/jsons/test_labels.csv | ROOT=/scratch/slurm_tmpdir/job_2172773/job_2172773/input/test
+[FINAL] AMP enabled=True dtype=bfloat16
+[FINAL] step=1  running_acc=0.0000
+[FINAL] Accuracy on fixed set (/scratch/slurm_tmpdir/job_2172773/job_2172773/input/jsons/test_labels.csv @ /scratch/slurm_tmpdir/job_2172773/job_2172773/input/test): 0.5455
+
+Warning: Could not load or parse file 01.pt. Error: 'pred'
+
+Warning: Could not load or parse file 02.pt. Error: 'pred'
+
+Warning: Could not load or parse file 03.pt. Error: 'pred'
+
+Warning: Could not load or parse file 04.pt. Error: 'pred'
+
+Warning: Could not load or parse file 05.pt. Error: 'pred'
+
+Warning: Could not load or parse file 06.pt. Error: 'pred'
+
+Warning: Could not load or parse file 07.pt. Error: 'pred'
+
+Warning: Could not load or parse file 08.pt. Error: 'pred'
+
+Warning: Could not load or parse file 09.pt. Error: 'pred'
+
+Warning: Could not load or parse file 10.pt. Error: 'pred'
+
+Warning: Could not load or parse file 11.pt. Error: 'pred'
+
+Warning: Could not load or parse file 12.pt. Error: 'pred'
+
+Warning: Could not load or parse file 13.pt. Error: 'pred'
+
+Warning: Could not load or parse file 14.pt. Error: 'pred'
+
+Warning: Could not load or parse file 15.pt. Error: 'pred'
+
+Warning: Could not load or parse file 16.pt. Error: 'pred'
+
+Warning: Could not load or parse file 17.pt. Error: 'pred'
+
+Warning: Could not load or parse file 18.pt. Error: 'pred'
+
+Warning: Could not load or parse file 19.pt. Error: 'pred'
+
+Warning: Could not load or parse file 20.pt. Error: 'pred'
+
+Warning: Could not load or parse file 21.pt. Error: 'pred'
+
+Warning: Could not load or parse file 22.pt. Error: 'pred'
+
+Warning: Could not load or parse file 23.pt. Error: 'pred'
+
+Warning: Could not load or parse file 24.pt. Error: 'pred'
+
+Warning: Could not load or parse file 25.pt. Error: 'pred'
+
+Warning: Could not load or parse file 26.pt. Error: 'pred'
+
+Warning: Could not load or parse file 27.pt. Error: 'pred'
+
+Warning: Could not load or parse file 28.pt. Error: 'pred'
+
+Warning: Could not load or parse file 29.pt. Error: 'pred'
+
+Warning: Could not load or parse file 30.pt. Error: 'pred'
+
+Warning: Could not load or parse file 31.pt. Error: 'pred'
+
+Warning: Could not load or parse file 32.pt. Error: 'pred'
+
+Warning: Could not load or parse file 33.pt. Error: 'pred'
+Error: Could not extract any valid label data from the files.
+=== Job beendet: Wed Nov 19 01:46:06 AM CET 2025 ===
+[INFO] Kopiere Ergebnisse zurück nach /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/vitb16_dropout_pretrained_SGD_2172773 ...
+              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=34/38)         32,768   0%    0.00kB/s    0:00:00      356,003,540  99%  414.00MB/s    0:00:00 (xfr#1, to-chk=33/38)    356,003,540  99%  414.00MB/s    0:00:00 (xfr#1, to-chk=33/38)    356,004,942  99%  414.00MB/s    0:00:00 (xfr#2, to-chk=32/38)    356,006,344  99%  414.00MB/s    0:00:00 (xfr#3, to-chk=31/38)    356,007,746  99%  414.01MB/s    0:00:00 (xfr#4, to-chk=30/38)    356,009,148  99%  414.01MB/s    0:00:00 (xfr#5, to-chk=29/38)    356,010,550  99%  414.01MB/s    0:00:00 (xfr#6, to-chk=28/38)    356,011,952  99%  414.01MB/s    0:00:00 (xfr#7, to-chk=27/38)    356,013,354  99%  414.01MB/s    0:00:00 (xfr#8, to-chk=26/38)    356,014,756  99%  414.01MB/s    0:00:00 (xfr#9, to-chk=25/38)    356,016,158  99%  414.01MB/s    0:00:00 (xfr#10, to-chk=24/38)    356,017,560  99%  414.02MB/s    0:00:00 (xfr#11, to-chk=23/38)    356,018,962  99%  414.02MB/s    0:00:00 (xfr#12, to-chk=22/38)    356,020,364  99%  414.02MB/s    0:00:00 (xfr#13, to-chk=21/38)    356,021,766  99%  414.02MB/s    0:00:00 (xfr#14, to-chk=20/38)    356,023,168  99%  414.02MB/s    0:00:00 (xfr#15, to-chk=19/38)    356,024,570  99%  414.02MB/s    0:00:00 (xfr#16, to-chk=18/38)    356,025,972  99%  414.03MB/s    0:00:00 (xfr#17, to-chk=17/38)    356,027,374  99%  414.03MB/s    0:00:00 (xfr#18, to-chk=16/38)    356,028,776  99%  414.03MB/s    0:00:00 (xfr#19, to-chk=15/38)    356,030,178  99%  414.03MB/s    0:00:00 (xfr#20, to-chk=14/38)    356,031,580  99%  414.03MB/s    0:00:00 (xfr#21, to-chk=13/38)    356,032,982  99%  414.03MB/s    0:00:00 (xfr#22, to-chk=12/38)    356,034,384  99%  414.04MB/s    0:00:00 (xfr#23, to-chk=11/38)    356,035,786  99%  414.04MB/s    0:00:00 (xfr#24, to-chk=10/38)    356,037,188  99%  414.04MB/s    0:00:00 (xfr#25, to-chk=9/38)     356,038,590  99%  414.04MB/s    0:00:00 (xfr#26, to-chk=8/38)    356,039,992  99%  414.04MB/s    0:00:00 (xfr#27, to-chk=7/38)    356,041,394  99%  414.04MB/s    0:00:00 (xfr#28, to-chk=6/38)    356,042,796  99%  413.54MB/s    0:00:00 (xfr#29, to-chk=5/38)    356,044,198  99%  413.54MB/s    0:00:00 (xfr#30, to-chk=4/38)    356,045,600  99%  413.54MB/s    0:00:00 (xfr#31, to-chk=3/38)    356,047,002  99%  413.55MB/s    0:00:00 (xfr#32, to-chk=2/38)    356,048,404  99%  413.55MB/s    0:00:00 (xfr#33, to-chk=1/38)    356,049,806 100%  413.55MB/s    0:00:00 (xfr#34, to-chk=0/38)    356,049,806 100%  337.84MB/s    0:00:01 (xfr#34, to-chk=0/38)    356,049,806 100%  278.53MB/s    0:00:01 (xfr#34, to-chk=0/38)
+
+Number of files: 38 (reg: 34, dir: 4)
+Number of created files: 37 (reg: 34, dir: 3)
+Number of deleted files: 0
+Number of regular files transferred: 34
+Total file size: 356,049,806 bytes
+Total transferred file size: 356,049,806 bytes
+Literal data: 356,049,806 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.035 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 356,139,036
+Total bytes received: 685
+
+sent 356,139,036 bytes  received 685 bytes  237,426,480.67 bytes/sec
+total size is 356,049,806  speedup is 1.00
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n904
+Job ID: 2172773
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 2-06:22:01
+CPU Efficiency: 25.83% of 8-18:29:04 core-walltime
+Job Wall-clock time: 13:09:19
+Memory Utilized: 14.60 GB
+Memory Efficiency: 36.49% of 40.00 GB (40.00 GB/node)

@@ -25,7 +25,10 @@ def evaluate_predictions(folder_path: str, output_dir: str, prompts_csv_path: st
     for f in tqdm(files, desc="Loading results"):
         try:
             data = torch.load(os.path.join(folder_path, f), map_location=torch.device("cpu"))
-            all_preds.append(data["pred"]) if "pred" in data else all_preds.append(data["preds"])
+            if "preds" in data:
+                all_preds.append(data["preds"])
+            else:
+                all_preds.append(data["pred"])
             all_labels.append(data["label"])
         except Exception as e:
             print(f"\nWarning: Could not load or parse file {f}. Error: {e}")
@@ -94,8 +97,8 @@ def evaluate_predictions(folder_path: str, output_dir: str, prompts_csv_path: st
     plt.tight_layout()
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
-    img_path = os.path.join(output_dir, "confusion_matrix.png")
-    pdf_path = os.path.join(output_dir, "confusion_matrix.pdf")
+    img_path = os.path.join(output_dir, f"confusion_matrix.png")
+    pdf_path = os.path.join(output_dir, f"confusion_matrix.pdf")
     plt.savefig(img_path, dpi=300)
     plt.savefig(pdf_path, bbox_inches="tight", pad_inches=0)
 

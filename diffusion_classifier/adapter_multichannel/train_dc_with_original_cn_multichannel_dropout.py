@@ -6,6 +6,8 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import torch
+import torch.optim as optim
+from torch.optim.lr_scheduler import OneCycleLR, CosineAnnealingLR
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
@@ -17,7 +19,7 @@ from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler, ControlNe
 
 from diffusion.datasets import ThzDataset
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
-from adapter.help_functions import PromptBank
+from adapter.help_functions import PromptBank, pool_prompt_errors_to_class_errors_batch
 
 from pipeline_classifier_with_adapter.eval_the_pipeline_results import evaluate_predictions
 
@@ -196,7 +198,7 @@ def encode_all_frames_with_vae(frames_vae, vae, scaling=0.18215):
 # ----------------- Train / Validate -----------------
 def train_one_epoch(
     loader, adapter, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
-    scheduler, eargs, img_size, logit_scale, torch_dtype, use_amp, opt, scaler,
+    sd_scheduler, eargs, img_size, logit_scale, torch_dtype, use_amp, opt, scheduler, scaler,
     reduce="mean"
 ):
     if eargs.learn_adapter:
@@ -254,7 +256,7 @@ def train_one_epoch(
                     unet=unet,
                     latent=lat[i:i+1],
                     text_embeds=prompt_embeds,
-                    scheduler=scheduler,
+                    scheduler=sd_scheduler,
                     args=eargs,
                     latent_size=latent_size,
                     controlnet=controlnet,
@@ -308,6 +310,9 @@ def train_one_epoch(
             _, ratio = update_ratio(controlnet, snap_before)
             print(f"[STAT] controlnet avg update/param = {ratio:.3e}")
 
+        if isinstance(scheduler, (torch.optim.lr_scheduler.OneCycleLR, torch.optim.lr_scheduler.CyclicLR)):
+            scheduler.step()
+
         with torch.no_grad():
             running_loss += loss.item() * vol.size(0)
             preds = torch.argmax(logits, dim=1)
@@ -321,7 +326,10 @@ def train_one_epoch(
                 for any_name, any_param in controlnet.named_parameters():
                     print(f"[DEBUG] sample weight after step: {any_param.view(-1)[0].item():.6f}")
                     break
-
+    if isinstance(scheduler, (torch.optim.lr_scheduler.CosineAnnealingLR,
+                            torch.optim.lr_scheduler.StepLR,
+                            torch.optim.lr_scheduler.ReduceLROnPlateau)):
+        scheduler.step()
     epoch_loss = running_loss / max(1, seen)
     epoch_acc = running_acc / max(1, seen)
     print(f"[train_one_epoch] Done. epoch_loss={epoch_loss:.4f}  epoch_acc={epoch_acc:.4f}")
@@ -331,7 +339,7 @@ def train_one_epoch(
 @torch.no_grad()
 def validate(
     loader, adapter, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
-    scheduler, eargs, img_size, torch_dtype, use_amp, save_dir, reduce="mean", save_preds=False
+    sd_scheduler, eargs, img_size, torch_dtype, use_amp, save_dir, reduce="mean", save_preds=False
 ):
     """Validation loop mirroring the training inference flow."""
     adapter.eval()
@@ -390,7 +398,7 @@ def validate(
                     unet=unet,
                     latent=lat[i:i+1],
                     text_embeds=prompt_embeds,
-                    scheduler=scheduler,
+                    scheduler=sd_scheduler,
                     args=eargs,
                     latent_size=latent_size,
                     controlnet=controlnet,
@@ -454,15 +462,15 @@ def main():
     ap.add_argument("--use_xformers", action="store_true")
     
     ap.add_argument("--acc_threshold", type=float, default=0.98)
-    ap.add_argument("--loss_threshold", type=float, default=0.05)
+    ap.add_argument("--loss_threshold", type=float, default=0.5)
 
     # Control / Adapter
     ap.add_argument("--cond_scale", type=float, default=2.0, help="conditioning_scale for ControlNet")
     ap.add_argument("--learn_adapter", action="store_true")
-    ap.add_argument("--lr_adapter", type=float, default=1e-3)
-    ap.add_argument("--wd_adapter", type=float, default=0.0)
+    ap.add_argument("--lr_adapter", type=float, default=1e-2)
+    ap.add_argument("--wd_adapter", type=float, default=1e-2)
     ap.add_argument("--lr_controlnet", type=float, default=5e-3)
-    ap.add_argument("--wd_controlnet", type=float, default=0.0)
+    ap.add_argument("--wd_controlnet", type=float, default=3e-3)
     ap.add_argument("--dropout_p_controlnet", type=float, default=0.1,
                 help="Dropout auf ControlNet-Residuals")
     ap.add_argument("--controlnet_spatial_dropout", action="store_true",
@@ -539,7 +547,7 @@ def main():
 
     # --- Load SD backbone (frozen VAE/UNet/TextEncoder, scheduler) ---
     print("[SD] Building Stable Diffusion base...")
-    vae, unet, tokenizer, text_encoder, scheduler, controlnet = build_sd2_1_base(
+    vae, unet, tokenizer, text_encoder, sd_scheduler, controlnet = build_sd2_1_base(
         dtype=args.dtype, use_xformers=args.use_xformers, train_all=False, version=args.version,
         dropout_p=args.dropout_p_controlnet, controlnet_spatial_dropout=args.controlnet_spatial_dropout
     )
@@ -550,7 +558,7 @@ def main():
     unet = unet.to(device).eval()
     vae = vae.to(device).eval()
     controlnet = controlnet.to(device).eval()
-    scheduler.set_timesteps(args.num_train_timesteps)
+    sd_scheduler.set_timesteps(args.num_train_timesteps)
     print("[SD] Done. UNet/VAEs are frozen.")
 
     # --- Prompt bank & text embeddings ---
@@ -585,7 +593,26 @@ def main():
     param_groups.append({"params": controlnet.base.parameters(), "lr": args.lr_controlnet, "weight_decay": args.wd_controlnet})
     print("[OPT] ControlNet parameters will be trained.")
 
-    opt = torch.optim.SGD(param_groups, momentum=0.9)
+    swap_number = int(args.epochs *0.6)
+
+    optimizer1 = optim.AdamW(param_groups, lr=args.lr_adapter, weight_decay=args.wd_adapter)
+    scheduler1 = OneCycleLR(
+        optimizer1,
+        max_lr=args.lr_adapter,
+        epochs=int(swap_number),
+        steps_per_epoch=len(train_loader),
+        pct_start=0.3
+    )
+
+    optimizer2 = optim.SGD(param_groups, lr=args.lr_adapter, momentum=0.9, weight_decay=args.wd_adapter)
+    scheduler2 = CosineAnnealingLR(optimizer2, T_max=args.epochs - int(swap_number), eta_min=1e-5)
+
+    
+    def combined_optimizer(step):
+        if step < swap_number:
+            return optimizer1, scheduler1
+        else:
+            return optimizer2, scheduler2
 
     print("[DEBUG] Trainable parameter groups:")
     for name, p in list(adapter.named_parameters())[:3]:
@@ -600,11 +627,12 @@ def main():
     model_path = os.path.join(path_ckpt, "best_model.pt")
     for epoch in range(1, args.epochs + 1):
         print(f"\n[Epoch] {epoch:02d}/{args.epochs}")
+        opt, scheduler = combined_optimizer(epoch)
         tr_loss, tr_acc = train_one_epoch(
             train_loader, adapter, unet, controlnet, vae,
             prompt_embeds, prompt_to_class, num_classes,
-            scheduler, eargs, args.img_size, args.logit_scale,
-            torch_dtype, use_amp, opt, scaler, reduce="mean"
+            sd_scheduler, eargs, args.img_size, args.logit_scale,
+            torch_dtype, use_amp, opt, scheduler, scaler, reduce="mean"
         )
         print(f"[Epoch] Result: train_loss={tr_loss:.4f}  train_acc={tr_acc:.4f}")
         
@@ -641,7 +669,7 @@ def main():
         print(f"[FINAL] Global best val_acc (from CV): {ckpt.get('best_val_acc','N/A')}")
 
         print("[FINAL] Rebuilding SD base...")
-        vae_f, unet_f, tokenizer_f, text_encoder_f, scheduler_f, controlnet_f = build_sd2_1_base(
+        vae_f, unet_f, tokenizer_f, text_encoder_f, sd_scheduler_f, controlnet_f = build_sd2_1_base(
             dtype=ckpt["dtype"], use_xformers=False, train_all=False, version=ckpt["version"]
         )
         unet_f.eval()
@@ -650,7 +678,7 @@ def main():
         vae_f = vae_f.to(device).eval()
         controlnet_f = controlnet_f.to(device).eval()
 
-        scheduler_f.set_timesteps(ckpt["num_train_timesteps"])
+        sd_scheduler_f.set_timesteps(ckpt["num_train_timesteps"])
 
         adapter_f = LatentMultiChannelAdapter(k_t=5, use_attn_pool=True).to(device)
         adapter_f.load_state_dict(ckpt["adapter_state_dict"], strict=False)
@@ -692,6 +720,7 @@ def main():
         eargs_f.num_train_timesteps = ckpt["num_train_timesteps"]
         eargs_f.version   = ckpt["version"]
         eargs_f.learn_adapter = False
+        eargs_f.cond_scale = ckpt["cond_scale"]
 
         result_dir = os.path.join(save_dir, "final_results")
         os.makedirs(result_dir, exist_ok=True)
@@ -700,7 +729,7 @@ def main():
         final_acc = validate(
             final_loader, adapter_f, unet_f, controlnet_f, vae_f,
             prompt_embeds_f, prompt_to_class_f, num_classes_f,
-            scheduler_f, eargs_f, ckpt["img_size"],
+            sd_scheduler_f, eargs_f, ckpt["img_size"],
             torch_dtype=final_torch_dtype, use_amp=use_amp_final, reduce="mean", save_dir=result_dir, save_preds=True
         )
         print(f"[FINAL] accuracy on fixed set ({test_csv} @ {final_root}): {final_acc:.4f}")

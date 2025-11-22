@@ -1,0 +1,207 @@
+=== Job gestartet: Thu Nov 20 12:04:14 AM CET 2025 ===
+Job-ID: 2188641 auf Node: uc2n909.localdomain
+[INFO] Benötigt: 35446224074 B, Frei: 15772848427008 B auf /scratch/slurm_tmpdir/job_2188641
+[INFO] Kopiere Daten nach lokale SSD ...
+         32,768   0%    0.00kB/s    0:00:00      272,691,012   1%  384.09MB/s    0:00:00 (xfr#1, to-chk=96/98)    344,878,916   1%  328.87MB/s    0:01:17      545,632,864   2%  366.43MB/s    0:00:01 (xfr#2, to-chk=95/98)    793,457,248   3%  378.52MB/s    0:01:06      818,417,625   3%  381.28MB/s    0:00:02 (xfr#3, to-chk=94/98)  1,090,854,769   4%  386.15MB/s    0:00:02 (xfr#4, to-chk=93/98)  1,171,595,121   4%  372.68MB/s    0:01:06    1,363,658,427   5%  384.30MB/s    0:00:03 (xfr#5, to-chk=92/98)  1,635,010,235   6%  390.10MB/s    0:01:02    1,636,332,727   6%  390.22MB/s    0:00:03 (xfr#6, to-chk=91/98)  1,908,518,178   7%  394.72MB/s    0:00:04 (xfr#7, to-chk=90/98)  2,068,196,642   7%  411.18MB/s    0:00:57    2,180,742,189   8%  398.33MB/s    0:00:05 (xfr#8, to-chk=89/98)  2,452,780,084   9%  397.40MB/s    0:00:05 (xfr#9, to-chk=88/98)  2,469,590,068   9%  399.12MB/s    0:00:58    2,724,814,958  10%  398.31MB/s    0:00:06 (xfr#10, to-chk=87/98)  2,937,479,278  11%  420.49MB/s    0:00:54    2,997,175,596  11%  401.39MB/s    0:00:07 (xfr#11, to-chk=86/98)  3,269,586,787  12%  400.32MB/s    0:00:07 (xfr#12, to-chk=85/98)  3,336,597,347  12%  405.18MB/s    0:00:55    3,542,070,056  13%  401.66MB/s    0:00:08 (xfr#13, to-chk=84/98)  3,788,714,792  14%  409.69MB/s    0:00:54    3,814,281,888  14%  401.89MB/s    0:00:09 (xfr#14, to-chk=83/98)  4,086,621,496  15%  400.75MB/s    0:00:09 (xfr#15, to-chk=82/98)  4,189,250,872  15%  410.31MB/s    0:00:52    4,358,860,813  16%  402.06MB/s    0:00:10 (xfr#16, to-chk=81/98)  4,631,773,976  17%  403.69MB/s    0:00:10 (xfr#17, to-chk=80/98)  4,632,068,888  17%  401.91MB/s    0:00:53    4,904,629,785  18%  404.41MB/s    0:00:11 (xfr#18, to-chk=79/98)  5,097,109,017  19%  417.55MB/s    0:00:49    5,177,156,184  19%  405.29MB/s    0:00:12 (xfr#19, to-chk=78/98)  5,450,061,653  20%  405.84MB/s    0:00:12 (xfr#20, to-chk=77/98)  5,490,726,741  20%  403.67MB/s    0:00:50    5,722,664,754  21%  404.80MB/s    0:00:13 (xfr#21, to-chk=76/98)  5,942,832,946  22%  415.90MB/s    0:00:48    5,995,436,680  22%  404.73MB/s    0:00:14 (xfr#22, to-chk=75/98)  6,268,148,355  23%  404.12MB/s    0:00:14 (xfr#23, to-chk=74/98)  6,344,989,315  23%  408.70MB/s    0:00:48    6,540,909,123  24%  404.69MB/s    0:00:15 (xfr#24, to-chk=73/98)  6,779,689,539  25%  401.46MB/s    0:00:47    6,813,702,013  25%  403.90MB/s    0:00:16 (xfr#25, to-chk=72/98)  7,085,530,778  26%  404.58MB/s    0:00:16 (xfr#26, to-chk=71/98)  7,205,428,890  27%  409.12MB/s    0:00:45    7,357,708,356  27%  405.03MB/s    0:00:17 (xfr#27, to-chk=70/98)  7,629,928,849  28%  405.67MB/s    0:00:17 (xfr#28, to-chk=69/98)  7,633,402,257  28%  403.37MB/s    0:00:45    7,901,892,363  29%  405.06MB/s    0:00:18 (xfr#29, to-chk=68/98)  8,047,939,339  30%  406.32MB/s    0:00:44    8,173,901,188  30%  404.23MB/s    0:00:19 (xfr#30, to-chk=67/98)  8,446,960,088  31%  404.87MB/s    0:00:19 (xfr#31, to-chk=66/98)  8,480,842,200  32%  405.89MB/s    0:00:43    8,719,808,239  32%  405.89MB/s    0:00:20 (xfr#32, to-chk=65/98)  8,953,837,295  33%  417.17MB/s    0:00:40    8,992,648,001  34%  406.60MB/s    0:00:21 (xfr#33, to-chk=64/98)  9,265,947,355  35%  407.26MB/s    0:00:21 (xfr#34, to-chk=63/98)  9,378,079,451  35%  416.28MB/s    0:00:40    9,539,165,302  36%  407.29MB/s    0:00:22 (xfr#35, to-chk=62/98)  9,812,438,441  37%  407.20MB/s    0:00:22 (xfr#36, to-chk=61/98)  9,812,733,353  37%  418.67MB/s    0:00:38   10,085,662,333  38%  407.39MB/s    0:00:23 (xfr#37, to-chk=60/98) 10,259,005,053  38%  421.84MB/s    0:00:37   10,358,688,023  39%  407.61MB/s    0:00:24 (xfr#38, to-chk=59/98) 10,631,546,722  40%  408.25MB/s    0:00:24 (xfr#39, to-chk=58/98) 10,694,559,586  40%  412.96MB/s    0:00:37   10,904,487,534  41%  408.54MB/s    0:00:25 (xfr#40, to-chk=57/98) 11,166,008,942  42%  424.15MB/s    0:00:35   11,177,540,730  42%  409.01MB/s    0:00:26 (xfr#41, to-chk=56/98) 11,450,463,674  43%  408.12MB/s    0:00:26 (xfr#42, to-chk=55/98) 11,574,392,250  43%  420.33MB/s    0:00:34   11,723,318,643  44%  409.08MB/s    0:00:27 (xfr#43, to-chk=54/98) 11,995,735,901  45%  409.18MB/s    0:00:27 (xfr#44, to-chk=53/98) 11,996,030,813  45%  411.16MB/s    0:00:34   12,268,247,897  46%  408.94MB/s    0:00:28 (xfr#45, to-chk=52/98) 12,460,628,825  47%  418.03MB/s    0:00:32   12,540,383,418  47%  409.23MB/s    0:00:29 (xfr#46, to-chk=51/98) 12,812,625,750  48%  409.58MB/s    0:00:29 (xfr#47, to-chk=50/98) 12,893,235,030  48%  408.84MB/s    0:00:32   13,084,820,724  49%  409.89MB/s    0:00:30 (xfr#48, to-chk=49/98) 13,354,534,132  50%  421.26MB/s    0:00:30   13,357,764,718  50%  410.01MB/s    0:00:31 (xfr#49, to-chk=48/98) 13,632,033,333  51%  409.95MB/s    0:00:31 (xfr#50, to-chk=47/98) 13,729,944,117  51%  413.71MB/s    0:00:30   13,906,204,156  52%  409.14MB/s    0:00:32 (xfr#51, to-chk=46/98) 14,179,890,476  53%  409.22MB/s    0:00:33 (xfr#52, to-chk=45/98) 14,179,923,244  53%  409.91MB/s    0:00:29   14,453,286,294  54%  408.50MB/s    0:00:33 (xfr#53, to-chk=44/98) 14,574,593,430  55%  400.87MB/s    0:00:28   14,726,157,770  55%  408.63MB/s    0:00:34 (xfr#54, to-chk=43/98) 14,999,414,046  56%  408.43MB/s    0:00:35 (xfr#55, to-chk=42/98) 14,999,708,958  56%  389.42MB/s    0:00:28   15,273,137,095  57%  408.00MB/s    0:00:35 (xfr#56, to-chk=41/98) 15,437,730,759  58%  404.24MB/s    0:00:26   15,545,375,631  58%  408.34MB/s    0:00:36 (xfr#57, to-chk=40/98) 15,817,226,259  59%  408.64MB/s    0:00:36 (xfr#58, to-chk=39/98) 15,841,310,739  59%  393.65MB/s    0:00:26   16,088,903,475  60%  408.28MB/s    0:00:37 (xfr#59, to-chk=38/98) 16,310,251,315  61%  411.24MB/s    0:00:24   16,361,286,071  61%  408.54MB/s    0:00:38 (xfr#60, to-chk=37/98) 16,633,749,065  62%  408.39MB/s    0:00:38 (xfr#61, to-chk=36/98) 16,696,172,105  63%  404.77MB/s    0:00:23   16,906,105,749  63%  408.12MB/s    0:00:39 (xfr#62, to-chk=35/98) 17,116,836,757  64%  400.63MB/s    0:00:22   17,179,104,552  64%  407.43MB/s    0:00:40 (xfr#63, to-chk=34/98) 17,451,525,232  65%  407.31MB/s    0:00:40 (xfr#64, to-chk=33/98) 17,540,621,424  66%  405.45MB/s    0:00:21   17,724,138,301  67%  407.77MB/s    0:00:41 (xfr#65, to-chk=32/98) 17,996,833,126  68%  407.91MB/s    0:00:42 (xfr#66, to-chk=31/98) 17,997,128,038  68%  398.40MB/s    0:00:20   18,269,127,131  69%  408.16MB/s    0:00:42 (xfr#67, to-chk=30/98) 18,434,146,779  69%  410.47MB/s    0:00:19   18,541,405,544  70%  407.99MB/s    0:00:43 (xfr#68, to-chk=29/98) 18,813,560,621  71%  407.95MB/s    0:00:43 (xfr#69, to-chk=28/98) 18,852,390,701  71%  409.89MB/s    0:00:18   19,086,948,857  72%  408.21MB/s    0:00:44 (xfr#70, to-chk=27/98) 19,312,294,393  73%  418.42MB/s    0:00:16   19,359,166,808  73%  408.29MB/s    0:00:45 (xfr#71, to-chk=26/98) 19,631,952,502  74%  408.20MB/s    0:00:45 (xfr#72, to-chk=25/98) 19,712,660,086  74%  409.32MB/s    0:00:16   19,904,312,853  75%  408.18MB/s    0:00:46 (xfr#73, to-chk=24/98) 20,122,580,501  76%  402.86MB/s    0:00:15   20,176,560,571  76%  407.39MB/s    0:00:47 (xfr#74, to-chk=23/98) 20,449,134,441  77%  407.71MB/s    0:00:47 (xfr#75, to-chk=22/98) 20,541,998,953  77%  403.04MB/s    0:00:14   20,721,396,641  78%  407.63MB/s    0:00:48 (xfr#76, to-chk=21/98) 20,992,650,145  79%  400.73MB/s    0:00:13   20,993,787,149  79%  407.54MB/s    0:00:49 (xfr#77, to-chk=20/98) 21,266,315,177  80%  407.51MB/s    0:00:49 (xfr#78, to-chk=19/98) 21,391,161,257  80%  400.19MB/s    0:00:12   21,539,173,243  81%  407.40MB/s    0:00:50 (xfr#79, to-chk=18/98) 21,811,551,531  82%  407.43MB/s    0:00:51 (xfr#80, to-chk=17/98) 21,811,846,443  82%  402.65MB/s    0:00:11   22,084,008,381  83%  407.35MB/s    0:00:51 (xfr#81, to-chk=16/98) 22,203,840,957  83%  396.21MB/s    0:00:10   22,356,459,612  84%  406.53MB/s    0:00:52 (xfr#82, to-chk=15/98) 22,629,639,304  85%  406.63MB/s    0:00:53 (xfr#83, to-chk=14/98) 22,629,934,216  85%  387.74MB/s    0:00:09   22,902,087,967  86%  406.85MB/s    0:00:53 (xfr#84, to-chk=13/98) 23,098,564,895  87%  404.45MB/s    0:00:08   23,174,688,959  87%  407.02MB/s    0:00:54 (xfr#85, to-chk=12/98) 23,446,721,976  88%  407.09MB/s    0:00:54 (xfr#86, to-chk=11/98) 23,519,466,936  88%  404.80MB/s    0:00:07   23,719,109,724  89%  407.21MB/s    0:00:55 (xfr#87, to-chk=10/98) 23,974,110,300  90%  419.65MB/s    0:00:05   23,991,619,802  90%  407.24MB/s    0:00:56 (xfr#88, to-chk=9/98)  24,264,066,609  91%  407.39MB/s    0:00:56 (xfr#89, to-chk=8/98) 24,402,642,481  92%  422.96MB/s    0:00:04   24,537,189,045  92%  407.55MB/s    0:00:57 (xfr#90, to-chk=7/98) 24,809,815,735  93%  407.74MB/s    0:00:58 (xfr#91, to-chk=6/98) 24,828,231,351  93%  412.69MB/s    0:00:03   25,082,360,808  94%  407.90MB/s    0:00:58 (xfr#92, to-chk=5/98) 25,301,873,640  95%  425.28MB/s    0:00:02   25,355,074,437  95%  408.11MB/s    0:00:59 (xfr#93, to-chk=4/98) 25,628,225,271  96%  408.23MB/s    0:00:59 (xfr#94, to-chk=3/98) 25,715,748,599  97%  415.55MB/s    0:00:01   25,901,555,282  97%  408.20MB/s    0:01:00 (xfr#95, to-chk=2/98) 26,174,806,566  98%  408.27MB/s    0:01:01 (xfr#96, to-chk=1/98) 26,175,101,478  98%  413.29MB/s    0:00:00   26,448,450,079 100%  408.30MB/s    0:01:01 (xfr#97, to-chk=0/98) 26,448,450,079 100%  408.24MB/s    0:01:01 (xfr#97, to-chk=0/98)
+
+Number of files: 98 (reg: 97, dir: 1)
+Number of created files: 97 (reg: 97)
+Number of deleted files: 0
+Number of regular files transferred: 97
+Total file size: 26,448,450,079 bytes
+Total transferred file size: 26,448,450,079 bytes
+Literal data: 26,448,450,079 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.005 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 26,454,914,667
+Total bytes received: 1,862
+
+sent 26,454,914,667 bytes  received 1,862 bytes  423,278,664.46 bytes/sec
+total size is 26,448,450,079  speedup is 1.00
+         32,768   0%    0.00kB/s    0:00:00      272,520,570   3%  386.70MB/s    0:00:00 (xfr#1, to-chk=32/34)    354,735,482   3%  338.27MB/s    0:00:24      545,313,185   6%  377.10MB/s    0:00:01 (xfr#2, to-chk=31/34)    775,508,385   8%  369.96MB/s    0:00:21      818,336,726   9%  374.83MB/s    0:00:02 (xfr#3, to-chk=30/34)  1,090,490,930  12%  372.34MB/s    0:00:02 (xfr#4, to-chk=29/34)  1,158,910,514  12%  368.64MB/s    0:00:20    1,362,718,050  15%  382.22MB/s    0:00:03 (xfr#5, to-chk=28/34)  1,607,429,474  17%  383.52MB/s    0:00:18    1,635,019,824  18%  385.00MB/s    0:00:04 (xfr#6, to-chk=27/34)  1,908,041,944  21%  386.91MB/s    0:00:04 (xfr#7, to-chk=26/34)  2,006,247,640  22%  394.05MB/s    0:00:17    2,180,874,428  24%  389.26MB/s    0:00:05 (xfr#8, to-chk=25/34)  2,444,099,772  27%  398.12MB/s    0:00:16    2,453,626,928  27%  389.15MB/s    0:00:06 (xfr#9, to-chk=24/34)  2,725,685,220  30%  387.27MB/s    0:00:06 (xfr#10, to-chk=23/34)  2,836,506,596  31%  400.27MB/s    0:00:15    2,998,023,590  33%  390.86MB/s    0:00:07 (xfr#11, to-chk=22/34)  3,270,949,905  36%  392.67MB/s    0:00:07 (xfr#12, to-chk=21/34)  3,271,244,817  36%  393.54MB/s    0:00:14    3,544,126,110  39%  394.57MB/s    0:00:08 (xfr#13, to-chk=20/34)  3,749,548,702  41%  412.34MB/s    0:00:12    3,817,228,969  42%  397.38MB/s    0:00:09 (xfr#14, to-chk=19/34)  4,090,111,343  45%  397.78MB/s    0:00:09 (xfr#15, to-chk=18/34)  4,158,825,839  46%  405.58MB/s    0:00:11    4,362,577,030  48%  398.74MB/s    0:00:10 (xfr#16, to-chk=17/34)  4,626,850,950  51%  423.46MB/s    0:00:10    4,634,778,744  51%  400.33MB/s    0:00:11 (xfr#17, to-chk=16/34)  4,908,056,721  54%  400.91MB/s    0:00:11 (xfr#18, to-chk=15/34)  5,045,649,553  56%  423.37MB/s    0:00:09    5,181,350,332  57%  401.93MB/s    0:00:12 (xfr#19, to-chk=14/34)  5,454,810,811  60%  402.20MB/s    0:00:12 (xfr#20, to-chk=13/34)  5,455,105,723  60%  399.15MB/s    0:00:08    5,726,923,393  63%  400.53MB/s    0:00:13 (xfr#21, to-chk=12/34)  5,899,512,449  65%  407.37MB/s    0:00:07    5,999,294,391  66%  400.07MB/s    0:00:14 (xfr#22, to-chk=11/34)  6,271,674,600  69%  400.74MB/s    0:00:14 (xfr#23, to-chk=10/34)  6,282,717,416  69%  387.52MB/s    0:00:06    6,543,905,264  72%  399.61MB/s    0:00:15 (xfr#24, to-chk=9/34)   6,743,560,688  74%  397.36MB/s    0:00:05    6,816,219,313  75%  400.08MB/s    0:00:16 (xfr#25, to-chk=8/34)  7,088,573,778  78%  399.77MB/s    0:00:16 (xfr#26, to-chk=7/34)  7,096,995,154  78%  391.75MB/s    0:00:04    7,362,169,528  81%  397.73MB/s    0:00:17 (xfr#27, to-chk=6/34)  7,549,438,648  83%  393.67MB/s    0:00:03    7,634,567,872  84%  398.58MB/s    0:00:18 (xfr#28, to-chk=5/34)  7,906,873,442  87%  398.76MB/s    0:00:18 (xfr#29, to-chk=4/34)  7,967,395,938  88%  401.96MB/s    0:00:02    8,179,279,488  90%  398.91MB/s    0:00:19 (xfr#30, to-chk=3/34)  8,421,729,920  93%  400.41MB/s    0:00:01    8,451,669,834  93%  399.89MB/s    0:00:20 (xfr#31, to-chk=2/34)  8,724,244,410  96%  399.35MB/s    0:00:20 (xfr#32, to-chk=1/34)  8,793,974,714  97%  404.90MB/s    0:00:00    8,997,615,579 100%  399.14MB/s    0:00:21 (xfr#33, to-chk=0/34)  8,997,615,579 100%  398.98MB/s    0:00:21 (xfr#33, to-chk=0/34)
+
+Number of files: 34 (reg: 33, dir: 1)
+Number of created files: 33 (reg: 33)
+Number of deleted files: 0
+Number of regular files transferred: 33
+Total file size: 8,997,615,579 bytes
+Total transferred file size: 8,997,615,579 bytes
+Literal data: 8,997,615,579 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 8,999,814,908
+Total bytes received: 646
+
+sent 8,999,814,908 bytes  received 646 bytes  399,991,802.40 bytes/sec
+total size is 8,997,615,579  speedup is 1.00
+          1,943   1%    0.00kB/s    0:00:00            1,943   1%    0.00kB/s    0:00:00 (xfr#1, to-chk=7/9)          7,419   5%    2.61MB/s    0:00:00 (xfr#2, to-chk=6/9)         14,488  10%    2.39MB/s    0:00:00 (xfr#3, to-chk=5/9)         20,186  15%    2.49MB/s    0:00:00 (xfr#4, to-chk=4/9)         36,272  27%    3.64MB/s    0:00:00 (xfr#5, to-chk=3/9)         57,095  42%    4.78MB/s    0:00:00 (xfr#6, to-chk=2/9)         95,597  71%    6.38MB/s    0:00:00 (xfr#7, to-chk=1/9)        133,840 100%    7.40MB/s    0:00:00 (xfr#8, to-chk=0/9)        133,840 100%    6.99MB/s    0:00:00 (xfr#8, to-chk=0/9)
+
+Number of files: 9 (reg: 8, dir: 1)
+Number of created files: 8 (reg: 8)
+Number of deleted files: 0
+Number of regular files transferred: 8
+Total file size: 133,840 bytes
+Total transferred file size: 133,840 bytes
+Literal data: 133,840 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.003 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 134,461
+Total bytes received: 171
+
+sent 134,461 bytes  received 171 bytes  269,264.00 bytes/sec
+total size is 133,840  speedup is 0.99
+=== GPU-Check ===
+Thu Nov 20 00:05:38 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.195.03             Driver Version: 570.195.03     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100 80GB PCIe          On  |   00000000:1A:00.0 Off |                    0 |
+| N/A   37C    P0             55W /  300W |      23MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            2953      G   /usr/libexec/Xorg                        17MiB |
++-----------------------------------------------------------------------------------------+
+torch.cuda.is_available: True
+device: NVIDIA A100 80GB PCIe
+capability: (8, 0)
+PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+3D conv smoke test OK: torch.Size([1, 16, 48, 48, 48])
+========== CONFIG ==========
+data_train: /scratch/slurm_tmpdir/job_2188641/job_2188641/input/train
+train_csv: /scratch/slurm_tmpdir/job_2188641/job_2188641/input/jsons/train_labels.csv
+backbone: resnet50
+pretrained: True
+num_classes: 2
+epochs: 600
+batch_size: 2
+num_workers: 4
+acc_threshold: 0.98
+loss_threshold: 0.05
+learn_front: True
+lr_front: 0.05
+wd_front: 0.01
+train_backbone: True
+lr_backbone: 0.05
+wd_backbone: 0.01
+dtype: bfloat16
+seed: 42
+dropout_p: 0.1
+final_eval: True
+data_test: /scratch/slurm_tmpdir/job_2188641/job_2188641/input/test
+test_csv: None
+val_csv: /scratch/slurm_tmpdir/job_2188641/job_2188641/input/jsons/test_labels.csv
+save_dir: /scratch/slurm_tmpdir/job_2188641/job_2188641/results
+============================
+[AMP] device=cuda  dtype=bfloat16  use_amp=True
+[IO] Save directory: /scratch/slurm_tmpdir/job_2188641/job_2188641/results/resnet50_bfloat16_251120_0006
+[build_backbone] Built ResNet-50 (pretrained=True) with ImageNet mean/std: (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschenhals-Tiefe: 8
+[OPT] Front parameters will be trained.
+[OPT] Backbone parameters will be trained.
+[DataLoader] Train batches: ~48
+
+[Epoch] 01/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6426  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.8448  avg_acc=0.6000
+[train_one_epoch] step=40  avg_loss=0.8715  avg_acc=0.5500
+[train_one_epoch] Done. epoch_loss=1.0476  epoch_acc=0.5417
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2188641/job_2188641/results/resnet50_bfloat16_251120_0006/best model/best_checkpoint.pt  (acc=0.5417)
+
+[Epoch] 02/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.0206  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=1.2702  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=1.1211  avg_acc=0.4500
+[train_one_epoch] Done. epoch_loss=1.0558  epoch_acc=0.4688
+
+[Epoch] 03/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7178  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7438  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.7258  avg_acc=0.5000
+[train_one_epoch] Done. epoch_loss=0.7256  epoch_acc=0.5104
+
+[Epoch] 04/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7148  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6973  avg_acc=0.5250
+[train_one_epoch] step=40  avg_loss=0.6946  avg_acc=0.5375
+[train_one_epoch] Done. epoch_loss=0.7005  epoch_acc=0.5312
+
+[Epoch] 05/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.7344  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.7037  avg_acc=0.5000
+[train_one_epoch] step=40  avg_loss=0.6985  avg_acc=0.5250
+[train_one_epoch] Done. epoch_loss=0.6990  epoch_acc=0.5208
+
+[Epoch] 06/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.8613  avg_acc=0.0000
+[train_one_epoch] step=20  avg_loss=0.7188  avg_acc=0.4750
+[train_one_epoch] step=40  avg_loss=0.7004  avg_acc=0.5750
+[train_one_epoch] Done. epoch_loss=0.6975  epoch_acc=0.5833
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2188641/job_2188641/results/resnet50_bfloat16_251120_0006/best model/best_checkpoint.pt  (acc=0.5833)
+
+[Epoch] 07/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6055  avg_acc=1.0000
+[train_one_epoch] step=20  avg_loss=0.7118  avg_acc=0.4500
+[train_one_epoch] step=40  avg_loss=0.6975  avg_acc=0.5125
+[train_one_epoch] Done. epoch_loss=0.6919  epoch_acc=0.5417
+
+[Epoch] 08/600
+[train_one_epoch] Starting training iteration...
+[train_one_epoch] step=1  avg_loss=0.6973  avg_acc=0.5000
+[train_one_epoch] step=20  avg_loss=0.6722  avg_acc=0.6500
+[INFO] Kopiere Ergebnisse zurück nach /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/resnet_dropout_pretrained_scheduler_2188641 ...
+              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=1/4)         32,768   0%    0.00kB/s    0:00:00      105,942,596 100%  413.95MB/s    0:00:00 (xfr#1, to-chk=0/4)    105,942,596 100%  413.95MB/s    0:00:00 (xfr#1, to-chk=0/4)    105,942,596 100%  385.51MB/s    0:00:00 (xfr#1, to-chk=0/4)
+
+Number of files: 4 (reg: 1, dir: 3)
+Number of created files: 3 (reg: 1, dir: 2)
+Number of deleted files: 0
+Number of regular files transferred: 1
+Total file size: 105,942,596 bytes
+Total transferred file size: 105,942,596 bytes
+Literal data: 105,942,596 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.035 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 105,968,707
+Total bytes received: 50
+
+sent 105,968,707 bytes  received 50 bytes  70,645,838.00 bytes/sec
+total size is 105,942,596  speedup is 1.00
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n909
+Job ID: 2188641
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:42:29
+CPU Efficiency: 22.53% of 03:08:32 core-walltime
+Job Wall-clock time: 00:11:47
+Memory Utilized: 10.64 GB
+Memory Efficiency: 26.61% of 40.00 GB (40.00 GB/node)

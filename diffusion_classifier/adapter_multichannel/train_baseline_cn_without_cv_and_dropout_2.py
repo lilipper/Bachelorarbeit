@@ -6,6 +6,8 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import torch
+import torch.optim as optim
+from torch.optim.lr_scheduler import OneCycleLR, CosineAnnealingLR
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
@@ -162,7 +164,7 @@ class ControlNetAdapterWrapper(torch.nn.Module):
 
 # ----------------- Train / Validate -----------------
 
-def train_one_epoch(loader, front, backbone, criterion, opt, scaler,
+def train_one_epoch(loader, front, backbone, criterion, opt, sched, scaler,
                     torch_dtype, use_amp, img_out_size, learn_front: bool, mean_std):
     """One training epoch with AMP and ImageNet normalization."""
     if learn_front:
@@ -203,11 +205,16 @@ def train_one_epoch(loader, front, backbone, criterion, opt, scaler,
             preds = torch.argmax(logits, dim=1)
             running_acc += (preds == label).sum().item()
             seen += vol.size(0)
+        if isinstance(sched, (torch.optim.lr_scheduler.OneCycleLR, torch.optim.lr_scheduler.CyclicLR)):
+            sched.step()
 
         if step % 20 == 0 or step == 1:
             print(f"[train_one_epoch] step={step}  "
                   f"avg_loss={running_loss/max(1,seen):.4f}  avg_acc={running_acc/max(1,seen):.4f}")
-
+    if isinstance(sched, (torch.optim.lr_scheduler.CosineAnnealingLR,
+                              torch.optim.lr_scheduler.StepLR,
+                              torch.optim.lr_scheduler.ReduceLROnPlateau)):
+        sched.step()
     epoch_loss = running_loss / max(1, seen)
     epoch_acc = running_acc / max(1, seen)
     print(f"[train_one_epoch] Done. epoch_loss={epoch_loss:.4f}  epoch_acc={epoch_acc:.4f}")
@@ -269,11 +276,11 @@ def main():
 
     # LRs / WD
     parser.add_argument("--learn_front", action="store_true", help="Train the THz adapter (front)")
-    parser.add_argument("--lr_front", type=float, default=5e-4)
-    parser.add_argument("--wd_front", type=float, default=0.0)
+    parser.add_argument("--lr_front", type=float, default=5e-2)
+    parser.add_argument("--wd_front", type=float, default=0.01)
 
     parser.add_argument("--train_backbone", action="store_true", help="Train the backbone classifier")
-    parser.add_argument("--lr_backbone", type=float, default=5e-4)
+    parser.add_argument("--lr_backbone", type=float, default=5e-2)
     parser.add_argument("--wd_backbone", type=float, default=0.01)
 
     # AMP
@@ -367,7 +374,8 @@ def main():
     if len(params) == 0:
         raise ValueError("Nothing to train: enable --learn_front and/or --train_backbone.")
 
-    opt = torch.optim.SGD(params, momentum=0.9)
+    
+    
     criterion = nn.CrossEntropyLoss()
     scaler = torch.amp.GradScaler('cuda', enabled=scaler_enabled)
 
@@ -378,6 +386,26 @@ def main():
     )
     print(f"[DataLoader] Train batches: ~{len(train_loader)}")
 
+    swap_number = int(args.epochs *0.6)
+
+    optimizer1 = optim.AdamW(params, lr=args.lr_front, weight_decay=args.wd_front)
+    scheduler1 = OneCycleLR(
+        optimizer1,
+        max_lr=args.lr_front,
+        epochs=int(swap_number),
+        steps_per_epoch=len(train_loader),
+        pct_start=0.3
+    )
+
+    optimizer2 = optim.SGD(params, lr=args.lr_front, momentum=0.9, weight_decay=args.wd_front)
+    scheduler2 = CosineAnnealingLR(optimizer2, T_max=args.epochs - int(swap_number), eta_min=1e-5)
+
+    def combined_optimizer(step):
+        if step < swap_number:
+            return optimizer1, scheduler1
+        else:
+            return optimizer2, scheduler2
+
     # Reset best metric per fold
     best_val = -1.0
     best_model_dir = os.path.join(save_dir, "best model")
@@ -385,8 +413,9 @@ def main():
     path_ckpt = os.path.join(best_model_dir, "best_checkpoint.pt")
     for epoch in range(1, args.epochs + 1):
         print(f"\n[Epoch] {epoch:02d}/{args.epochs}")
+        opt, sched = combined_optimizer(epoch - 1)
         tr_loss, tr_acc = train_one_epoch(
-            train_loader, front, backbone, criterion, opt, scaler,
+            train_loader, front, backbone, criterion, opt, sched, scaler,
             torch_dtype, use_amp, img_out_size, learn_front=args.learn_front, mean_std=mean_std
         )
         if tr_acc >= best_val:
@@ -493,7 +522,7 @@ def main():
 
         final_acc = correct / max(1, total)
         print(f"[FINAL] Accuracy on fixed set ({test_csv} @ {args.data_test}): {final_acc:.4f}")
-        evaluate_predictions(final_eval_path, args.num_classes)
+        evaluate_predictions(final_eval_path, args.save_dir)
 
 
 if __name__ == "__main__":

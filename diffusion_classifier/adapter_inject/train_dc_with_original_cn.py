@@ -327,9 +327,10 @@ def main():
     ap.add_argument("--wd_controlnet", type=float, default=0.0)
 
     # Training
-    ap.add_argument("--epochs", type=int, default=60)
+    ap.add_argument("--epochs", type=int, default=30)
     ap.add_argument("--batch_size", type=int, default=2)
     ap.add_argument("--num_workers", type=int, default=4)
+    ap.add_argument("--dropout", type=float, default=0.1)
 
     # CV
     ap.add_argument("--cv_splits", type=int, default=5)
@@ -344,7 +345,7 @@ def main():
     ap.add_argument("--val_csv", type=str, default=None, help="Fallback CSV for final eval if --test_csv not set.")
 
     # IO
-    ap.add_argument("--save_dir", type=str, default="./runs/checkpoints_dc_rskf")
+    ap.add_argument("--save_dir", type=str, default="./runs/train_dc_with_original_cn")
 
     args = ap.parse_args()
     # Print config
@@ -381,6 +382,8 @@ def main():
     controlnet = controlnet.to(device).eval()
     scheduler.set_timesteps(args.num_train_timesteps)
     print("[SD] Done. UNet/VAEs are frozen.")
+
+    front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16, p=args.dropout).to(device, dtype=torch.float32)
 
     # --- Prompt bank & text embeddings ---
     print(f"[Prompts] Loading prompts from: {args.prompts_csv}")
@@ -455,8 +458,8 @@ def main():
         except Exception:
             print("[ControlNet] Gradient checkpointing not available.")
 
-        # --- THz->RGB front ---
-        front = THzToRGBHead(in_ch=2, base_ch=32, k_t=5, final_depth=16).to(device, dtype=torch.float32)
+        
+        
         # Optimizer: train ControlNet (+ optionally front)
         param_groups = []
         if args.learn_front:
@@ -471,7 +474,7 @@ def main():
         param_groups.append({"params": controlnet.parameters(), "lr": args.lr_controlnet, "weight_decay": args.wd_controlnet})
         print("[OPT] ControlNet parameters will be trained.")
 
-        opt = torch.optim.AdamW(param_groups)
+        opt = torch.optim.SGD(param_groups, momentum=0.9)
 
         print("[DEBUG] Trainable parameter groups:")
         for name, p in list(front.named_parameters())[:3]:

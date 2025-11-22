@@ -4,10 +4,12 @@ from pathlib import Path
 from typing import Tuple, Optional, List
 
 
-path = '/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/vitb32_dropout_01_2099564/vit_b32_bfloat16_251112_0137/best model/best_checkpoint.pt'
+path = '/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/resnet_dropout_pretrained_SGD_2172774/resnet50_bfloat16_251118_1336/final_eval/01.pt'
 
-ckpt = torch.load(path, map_location='cpu')
-print(ckpt.keys())
-model = ckpt['backbone_state_dict']
-for k, i in model.items():
-    print(k, i.shape)
+data = torch.load(path, map_location='cpu')
+print(type(data))
+if isinstance(data, dict):
+    print("Keys:", data.keys())
+else:
+    print("Kein Dict, sondern:", type(data))
+    print("Inhalt:", data)

@@ -12,7 +12,9 @@ class THzToRGBHead(nn.Module):
                  cap_T_in: int = 256,
                  t_stride1: int = 8,
                  t_stride2: int = 2,
-                 gn_groups: int = 8):
+                 gn_groups: int = 8,
+                 p: float = 0.1,
+                 ):
         super().__init__()
         self.cap_T_in = int(cap_T_in)
         self.t_stride1 = int(t_stride1)
@@ -52,6 +54,7 @@ class THzToRGBHead(nn.Module):
             nn.Conv2d(base_ch, base_ch // 2, 3, padding=1), nn.SiLU(),
             nn.Conv2d(base_ch // 2, max(8, base_ch // 4), 3, padding=1), nn.SiLU(),
         )
+        self.dropout = nn.Dropout2d(p=p)
         self.head = nn.Conv2d(max(8, base_ch // 4), 3, 1)
         nn.init.zeros_(self.head.bias)
         nn.init.normal_(self.head.weight, mean=0.0, std=1e-4)
@@ -68,5 +71,6 @@ class THzToRGBHead(nn.Module):
         x = self.pool_to_D(x)
         x = self.depth_projection(x).squeeze(2)
         x = self.refine2d(x)
+        x = self.dropout(x)
         x = self.head(x)
         return x

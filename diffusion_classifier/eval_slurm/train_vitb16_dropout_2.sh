@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=vitb16_dropout_pretrained-SGD
-#SBATCH --partition=gpu_h100
+#SBATCH --job-name=vitb16_dropout_pretrained-scheduler
+#SBATCH --partition=gpu_a100_il
 #SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/vitb16_dropout_pretrained_SGD_%j.out
-#SBATCH --error=final_logs/vitb16_dropout_pretrained_SGD_%j.err
+#SBATCH --output=final_logs/vitb16_dropout_pretrained_scheduler_%j.out
+#SBATCH --error=final_logs/vitb16_dropout_pretrained_scheduler_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/final_eval"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="vitb16_dropout_pretrained_SGD_${SLURM_JOB_ID}"
+RUN_NAME="vitb16_dropout_pretrained_scheduler_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)

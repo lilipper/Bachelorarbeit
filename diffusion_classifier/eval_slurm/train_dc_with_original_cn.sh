@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=train-dc-with-original-cn
+#SBATCH --job-name=train-dc-with-original-cn-SGD
 #SBATCH --partition=gpu_h100
 #SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
 #SBATCH --mem=40GB
 #SBATCH --cpus-per-task=16
-#SBATCH --output=final_logs/train_dc_with_original_cn_%j.out
-#SBATCH --error=final_logs/train_dc_with_original_cn_%j.err
+#SBATCH --output=final_logs/train_dc_with_original_cn_SGD_%j.out
+#SBATCH --error=final_logs/train_dc_with_original_cn_SGD_%j.err
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=linus.lippert@students.uni-mannheim.de
 
@@ -24,7 +24,7 @@ INPUT_TRAIN_DIR="$WORKSPACE_BASE/thz_dataset/train"
 INPUT_TEST_DIR="$WORKSPACE_BASE/thz_dataset/test"
 INPUT_LABELS_DIR="$WORKSPACE_BASE/Bachelorarbeit/jsons"
 OUTPUT_BASE="$WORKSPACE_BASE/outputs"                       # Ziel für Ergebnisse auf Workspace
-RUN_NAME="train_dc_with_original_cn_${SLURM_JOB_ID}"
+RUN_NAME="train_dc_with_original_cn_SGD_${SLURM_JOB_ID}"
 OUTPUT_DIR="$OUTPUT_BASE/$RUN_NAME"
 
 ########## 🧊 Lokales SSD-Arbeitsverzeichnis ($TMPDIR)
@@ -94,6 +94,7 @@ python adapter_inject/train_dc_with_original_cn.py \
   --to_keep   3 2 1 \
   --use_xformers \
   --learn_front \
-  --save_dir ./runs/checkpoints_cn_official
+  --final_eval \
+  --output_dir "$LCL_RESULTS" \
 
 echo "=== Job beendet: $(date) ==="

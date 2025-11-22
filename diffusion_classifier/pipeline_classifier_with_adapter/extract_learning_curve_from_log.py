@@ -77,11 +77,11 @@ def parse_args():
                         help="Output-Verzeichnis für CSV und Plots")
     return parser.parse_args()
 
-def main(args):
+def main(log,outdir):
     
 
-    log_path = Path(args.log)
-    outdir = Path(args.outdir)
+    log_path = Path(log)
+    outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     outdir = Path(os.path.join(outdir, os.path.basename(log_path).replace('.out', '').replace('.err', '').replace('.', '_')))
 
@@ -99,4 +99,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(parse_args())
+    args = parse_args()
+    main(args.log,args.outdir)
+    
+

@@ -1,0 +1,1070 @@
+=== Job gestartet: Wed Nov 19 11:37:18 AM CET 2025 ===
+Job-ID: 2182868 auf Node: uc3n072.localdomain
+[INFO] Benötigt: 35446224074 B, Frei: 15124243521536 B auf /scratch/slurm_tmpdir/job_2182868
+[INFO] Kopiere Daten nach lokale SSD ...
+         32,768   0%    0.00kB/s    0:00:00      272,691,012   1%  324.22MB/s    0:00:00 (xfr#1, to-chk=96/98)    276,131,652   1%  263.31MB/s    0:01:37      545,632,864   2%  316.88MB/s    0:00:01 (xfr#2, to-chk=95/98)    622,735,968   2%  296.93MB/s    0:01:24      818,417,625   3%  318.69MB/s    0:00:02 (xfr#3, to-chk=94/98)    985,370,585   3%  313.33MB/s    0:01:19    1,090,854,769   4%  321.08MB/s    0:00:03 (xfr#4, to-chk=93/98)  1,327,275,889   5%  316.60MB/s    0:01:17    1,363,658,427   5%  318.66MB/s    0:00:04 (xfr#5, to-chk=92/98)  1,636,332,727   6%  313.42MB/s    0:00:04 (xfr#6, to-chk=91/98)  1,636,365,495   6%  319.20MB/s    0:01:15    1,908,518,178   7%  311.98MB/s    0:00:05 (xfr#7, to-chk=90/98)  1,928,932,642   7%  306.44MB/s    0:01:18    2,180,742,189   8%  313.06MB/s    0:00:06 (xfr#8, to-chk=89/98)  2,277,178,413   8%  303.14MB/s    0:01:17    2,452,780,084   9%  313.30MB/s    0:00:07 (xfr#9, to-chk=88/98)  2,614,031,412   9%  301.96MB/s    0:01:17    2,724,814,958  10%  312.48MB/s    0:00:08 (xfr#10, to-chk=87/98)  2,976,833,646  11%  319.83MB/s    0:01:11    2,997,175,596  11%  313.86MB/s    0:00:09 (xfr#11, to-chk=86/98)  3,269,586,787  12%  313.82MB/s    0:00:09 (xfr#12, to-chk=85/98)  3,269,881,699  12%  316.54MB/s    0:01:11    3,542,070,056  13%  312.63MB/s    0:00:10 (xfr#13, to-chk=84/98)  3,579,818,792  13%  307.50MB/s    0:01:12    3,814,281,888  14%  312.29MB/s    0:00:11 (xfr#14, to-chk=83/98)  3,930,116,768  14%  310.67MB/s    0:01:10    4,086,621,496  15%  312.71MB/s    0:00:12 (xfr#15, to-chk=82/98)  4,284,048,696  16%  308.58MB/s    0:01:10    4,358,860,813  16%  313.16MB/s    0:00:13 (xfr#16, to-chk=81/98)  4,631,773,976  17%  314.17MB/s    0:00:14 (xfr#17, to-chk=80/98)  4,631,806,744  17%  323.50MB/s    0:01:05    4,904,629,785  18%  314.30MB/s    0:00:14 (xfr#18, to-chk=79/98)  4,925,830,681  18%  319.72MB/s    0:01:05    5,177,156,184  19%  314.52MB/s    0:00:15 (xfr#19, to-chk=78/98)  5,271,954,008  19%  318.72MB/s    0:01:04    5,450,061,653  20%  314.43MB/s    0:00:16 (xfr#20, to-chk=77/98)  5,633,922,901  21%  320.63MB/s    0:01:03    5,722,664,754  21%  315.05MB/s    0:00:17 (xfr#21, to-chk=76/98)  5,984,055,090  22%  322.64MB/s    0:01:01    5,995,436,680  22%  315.14MB/s    0:00:18 (xfr#22, to-chk=75/98)  6,268,148,355  23%  314.45MB/s    0:00:19 (xfr#23, to-chk=74/98)  6,268,705,411  23%  320.25MB/s    0:01:01    6,540,909,123  24%  314.84MB/s    0:00:19 (xfr#24, to-chk=73/98)  6,598,842,947  24%  316.43MB/s    0:01:01    6,813,702,013  25%  315.24MB/s    0:00:20 (xfr#25, to-chk=72/98)  6,956,111,741  26%  315.31MB/s    0:01:00    7,085,530,778  26%  315.55MB/s    0:00:21 (xfr#26, to-chk=71/98)  7,317,495,450  27%  318.00MB/s    0:00:58    7,357,708,356  27%  315.97MB/s    0:00:22 (xfr#27, to-chk=70/98)  7,629,928,849  28%  316.46MB/s    0:00:22 (xfr#28, to-chk=69/98)  7,631,796,625  28%  325.15MB/s    0:00:56    7,901,892,363  29%  316.99MB/s    0:00:23 (xfr#29, to-chk=68/98)  7,953,993,483  30%  323.25MB/s    0:00:55    8,173,901,188  30%  316.61MB/s    0:00:24 (xfr#30, to-chk=67/98)  8,304,940,420  31%  321.75MB/s    0:00:55    8,446,960,088  31%  316.54MB/s    0:00:25 (xfr#31, to-chk=66/98)  8,676,827,608  32%  324.25MB/s    0:00:53    8,719,808,239  32%  317.25MB/s    0:00:26 (xfr#32, to-chk=65/98)  8,992,648,001  34%  317.16MB/s    0:00:27 (xfr#33, to-chk=64/98)  8,992,680,769  34%  324.70MB/s    0:00:52    9,265,947,355  35%  317.09MB/s    0:00:27 (xfr#34, to-chk=63/98)  9,302,352,603  35%  321.72MB/s    0:00:52    9,539,165,302  36%  317.45MB/s    0:00:28 (xfr#35, to-chk=62/98)  9,674,071,158  36%  326.67MB/s    0:00:50    9,812,438,441  37%  317.99MB/s    0:00:29 (xfr#36, to-chk=61/98) 10,011,700,649  37%  318.50MB/s    0:00:50   10,085,662,333  38%  317.64MB/s    0:00:30 (xfr#37, to-chk=60/98) 10,357,866,109  39%  325.73MB/s    0:00:48   10,358,688,023  39%  317.54MB/s    0:00:31 (xfr#38, to-chk=59/98) 10,631,546,722  40%  317.74MB/s    0:00:31 (xfr#39, to-chk=58/98) 10,648,487,778  40%  321.18MB/s    0:00:48   10,904,487,534  41%  318.06MB/s    0:00:32 (xfr#40, to-chk=57/98) 10,980,214,382  41%  311.64MB/s    0:00:48   11,177,540,730  42%  317.62MB/s    0:00:33 (xfr#41, to-chk=56/98) 11,335,220,346  42%  315.79MB/s    0:00:46   11,450,463,674  43%  317.68MB/s    0:00:34 (xfr#42, to-chk=55/98) 11,689,833,914  44%  317.80MB/s    0:00:45   11,723,318,643  44%  317.78MB/s    0:00:35 (xfr#43, to-chk=54/98) 11,995,735,901  45%  318.18MB/s    0:00:35 (xfr#44, to-chk=53/98) 11,998,127,965  45%  321.70MB/s    0:00:43   12,268,247,897  46%  318.15MB/s    0:00:36 (xfr#45, to-chk=52/98) 12,346,006,361  46%  325.55MB/s    0:00:42   12,540,383,418  47%  318.34MB/s    0:00:37 (xfr#46, to-chk=51/98) 12,708,942,010  48%  327.44MB/s    0:00:40   12,812,625,750  48%  318.65MB/s    0:00:38 (xfr#47, to-chk=50/98) 13,044,066,134  49%  322.79MB/s    0:00:40   13,084,820,724  49%  318.31MB/s    0:00:39 (xfr#48, to-chk=49/98) 13,357,764,718  50%  318.14MB/s    0:00:40 (xfr#49, to-chk=48/98) 13,358,059,630  50%  321.26MB/s    0:00:39   13,632,033,333  51%  317.97MB/s    0:00:40 (xfr#50, to-chk=47/98) 13,669,749,301  51%  312.71MB/s    0:00:39   13,906,204,156  52%  318.12MB/s    0:00:41 (xfr#51, to-chk=46/98) 13,992,482,300  52%  303.22MB/s    0:00:40   14,179,890,476  53%  317.52MB/s    0:00:42 (xfr#52, to-chk=45/98) 14,351,463,724  54%  308.93MB/s    0:00:38   14,453,286,294  54%  317.76MB/s    0:00:43 (xfr#53, to-chk=44/98) 14,721,688,982  55%  325.36MB/s    0:00:35   14,726,157,770  55%  318.08MB/s    0:00:44 (xfr#54, to-chk=43/98) 14,999,414,046  56%  318.03MB/s    0:00:44 (xfr#55, to-chk=42/98) 15,002,854,686  56%  318.08MB/s    0:00:35   15,273,137,095  57%  318.12MB/s    0:00:45 (xfr#56, to-chk=41/98) 15,355,515,847  58%  325.22MB/s    0:00:33   15,545,375,631  58%  318.29MB/s    0:00:46 (xfr#57, to-chk=40/98) 15,720,127,375  59%  326.56MB/s    0:00:32   15,817,226,259  59%  318.48MB/s    0:00:47 (xfr#58, to-chk=39/98) 16,086,775,827  60%  325.71MB/s    0:00:31   16,088,903,475  60%  318.70MB/s    0:00:48 (xfr#59, to-chk=38/98) 16,361,286,071  61%  318.68MB/s    0:00:48 (xfr#60, to-chk=37/98) 16,364,464,567  61%  324.80MB/s    0:00:30   16,633,749,065  62%  318.74MB/s    0:00:49 (xfr#61, to-chk=36/98) 16,707,083,849  63%  322.40MB/s    0:00:29   16,906,105,749  63%  318.67MB/s    0:00:50 (xfr#62, to-chk=35/98) 17,080,529,813  64%  324.51MB/s    0:00:28   17,179,104,552  64%  318.96MB/s    0:00:51 (xfr#63, to-chk=34/98) 17,438,102,824  65%  322.34MB/s    0:00:27   17,451,525,232  65%  319.03MB/s    0:00:52 (xfr#64, to-chk=33/98) 17,724,138,301  67%  319.24MB/s    0:00:52 (xfr#65, to-chk=32/98) 17,741,931,325  67%  328.66MB/s    0:00:25   17,996,833,126  68%  319.48MB/s    0:00:53 (xfr#66, to-chk=31/98) 18,093,957,478  68%  330.90MB/s    0:00:24   18,269,127,131  69%  319.47MB/s    0:00:54 (xfr#67, to-chk=30/98) 18,464,162,267  69%  330.13MB/s    0:00:23   18,541,405,544  70%  319.69MB/s    0:00:55 (xfr#68, to-chk=29/98) 18,813,560,621  71%  319.74MB/s    0:00:56 (xfr#69, to-chk=28/98) 18,813,593,389  71%  324.53MB/s    0:00:22   19,086,948,857  72%  319.72MB/s    0:00:56 (xfr#70, to-chk=27/98) 19,123,485,177  72%  325.97MB/s    0:00:21   19,359,166,808  73%  319.77MB/s    0:00:57 (xfr#71, to-chk=26/98) 19,475,067,224  73%  325.86MB/s    0:00:20   19,631,952,502  74%  319.84MB/s    0:00:58 (xfr#72, to-chk=25/98) 19,841,634,934  75%  325.00MB/s    0:00:19   19,904,312,853  75%  319.98MB/s    0:00:59 (xfr#73, to-chk=24/98) 20,176,560,571  76%  319.87MB/s    0:01:00 (xfr#74, to-chk=23/98) 20,176,593,339  76%  322.95MB/s    0:00:18   20,449,134,441  77%  319.73MB/s    0:01:00 (xfr#75, to-chk=22/98) 20,466,960,233  77%  318.32MB/s    0:00:18   20,721,396,641  78%  319.81MB/s    0:01:01 (xfr#76, to-chk=21/98) 20,794,108,833  78%  312.53MB/s    0:00:17   20,993,787,149  79%  319.43MB/s    0:01:02 (xfr#77, to-chk=20/98) 21,150,614,797  79%  310.15MB/s    0:00:16   21,266,315,177  80%  319.52MB/s    0:01:03 (xfr#78, to-chk=19/98) 21,506,144,169  81%  317.23MB/s    0:00:15   21,539,173,243  81%  319.58MB/s    0:01:04 (xfr#79, to-chk=18/98) 21,811,551,531  82%  319.76MB/s    0:01:05 (xfr#80, to-chk=17/98) 21,814,467,883  82%  321.35MB/s    0:00:14   22,084,008,381  83%  319.89MB/s    0:01:05 (xfr#81, to-chk=16/98) 22,105,930,173  83%  312.84MB/s    0:00:13   22,356,459,612  84%  319.13MB/s    0:01:06 (xfr#82, to-chk=15/98) 22,400,630,876  84%  298.10MB/s    0:00:13   22,629,639,304  85%  318.47MB/s    0:01:07 (xfr#83, to-chk=14/98) 22,684,525,704  85%  281.02MB/s    0:00:13   22,902,087,967  86%  317.66MB/s    0:01:08 (xfr#84, to-chk=13/98) 22,970,212,639  86%  275.76MB/s    0:00:12   23,174,688,959  87%  316.94MB/s    0:01:09 (xfr#85, to-chk=12/98) 23,254,773,951  87%  274.11MB/s    0:00:11   23,446,721,976  88%  316.38MB/s    0:01:10 (xfr#86, to-chk=11/98) 23,546,205,624  89%  273.33MB/s    0:00:10   23,719,109,724  89%  315.78MB/s    0:01:11 (xfr#87, to-chk=10/98) 23,852,770,396  90%  278.74MB/s    0:00:09   23,991,619,802  90%  315.34MB/s    0:01:12 (xfr#88, to-chk=9/98)  24,168,173,786  91%  285.83MB/s    0:00:07   24,264,066,609  91%  315.09MB/s    0:01:13 (xfr#89, to-chk=8/98) 24,446,518,833  92%  284.35MB/s    0:00:06   24,537,189,045  92%  314.46MB/s    0:01:14 (xfr#90, to-chk=7/98) 24,765,418,165  93%  290.90MB/s    0:00:05   24,809,815,735  93%  314.21MB/s    0:01:15 (xfr#91, to-chk=6/98) 25,082,360,808  94%  314.00MB/s    0:01:16 (xfr#92, to-chk=5/98) 25,082,393,576  94%  291.78MB/s    0:00:04   25,355,074,437  95%  313.54MB/s    0:01:17 (xfr#93, to-chk=4/98) 25,356,680,069  95%  281.88MB/s    0:00:03   25,628,225,271  96%  313.00MB/s    0:01:18 (xfr#94, to-chk=3/98) 25,629,044,471  96%  280.18MB/s    0:00:02   25,901,555,282  97%  312.24MB/s    0:01:19 (xfr#95, to-chk=2/98) 25,902,898,770  97%  269.38MB/s    0:00:01   26,174,806,566  98%  311.70MB/s    0:01:20 (xfr#96, to-chk=1/98) 26,177,722,918  98%  260.56MB/s    0:00:01   26,448,450,079 100%  311.40MB/s    0:01:21 (xfr#97, to-chk=0/98) 26,448,450,079 100%  311.36MB/s    0:01:21 (xfr#97, to-chk=0/98)
+
+Number of files: 98 (reg: 97, dir: 1)
+Number of created files: 97 (reg: 97)
+Number of deleted files: 0
+Number of regular files transferred: 97
+Total file size: 26,448,450,079 bytes
+Total transferred file size: 26,448,450,079 bytes
+Literal data: 26,448,450,079 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.003 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 26,454,914,667
+Total bytes received: 1,862
+
+sent 26,454,914,667 bytes  received 1,862 bytes  324,600,202.81 bytes/sec
+total size is 26,448,450,079  speedup is 1.00
+         32,768   0%    0.00kB/s    0:00:00      272,520,570   3%  261.17MB/s    0:00:00 (xfr#1, to-chk=32/34)    272,553,338   3%  247.05MB/s    0:00:34      545,313,185   6%  255.66MB/s    0:00:02 (xfr#2, to-chk=31/34)    545,345,953   6%  248.12MB/s    0:00:33      792,121,761   8%  244.07MB/s    0:00:32      818,336,726   9%  245.79MB/s    0:00:03 (xfr#3, to-chk=30/34)  1,026,970,582  11%  239.16MB/s    0:00:32    1,090,490,930  12%  243.20MB/s    0:00:04 (xfr#4, to-chk=29/34)  1,318,949,426  14%  246.95MB/s    0:00:30    1,362,718,050  15%  249.53MB/s    0:00:05 (xfr#5, to-chk=28/34)  1,618,537,826  17%  256.06MB/s    0:00:28    1,635,019,824  18%  254.24MB/s    0:00:06 (xfr#6, to-chk=27/34)  1,897,557,040  21%  263.75MB/s    0:00:26    1,908,041,944  21%  255.64MB/s    0:00:07 (xfr#7, to-chk=26/34)  2,148,198,616  23%  267.52MB/s    0:00:25    2,180,874,428  24%  254.32MB/s    0:00:08 (xfr#8, to-chk=25/34)  2,410,741,948  26%  260.50MB/s    0:00:24    2,453,626,928  27%  254.28MB/s    0:00:09 (xfr#9, to-chk=24/34)  2,710,659,120  30%  260.58MB/s    0:00:23    2,725,685,220  30%  256.60MB/s    0:00:10 (xfr#10, to-chk=23/34)  2,998,023,590  33%  259.09MB/s    0:00:11 (xfr#11, to-chk=22/34)  2,998,056,358  33%  259.52MB/s    0:00:22    3,270,949,905  36%  259.71MB/s    0:00:12 (xfr#12, to-chk=21/34)  3,272,293,393  36%  264.76MB/s    0:00:21    3,544,126,110  39%  261.77MB/s    0:00:12 (xfr#13, to-chk=20/34)  3,547,828,894  39%  267.49MB/s    0:00:19    3,817,228,969  42%  261.95MB/s    0:00:13 (xfr#14, to-chk=19/34)  3,845,573,289  42%  266.98MB/s    0:00:18    4,090,111,343  45%  262.88MB/s    0:00:14 (xfr#15, to-chk=18/34)  4,128,941,423  45%  267.48MB/s    0:00:17    4,362,577,030  48%  263.65MB/s    0:00:15 (xfr#16, to-chk=17/34)  4,399,899,782  48%  267.04MB/s    0:00:16    4,634,778,744  51%  264.06MB/s    0:00:16 (xfr#17, to-chk=16/34)  4,726,037,624  52%  279.02MB/s    0:00:14    4,908,056,721  54%  265.04MB/s    0:00:17 (xfr#18, to-chk=15/34)  5,002,395,793  55%  273.96MB/s    0:00:14    5,181,350,332  57%  264.66MB/s    0:00:18 (xfr#19, to-chk=14/34)  5,290,107,324  58%  276.84MB/s    0:00:13    5,454,810,811  60%  265.47MB/s    0:00:19 (xfr#20, to-chk=13/34)  5,567,696,571  61%  278.42MB/s    0:00:12    5,726,923,393  63%  265.42MB/s    0:00:20 (xfr#21, to-chk=12/34)  5,868,382,849  65%  272.56MB/s    0:00:11    5,999,294,391  66%  266.28MB/s    0:00:21 (xfr#22, to-chk=11/34)  6,130,530,231  68%  269.17MB/s    0:00:10    6,271,674,600  69%  265.72MB/s    0:00:22 (xfr#23, to-chk=10/34)  6,430,009,576  71%  271.98MB/s    0:00:09    6,543,905,264  72%  266.23MB/s    0:00:23 (xfr#24, to-chk=9/34)   6,707,253,744  74%  270.74MB/s    0:00:08    6,816,219,313  75%  265.32MB/s    0:00:24 (xfr#25, to-chk=8/34)  7,017,152,689  77%  272.93MB/s    0:00:07    7,088,573,778  78%  266.48MB/s    0:00:25 (xfr#26, to-chk=7/34)  7,334,464,850  81%  286.04MB/s    0:00:05    7,362,169,528  81%  267.41MB/s    0:00:26 (xfr#27, to-chk=6/34)  7,625,001,656  84%  283.91MB/s    0:00:04    7,634,567,872  84%  267.62MB/s    0:00:27 (xfr#28, to-chk=5/34)  7,906,873,442  87%  267.78MB/s    0:00:28 (xfr#29, to-chk=4/34)  7,906,906,210  87%  285.31MB/s    0:00:03    8,166,953,058  90%  273.38MB/s    0:00:02    8,179,279,488  90%  266.92MB/s    0:00:29 (xfr#30, to-chk=3/34)  8,447,747,712  93%  262.60MB/s    0:00:02    8,451,669,834  93%  266.62MB/s    0:00:30 (xfr#31, to-chk=2/34)  8,711,946,058  96%  256.39MB/s    0:00:01    8,724,244,410  96%  266.20MB/s    0:00:31 (xfr#32, to-chk=1/34)  8,989,468,602  99%  256.31MB/s    0:00:00    8,997,615,579 100%  266.11MB/s    0:00:32 (xfr#33, to-chk=0/34)  8,997,615,579 100%  266.03MB/s    0:00:32 (xfr#33, to-chk=0/34)
+
+Number of files: 34 (reg: 33, dir: 1)
+Number of created files: 33 (reg: 33)
+Number of deleted files: 0
+Number of regular files transferred: 33
+Total file size: 8,997,615,579 bytes
+Total transferred file size: 8,997,615,579 bytes
+Literal data: 8,997,615,579 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.002 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 8,999,814,908
+Total bytes received: 646
+
+sent 8,999,814,908 bytes  received 646 bytes  268,651,210.57 bytes/sec
+total size is 8,997,615,579  speedup is 1.00
+          1,943   1%    0.00kB/s    0:00:00            1,943   1%    0.00kB/s    0:00:00 (xfr#1, to-chk=7/9)          7,419   5%    5.22MB/s    0:00:00 (xfr#2, to-chk=6/9)         14,488  10%    5.98MB/s    0:00:00 (xfr#3, to-chk=5/9)         20,186  15%    5.80MB/s    0:00:00 (xfr#4, to-chk=4/9)         36,272  27%    8.18MB/s    0:00:00 (xfr#5, to-chk=3/9)         57,095  42%   10.52MB/s    0:00:00 (xfr#6, to-chk=2/9)         95,597  71%   12.76MB/s    0:00:00 (xfr#7, to-chk=1/9)        133,840 100%   15.72MB/s    0:00:00 (xfr#8, to-chk=0/9)        133,840 100%   15.72MB/s    0:00:00 (xfr#8, to-chk=0/9)
+
+Number of files: 9 (reg: 8, dir: 1)
+Number of created files: 8 (reg: 8)
+Number of deleted files: 0
+Number of regular files transferred: 8
+Total file size: 133,840 bytes
+Total transferred file size: 133,840 bytes
+Literal data: 133,840 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 134,461
+Total bytes received: 171
+
+sent 134,461 bytes  received 171 bytes  269,264.00 bytes/sec
+total size is 133,840  speedup is 0.99
+=== GPU-Check ===
+Wed Nov 19 11:39:12 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.195.03             Driver Version: 570.195.03     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    On  |   00000000:A6:00.0 Off |                    0 |
+| N/A   45C    P0             68W /  415W |      27MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3837      G   /usr/libexec/Xorg                        17MiB |
++-----------------------------------------------------------------------------------------+
+torch.cuda.is_available: True
+device: NVIDIA H100
+capability: (9, 0)
+PYTORCH_CUDA_ALLOC_CONF: max_split_size_mb:128
+3D conv smoke test OK: torch.Size([1, 16, 48, 48, 48])
+========== CONFIG ==========
+data_train: /scratch/slurm_tmpdir/job_2182868/job_2182868/input/train
+train_csv: /scratch/slurm_tmpdir/job_2182868/job_2182868/input/jsons/train_labels.csv
+data_root_eval: None
+prompts_csv: /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/prompts/thz_prompts.csv
+version: 2-1
+dtype: float32
+img_size: 256
+num_train_timesteps: 1000
+n_trials: 1
+n_samples: [8, 4, 2]
+to_keep: [3, 2, 1]
+loss: l2
+logit_scale: 60.0
+use_xformers: True
+acc_threshold: 0.98
+loss_threshold: 0.5
+cond_scale: 2.0
+learn_adapter: True
+lr_adapter: 0.01
+wd_adapter: 0.01
+lr_controlnet: 0.005
+wd_controlnet: 0.003
+dropout_p_controlnet: 0.1
+controlnet_spatial_dropout: True
+epochs: 200
+batch_size: 2
+num_workers: 4
+dropout_p: 0.1
+cv_seed: 42
+final_eval: True
+data_test: /scratch/slurm_tmpdir/job_2182868/job_2182868/input/test
+test_csv: /scratch/slurm_tmpdir/job_2182868/job_2182868/input/jsons/test_labels.csv
+val_csv: None
+save_dir: /scratch/slurm_tmpdir/job_2182868/job_2182868/results
+============================
+[IO] Save directory: /scratch/slurm_tmpdir/job_2182868/job_2182868/results/sd2-1_img256_float32_251119_1141
+[IO] Fold directory: /scratch/slurm_tmpdir/job_2182868/job_2182868/results/sd2-1_img256_float32_251119_1141/best_model
+[Data] Train batches: ~48
+[AMP] device=cuda  dtype=float32  use_amp=False
+[SD] Building Stable Diffusion base...
+[CN] cond_ch: 3
+diffusers version: 0.35.1
+controlnet class: ControlNetWithDropout
+controlnet config in/out: 4 None
+FrozenDict([('in_channels', 4), ('conditioning_channels', 3), ('flip_sin_to_cos', True), ('freq_shift', 0), ('down_block_types', ['CrossAttnDownBlock2D', 'CrossAttnDownBlock2D', 'CrossAttnDownBlock2D', 'DownBlock2D']), ('mid_block_type', 'UNetMidBlock2DCrossAttn'), ('only_cross_attention', False), ('block_out_channels', [320, 640, 1280, 1280]), ('layers_per_block', 2), ('downsample_padding', 1), ('mid_block_scale_factor', 1), ('act_fn', 'silu'), ('norm_num_groups', 32), ('norm_eps', 1e-05), ('cross_attention_dim', 1024), ('transformer_layers_per_block', 1), ('encoder_hid_dim', None), ('encoder_hid_dim_type', None), ('attention_head_dim', [5, 10, 20, 20]), ('num_attention_heads', None), ('use_linear_projection', True), ('class_embed_type', None), ('addition_embed_type', None), ('addition_time_embed_dim', None), ('num_class_embeds', None), ('upcast_attention', False), ('resnet_time_scale_shift', 'default'), ('projection_class_embeddings_input_dim', None), ('controlnet_conditioning_channel_order', 'rgb'), ('conditioning_embedding_out_channels', (16, 32, 96, 256)), ('global_pool_conditions', False), ('addition_embed_type_num_heads', 64), ('_use_default_values', ['global_pool_conditions', 'addition_embed_type_num_heads'])])
+[SD] Done. UNet/VAEs are frozen.
+[Prompts] Loading prompts from: /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/prompts/thz_prompts.csv
+[Prompts] Loaded 4 prompts over 2 classes.
+[ControlNet] Enabled gradient checkpointing.
+controlnet config in/out: 4 None
+FrozenDict([('in_channels', 4), ('conditioning_channels', 3), ('flip_sin_to_cos', True), ('freq_shift', 0), ('down_block_types', ['CrossAttnDownBlock2D', 'CrossAttnDownBlock2D', 'CrossAttnDownBlock2D', 'DownBlock2D']), ('mid_block_type', 'UNetMidBlock2DCrossAttn'), ('only_cross_attention', False), ('block_out_channels', [320, 640, 1280, 1280]), ('layers_per_block', 2), ('downsample_padding', 1), ('mid_block_scale_factor', 1), ('act_fn', 'silu'), ('norm_num_groups', 32), ('norm_eps', 1e-05), ('cross_attention_dim', 1024), ('transformer_layers_per_block', 1), ('encoder_hid_dim', None), ('encoder_hid_dim_type', None), ('attention_head_dim', [5, 10, 20, 20]), ('num_attention_heads', None), ('use_linear_projection', True), ('class_embed_type', None), ('addition_embed_type', None), ('addition_time_embed_dim', None), ('num_class_embeds', None), ('upcast_attention', False), ('resnet_time_scale_shift', 'default'), ('projection_class_embeddings_input_dim', None), ('controlnet_conditioning_channel_order', 'rgb'), ('conditioning_embedding_out_channels', (16, 32, 96, 256)), ('global_pool_conditions', False), ('addition_embed_type_num_heads', 64), ('_use_default_values', ['global_pool_conditions', 'addition_embed_type_num_heads'])])
+[OPT] Adapter parameters will be trained.
+[OPT] ControlNet parameters will be trained.
+[DEBUG] Trainable parameter groups:
+ Adapter: dw_t.weight True
+ Adapter: pw_mix.weight True
+ Adapter: pw_mix.bias True
+ ControlNet: base.conv_in.weight True
+ ControlNet: base.conv_in.bias True
+ ControlNet: base.time_embedding.linear_1.weight True
+ UNet: conv_in.weight False
+ UNet: conv_in.bias False
+ UNet: time_embedding.linear_1.weight False
+
+[Epoch] 01/200
+[train_one_epoch] Starting training iteration...
+[DEBUG] grad ControlNet base.conv_in.weight: mean=0.0000e+00 max=0.0000e+00
+[DEBUG] grad ControlNet base.conv_in.bias: mean=0.0000e+00 max=0.0000e+00
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=0.0000e+00 max=0.0000e+00
+[DEBUG] grad Adapter dw_t.weight: mean=7.5791e-04 max=1.6023e-03
+[DEBUG] grad Adapter pw_mix.weight: mean=5.2837e-04 max=2.2038e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=3.5190e-04 max=1.1353e-03
+[STAT] controlnet avg update/param = 7.647e-02
+[train_one_epoch] step=1  avg_loss=1.3860  avg_acc=0.5000
+[DEBUG] sample weight after step: -0.025094
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.9848e-05 max=1.8995e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.8667e-05 max=4.5010e-04
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.6659e-08 max=1.0237e-05
+[DEBUG] grad Adapter dw_t.weight: mean=1.5432e-04 max=1.8573e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=1.8193e-04 max=1.3483e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=9.6096e-05 max=2.5776e-04
+[STAT] controlnet avg update/param = 4.599e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.1386e-05 max=3.1088e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.9152e-05 max=4.0805e-04
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.1022e-07 max=3.4209e-05
+[DEBUG] grad Adapter dw_t.weight: mean=2.2448e-04 max=5.1383e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=3.0435e-04 max=2.6378e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=1.5159e-04 max=2.0097e-04
+[STAT] controlnet avg update/param = 3.448e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.6960e-05 max=4.6044e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.6431e-04 max=8.4135e-04
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.2614e-07 max=3.5946e-05
+[DEBUG] grad Adapter dw_t.weight: mean=3.0509e-04 max=5.2439e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=2.2497e-04 max=1.6022e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=5.1781e-05 max=7.5128e-05
+[STAT] controlnet avg update/param = 3.101e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.5703e-05 max=5.4117e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.5301e-04 max=1.4348e-03
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.8037e-07 max=9.7516e-05
+[DEBUG] grad Adapter dw_t.weight: mean=4.9939e-04 max=1.2657e-03
+[DEBUG] grad Adapter pw_mix.weight: mean=4.0140e-04 max=1.8342e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=1.2417e-04 max=3.6039e-04
+[STAT] controlnet avg update/param = 3.104e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.7118e-06 max=6.8380e-05
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.2477e-05 max=1.3943e-04
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.0166e-08 max=3.8041e-06
+[DEBUG] grad Adapter dw_t.weight: mean=1.1926e-04 max=2.1986e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=9.5133e-05 max=7.5929e-04
+[DEBUG] grad Adapter pw_mix.bias: mean=2.9018e-05 max=7.6927e-05
+[STAT] controlnet avg update/param = 2.873e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.4102e-05 max=4.3764e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.2745e-04 max=7.4046e-04
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0200e-07 max=1.0642e-05
+[DEBUG] grad Adapter dw_t.weight: mean=2.4019e-04 max=6.8099e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=2.0506e-04 max=1.1677e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3802e-04 max=2.2703e-04
+[STAT] controlnet avg update/param = 2.793e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.7275e-04 max=1.4470e-03
+[DEBUG] grad ControlNet base.conv_in.bias: mean=8.3485e-04 max=3.8609e-03
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.3080e-07 max=2.0107e-05
+[DEBUG] grad Adapter dw_t.weight: mean=3.8459e-05 max=6.5448e-05
+[DEBUG] grad Adapter pw_mix.weight: mean=6.1402e-05 max=4.4788e-04
+[DEBUG] grad Adapter pw_mix.bias: mean=2.4718e-05 max=3.6170e-05
+[STAT] controlnet avg update/param = 2.745e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.5071e-04 max=5.0504e-03
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.3157e-03 max=1.2724e-02
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.9100e-06 max=2.6419e-04
+[DEBUG] grad Adapter dw_t.weight: mean=3.3172e-04 max=6.1665e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=2.9075e-04 max=2.4373e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=7.9876e-05 max=2.0499e-04
+[STAT] controlnet avg update/param = 2.820e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.0641e-04 max=2.4082e-03
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.9661e-04 max=1.9684e-03
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7357e-06 max=1.4893e-04
+[DEBUG] grad Adapter dw_t.weight: mean=4.3035e-04 max=1.3299e-03
+[DEBUG] grad Adapter pw_mix.weight: mean=2.9737e-04 max=2.3157e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3735e-04 max=2.6058e-04
+[STAT] controlnet avg update/param = 2.972e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.6961e-05 max=4.9870e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.4066e-04 max=1.4927e-03
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7914e-06 max=1.1769e-04
+[DEBUG] grad Adapter dw_t.weight: mean=1.4179e-04 max=2.0173e-04
+[DEBUG] grad Adapter pw_mix.weight: mean=1.7101e-04 max=1.3244e-03
+[DEBUG] grad Adapter pw_mix.bias: mean=5.8961e-05 max=1.0397e-04
+[STAT] controlnet avg update/param = 3.156e-02
+[train_one_epoch] step=11  avg_loss=1.3561  avg_acc=0.5000
+[DEBUG] sample weight after step: -0.022764
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.4956e-06 max=2.3482e-05
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.4055e-06 max=2.4045e-05
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.6643e-07 max=3.5208e-06
+[DEBUG] grad Adapter dw_t.weight: mean=3.8710e-06 max=9.4174e-06
+[DEBUG] grad Adapter pw_mix.weight: mean=4.0853e-06 max=2.7971e-05
+[DEBUG] grad Adapter pw_mix.bias: mean=2.0383e-06 max=4.8924e-06
+[STAT] controlnet avg update/param = 3.012e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.6137e-06 max=3.0653e-05
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.6988e-06 max=2.2750e-05
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.2690e-07 max=5.8058e-06
+[DEBUG] grad Adapter dw_t.weight: mean=4.1131e-06 max=7.1150e-06
+[DEBUG] grad Adapter pw_mix.weight: mean=3.5539e-06 max=1.8348e-05
+[DEBUG] grad Adapter pw_mix.bias: mean=2.0902e-06 max=4.9965e-06
+[STAT] controlnet avg update/param = 2.884e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.7767e-06 max=1.1245e-04
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.4087e-05 max=5.4517e-05
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.6075e-07 max=2.2853e-05
+[DEBUG] grad Adapter dw_t.weight: mean=1.8836e-05 max=4.6148e-05
+[DEBUG] grad Adapter pw_mix.weight: mean=2.0812e-05 max=1.9626e-04
+[DEBUG] grad Adapter pw_mix.bias: mean=6.8464e-06 max=1.5216e-05
+[STAT] controlnet avg update/param = 2.751e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.1683e-07 max=1.5075e-05
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.0842e-06 max=3.4098e-06
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.7539e-08 max=4.3236e-07
+[DEBUG] grad Adapter dw_t.weight: mean=1.4729e-06 max=4.4470e-06
+[DEBUG] grad Adapter pw_mix.weight: mean=1.8875e-06 max=1.7882e-05
+[DEBUG] grad Adapter pw_mix.bias: mean=7.8167e-07 max=1.4548e-06
+[STAT] controlnet avg update/param = 2.619e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.7171e-07 max=2.9081e-06
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.7711e-07 max=6.9482e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=8.5883e-09 max=6.9490e-08
+[DEBUG] grad Adapter dw_t.weight: mean=3.6651e-07 max=1.0865e-06
+[DEBUG] grad Adapter pw_mix.weight: mean=4.3255e-07 max=4.2395e-06
+[DEBUG] grad Adapter pw_mix.bias: mean=1.7286e-07 max=3.2656e-07
+[STAT] controlnet avg update/param = 2.486e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.0316e-07 max=3.1344e-06
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.3750e-07 max=3.7335e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.5328e-09 max=4.3346e-08
+[DEBUG] grad Adapter dw_t.weight: mean=3.6126e-07 max=1.1609e-06
+[DEBUG] grad Adapter pw_mix.weight: mean=4.4848e-07 max=4.6123e-06
+[DEBUG] grad Adapter pw_mix.bias: mean=1.7634e-07 max=3.2030e-07
+[STAT] controlnet avg update/param = 2.355e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.4365e-07 max=2.0956e-06
+[DEBUG] grad ControlNet base.conv_in.bias: mean=6.2985e-08 max=2.3936e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.1638e-09 max=1.4133e-08
+[DEBUG] grad Adapter dw_t.weight: mean=2.8888e-07 max=7.6813e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=3.2914e-07 max=2.9379e-06
+[DEBUG] grad Adapter pw_mix.bias: mean=1.6721e-07 max=2.6554e-07
+[STAT] controlnet avg update/param = 2.223e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.9483e-08 max=5.8424e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.3183e-08 max=1.8973e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.0507e-09 max=1.7503e-08
+[DEBUG] grad Adapter dw_t.weight: mean=7.6222e-08 max=2.2492e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=9.5967e-08 max=7.7425e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=4.8683e-08 max=1.0784e-07
+[STAT] controlnet avg update/param = 2.088e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.1543e-08 max=5.6352e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.9915e-08 max=2.4137e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.4516e-09 max=2.1089e-08
+[DEBUG] grad Adapter dw_t.weight: mean=5.8468e-08 max=1.9523e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=8.3014e-08 max=8.2982e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=3.6258e-08 max=5.6393e-08
+[STAT] controlnet avg update/param = 1.955e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.2900e-08 max=4.5266e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.2486e-08 max=2.1268e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.6207e-09 max=1.7489e-08
+[DEBUG] grad Adapter dw_t.weight: mean=4.4165e-08 max=1.0785e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=4.9226e-08 max=4.2330e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=2.6966e-08 max=4.3668e-08
+[STAT] controlnet avg update/param = 1.821e-02
+[train_one_epoch] step=21  avg_loss=1.3693  avg_acc=0.3571
+[DEBUG] sample weight after step: -0.016825
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.6963e-08 max=2.2725e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.9364e-08 max=1.7951e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.9451e-10 max=9.1905e-09
+[DEBUG] grad Adapter dw_t.weight: mean=5.6635e-08 max=1.6213e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=6.9076e-08 max=5.4251e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=3.9038e-08 max=7.9594e-08
+[STAT] controlnet avg update/param = 1.689e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.7379e-08 max=1.8125e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.2617e-08 max=1.0628e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.4684e-10 max=4.3905e-09
+[DEBUG] grad Adapter dw_t.weight: mean=2.5475e-08 max=6.6216e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=3.0085e-08 max=2.6096e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=1.5660e-08 max=2.1878e-08
+[STAT] controlnet avg update/param = 1.557e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.0201e-09 max=8.3317e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.3709e-08 max=3.8756e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.9448e-10 max=3.4244e-09
+[DEBUG] grad Adapter dw_t.weight: mean=1.1397e-08 max=1.5660e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=8.8743e-09 max=4.1953e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=7.9695e-09 max=2.0637e-08
+[STAT] controlnet avg update/param = 1.427e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.6918e-09 max=6.1216e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.1716e-09 max=1.9262e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.3634e-10 max=1.6472e-09
+[DEBUG] grad Adapter dw_t.weight: mean=4.1140e-09 max=8.5320e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=5.6905e-09 max=2.2601e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=3.9398e-09 max=1.0361e-08
+[STAT] controlnet avg update/param = 1.300e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.8667e-09 max=5.4207e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.8820e-09 max=2.3821e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.3345e-10 max=8.8802e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.1149e-09 max=2.5902e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=3.1989e-09 max=2.0664e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=1.7388e-09 max=4.5528e-09
+[STAT] controlnet avg update/param = 1.177e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.4389e-09 max=4.2078e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=6.4734e-09 max=3.6873e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0259e-10 max=7.9907e-10
+[DEBUG] grad Adapter dw_t.weight: mean=8.2125e-09 max=1.6962e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=7.3793e-09 max=3.8263e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=5.7765e-09 max=1.9101e-08
+[STAT] controlnet avg update/param = 1.059e-02
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.6807e-09 max=5.2354e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.1814e-08 max=3.9461e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.2365e-09 max=6.8802e-09
+[DEBUG] grad Adapter dw_t.weight: mean=1.0942e-08 max=3.5377e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=1.6327e-08 max=1.4698e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=7.6652e-09 max=1.0947e-08
+[STAT] controlnet avg update/param = 9.528e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.9595e-09 max=4.0187e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.5112e-08 max=3.0235e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.4172e-09 max=7.9619e-09
+[DEBUG] grad Adapter dw_t.weight: mean=1.8357e-08 max=4.9341e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=2.3583e-08 max=1.9782e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=1.2778e-08 max=1.8976e-08
+[STAT] controlnet avg update/param = 8.660e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.5205e-09 max=2.7045e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.6441e-08 max=3.8332e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.2007e-09 max=7.0405e-09
+[DEBUG] grad Adapter dw_t.weight: mean=2.0780e-09 max=5.5564e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=2.9469e-09 max=1.6318e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3671e-09 max=1.9817e-09
+[STAT] controlnet avg update/param = 7.801e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.2355e-08 max=4.9620e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.9771e-07 max=1.8497e-06
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.6031e-09 max=3.9360e-08
+[DEBUG] grad Adapter dw_t.weight: mean=2.2542e-08 max=5.0403e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=3.2596e-08 max=1.5167e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=1.9344e-08 max=3.4020e-08
+[STAT] controlnet avg update/param = 8.651e-03
+[train_one_epoch] step=31  avg_loss=1.3748  avg_acc=0.2742
+[DEBUG] sample weight after step: -0.013228
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.2803e-09 max=3.0975e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.9634e-08 max=9.6149e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=9.9083e-10 max=7.3952e-09
+[DEBUG] grad Adapter dw_t.weight: mean=4.7537e-09 max=9.8496e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=9.7545e-09 max=7.8573e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=4.5571e-09 max=6.7352e-09
+[STAT] controlnet avg update/param = 7.232e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.3962e-10 max=4.3506e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.9127e-09 max=9.6778e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.2162e-10 max=7.6761e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.2797e-09 max=3.3542e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.4030e-09 max=5.3699e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=6.6843e-10 max=1.9473e-09
+[STAT] controlnet avg update/param = 6.273e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.6665e-11 max=4.7967e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.5694e-10 max=5.6744e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.2235e-11 max=1.3111e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.4427e-10 max=2.3500e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=8.3932e-11 max=2.2205e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=5.3216e-11 max=1.1739e-10
+[STAT] controlnet avg update/param = 5.430e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.9925e-11 max=8.2751e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.5096e-10 max=2.2562e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.1898e-11 max=4.1951e-10
+[DEBUG] grad Adapter dw_t.weight: mean=5.0686e-10 max=1.2910e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=5.7105e-10 max=4.7108e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=3.0569e-10 max=5.0242e-10
+[STAT] controlnet avg update/param = 4.691e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.1853e-10 max=5.8506e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.4965e-10 max=1.7663e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.2079e-11 max=2.5898e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.7045e-10 max=7.5384e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=3.4666e-10 max=2.9385e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.5941e-10 max=2.4255e-10
+[STAT] controlnet avg update/param = 4.063e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.6470e-11 max=4.7473e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.7315e-10 max=7.6398e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.1294e-12 max=5.5500e-11
+[DEBUG] grad Adapter dw_t.weight: mean=1.3386e-10 max=3.3106e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.8468e-10 max=7.4913e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=1.1131e-10 max=2.9571e-10
+[STAT] controlnet avg update/param = 3.487e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.1823e-11 max=5.4914e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.7567e-10 max=1.4459e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.5441e-12 max=7.2427e-11
+[DEBUG] grad Adapter dw_t.weight: mean=1.4373e-10 max=2.7480e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.2496e-10 max=5.9968e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=3.8549e-11 max=6.1624e-11
+[STAT] controlnet avg update/param = 3.027e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.0649e-11 max=4.8088e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.1625e-10 max=1.3298e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.9848e-11 max=2.9653e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.1063e-10 max=1.9369e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.5369e-10 max=9.9838e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=7.3964e-11 max=1.8862e-10
+[STAT] controlnet avg update/param = 2.585e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.0191e-11 max=4.7525e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.0549e-10 max=9.4642e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.5856e-12 max=7.5499e-11
+[DEBUG] grad Adapter dw_t.weight: mean=9.3098e-11 max=1.7273e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1609e-10 max=4.1371e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=8.9945e-11 max=1.9316e-10
+[STAT] controlnet avg update/param = 2.280e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.8899e-11 max=3.6551e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.6072e-10 max=9.2189e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.3539e-11 max=1.7915e-10
+[DEBUG] grad Adapter dw_t.weight: mean=9.0932e-11 max=1.3398e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=6.5083e-11 max=3.5065e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=6.4724e-11 max=1.7096e-10
+[STAT] controlnet avg update/param = 2.022e-03
+[train_one_epoch] step=41  avg_loss=1.3776  avg_acc=0.2683
+[DEBUG] sample weight after step: -0.012114
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.5971e-10 max=2.0237e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.2399e-09 max=7.7702e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.8505e-10 max=2.2669e-09
+[DEBUG] grad Adapter dw_t.weight: mean=4.7408e-10 max=9.6007e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.4519e-10 max=3.1800e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.5139e-10 max=2.9454e-10
+[STAT] controlnet avg update/param = 2.170e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.8188e-11 max=8.9063e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.1983e-10 max=1.8101e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.5831e-12 max=7.5919e-11
+[DEBUG] grad Adapter dw_t.weight: mean=1.0209e-10 max=1.5165e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1444e-10 max=4.8613e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=5.9040e-11 max=7.6333e-11
+[STAT] controlnet avg update/param = 1.892e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=9.2509e-11 max=8.1106e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.6810e-10 max=1.5291e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7374e-11 max=1.6708e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.2162e-10 max=3.1927e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.5464e-10 max=8.0918e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3568e-10 max=4.0567e-10
+[STAT] controlnet avg update/param = 1.637e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.3981e-11 max=2.8887e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.3650e-10 max=4.0687e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.3599e-12 max=2.0975e-11
+[DEBUG] grad Adapter dw_t.weight: mean=3.8736e-11 max=6.4128e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=3.5514e-11 max=1.3570e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=2.7490e-11 max=7.3238e-11
+[STAT] controlnet avg update/param = 1.399e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.5857e-10 max=1.0362e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=8.8746e-10 max=2.8267e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.6257e-10 max=2.5537e-09
+[DEBUG] grad Adapter dw_t.weight: mean=5.2398e-11 max=8.8880e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=7.8057e-11 max=6.2443e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=3.3131e-11 max=5.3040e-11
+[STAT] controlnet avg update/param = 1.319e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.5041e-11 max=2.1931e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.6574e-10 max=5.5642e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.8558e-12 max=5.5063e-11
+[DEBUG] grad Adapter dw_t.weight: mean=4.7018e-11 max=1.2343e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=6.2472e-11 max=4.6942e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=2.5560e-11 max=3.6871e-11
+[STAT] controlnet avg update/param = 1.142e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.3659e-11 max=2.4886e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.2993e-10 max=3.8680e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.6472e-11 max=9.8451e-11
+[DEBUG] grad Adapter dw_t.weight: mean=3.0504e-11 max=6.8530e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=2.5120e-11 max=1.3550e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=9.4630e-12 max=2.0887e-11
+[STAT] controlnet avg update/param = 9.944e-04
+[train_one_epoch] Done. epoch_loss=1.3789  epoch_acc=0.2708
+[Epoch] Result: train_loss=1.3789  train_acc=0.2708
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2182868/job_2182868/results/sd2-1_img256_float32_251119_1141/best_model/best_model.pt  (val_acc=0.2708)
+
+[Epoch] 02/200
+[train_one_epoch] Starting training iteration...
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.7851e-11 max=5.4481e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.5204e-10 max=1.4697e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.6204e-10 max=9.4718e-10
+[DEBUG] grad Adapter dw_t.weight: mean=7.3829e-11 max=1.4666e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=8.6004e-11 max=7.1586e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=2.3022e-11 max=4.7450e-11
+[STAT] controlnet avg update/param = 1.009e-03
+[train_one_epoch] step=1  avg_loss=1.3862  avg_acc=0.0000
+[DEBUG] sample weight after step: -0.011889
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.4736e-11 max=1.6165e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.6140e-10 max=5.8351e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.1953e-12 max=3.5723e-11
+[DEBUG] grad Adapter dw_t.weight: mean=2.0076e-11 max=3.6301e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=2.0017e-11 max=9.6525e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=9.3488e-12 max=1.9072e-11
+[STAT] controlnet avg update/param = 9.305e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.5527e-11 max=3.2670e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.3792e-10 max=6.0838e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.5771e-11 max=4.3668e-10
+[DEBUG] grad Adapter dw_t.weight: mean=3.3027e-11 max=6.4372e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=4.0814e-11 max=3.8366e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=1.0007e-11 max=2.8944e-11
+[STAT] controlnet avg update/param = 8.485e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.8434e-11 max=4.0130e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.2010e-10 max=1.1896e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7278e-11 max=2.0709e-10
+[DEBUG] grad Adapter dw_t.weight: mean=7.9612e-11 max=1.7905e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.0522e-10 max=7.6939e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=5.4724e-11 max=8.4727e-11
+[STAT] controlnet avg update/param = 8.637e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.1826e-10 max=4.2732e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=6.0818e-10 max=1.2493e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.2538e-11 max=2.7302e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.9759e-11 max=4.3613e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=2.1269e-11 max=7.6601e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=9.0338e-12 max=1.6530e-11
+[STAT] controlnet avg update/param = 9.234e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.6685e-10 max=1.5025e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.3927e-09 max=6.9315e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.9876e-11 max=5.2137e-10
+[DEBUG] grad Adapter dw_t.weight: mean=7.0611e-11 max=1.8290e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1225e-10 max=3.9043e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=6.1472e-11 max=1.4482e-10
+[STAT] controlnet avg update/param = 1.007e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.4962e-11 max=1.9430e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.2267e-10 max=5.6939e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.9494e-11 max=2.8624e-10
+[DEBUG] grad Adapter dw_t.weight: mean=4.9927e-11 max=1.0805e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=5.3579e-11 max=3.5343e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=3.3328e-11 max=5.8225e-11
+[STAT] controlnet avg update/param = 8.454e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.5310e-11 max=2.2927e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.6516e-10 max=6.7346e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.2142e-11 max=2.1377e-10
+[DEBUG] grad Adapter dw_t.weight: mean=9.2546e-12 max=1.7686e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=1.0053e-11 max=6.1920e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=5.1728e-12 max=9.4837e-12
+[STAT] controlnet avg update/param = 6.844e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.0683e-11 max=1.0646e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.5786e-10 max=3.9569e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.6110e-11 max=1.5670e-10
+[DEBUG] grad Adapter dw_t.weight: mean=6.3797e-12 max=1.5107e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=1.0761e-11 max=9.5095e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=5.0295e-12 max=8.7479e-12
+[STAT] controlnet avg update/param = 5.786e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.4683e-11 max=2.8962e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.8495e-10 max=7.9869e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.2398e-11 max=1.0638e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.3145e-11 max=2.5257e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=1.2774e-11 max=4.3600e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=8.0224e-12 max=1.3652e-11
+[STAT] controlnet avg update/param = 4.920e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.1947e-11 max=2.8021e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.9412e-10 max=1.1104e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7637e-11 max=1.8637e-10
+[DEBUG] grad Adapter dw_t.weight: mean=3.4249e-11 max=5.9222e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=5.4184e-11 max=3.8942e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=1.9910e-11 max=3.2420e-11
+[STAT] controlnet avg update/param = 4.424e-04
+[train_one_epoch] step=11  avg_loss=1.3863  avg_acc=0.2273
+[DEBUG] sample weight after step: -0.011814
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.7848e-11 max=2.0484e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.4638e-10 max=4.1805e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.5629e-11 max=1.5190e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.5344e-11 max=3.0338e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=1.6446e-11 max=1.0758e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=4.9682e-12 max=8.1427e-12
+[STAT] controlnet avg update/param = 3.990e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.7520e-11 max=1.5100e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.0875e-10 max=5.0688e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0164e-11 max=6.8872e-11
+[DEBUG] grad Adapter dw_t.weight: mean=1.0282e-11 max=2.3111e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=1.3227e-11 max=4.4486e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=3.5493e-12 max=5.6388e-12
+[STAT] controlnet avg update/param = 3.752e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.5053e-11 max=2.4895e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.9841e-10 max=7.3867e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.6509e-11 max=1.0219e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.7617e-11 max=3.3260e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=1.2023e-11 max=5.7761e-11
+[DEBUG] grad Adapter pw_mix.bias: mean=5.3167e-12 max=8.8919e-12
+[STAT] controlnet avg update/param = 3.706e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.9411e-11 max=2.9795e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.2943e-10 max=9.0391e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.6376e-11 max=2.7515e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.9623e-11 max=5.6935e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=3.1121e-11 max=2.1312e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=2.0856e-11 max=4.0213e-11
+[STAT] controlnet avg update/param = 4.026e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.6135e-11 max=3.7795e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.0199e-09 max=2.1391e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.8613e-11 max=2.0295e-10
+[DEBUG] grad Adapter dw_t.weight: mean=4.1721e-11 max=6.7259e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=4.7248e-11 max=2.6577e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=2.8127e-11 max=7.8493e-11
+[STAT] controlnet avg update/param = 5.077e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.3822e-10 max=6.1206e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=8.8931e-10 max=2.2827e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.1559e-11 max=2.2947e-10
+[DEBUG] grad Adapter dw_t.weight: mean=4.0807e-11 max=7.3475e-11
+[DEBUG] grad Adapter pw_mix.weight: mean=5.4688e-11 max=3.9506e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=1.9388e-11 max=4.2192e-11
+[STAT] controlnet avg update/param = 5.780e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.1049e-10 max=1.9377e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.3988e-09 max=7.1020e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.5839e-11 max=6.5238e-10
+[DEBUG] grad Adapter dw_t.weight: mean=6.4171e-11 max=1.1052e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.4092e-10 max=9.4214e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=6.4888e-11 max=1.1147e-10
+[STAT] controlnet avg update/param = 8.839e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.2555e-09 max=5.5582e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.4776e-09 max=2.3564e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.1184e-10 max=3.7006e-09
+[DEBUG] grad Adapter dw_t.weight: mean=7.9699e-10 max=1.8529e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=9.7386e-10 max=3.4282e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=6.7317e-10 max=1.4868e-09
+[STAT] controlnet avg update/param = 1.368e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.1220e-09 max=1.7515e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.8958e-08 max=7.0038e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0129e-09 max=7.7928e-09
+[DEBUG] grad Adapter dw_t.weight: mean=1.1960e-09 max=2.2633e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.6149e-09 max=9.1256e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=7.9561e-10 max=1.5787e-09
+[STAT] controlnet avg update/param = 1.021e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.4409e-10 max=1.4476e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.2689e-09 max=3.9763e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.1891e-10 max=2.3791e-09
+[DEBUG] grad Adapter dw_t.weight: mean=1.2888e-10 max=2.2506e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.0261e-10 max=4.0643e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=6.8601e-11 max=2.1628e-10
+[STAT] controlnet avg update/param = 1.139e-03
+[train_one_epoch] step=21  avg_loss=1.3863  avg_acc=0.2857
+[DEBUG] sample weight after step: -0.011796
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.0703e-10 max=4.3054e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.1642e-09 max=1.4814e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.1316e-10 max=8.3804e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.1218e-10 max=5.7682e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=3.1782e-10 max=2.1101e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.6267e-10 max=3.1117e-10
+[STAT] controlnet avg update/param = 8.860e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.7041e-09 max=6.1142e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.0570e-08 max=2.4470e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.2998e-10 max=3.7599e-09
+[DEBUG] grad Adapter dw_t.weight: mean=3.7548e-10 max=6.0775e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.2624e-10 max=2.1751e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.5952e-10 max=5.7039e-10
+[STAT] controlnet avg update/param = 1.058e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.0078e-09 max=1.0522e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.8815e-08 max=3.9975e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.0874e-10 max=4.6731e-09
+[DEBUG] grad Adapter dw_t.weight: mean=7.7401e-10 max=2.1936e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.2305e-09 max=7.2395e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=6.7239e-10 max=1.5268e-09
+[STAT] controlnet avg update/param = 1.459e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.1632e-09 max=5.6530e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.4944e-08 max=2.2480e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0527e-09 max=8.4040e-09
+[DEBUG] grad Adapter dw_t.weight: mean=3.4631e-09 max=8.3618e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=2.6605e-09 max=1.2548e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=1.7282e-09 max=2.4913e-09
+[STAT] controlnet avg update/param = 2.349e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.7444e-08 max=2.0325e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.1413e-07 max=6.9159e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.0300e-09 max=4.4970e-08
+[DEBUG] grad Adapter dw_t.weight: mean=5.0286e-08 max=7.1053e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=4.1645e-08 max=1.9933e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=2.0299e-08 max=4.6333e-08
+[STAT] controlnet avg update/param = 5.087e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.2475e-07 max=8.4338e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=9.3030e-07 max=3.1201e-06
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.4235e-08 max=2.6416e-07
+[DEBUG] grad Adapter dw_t.weight: mean=1.6805e-07 max=2.6450e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=1.6513e-07 max=5.8752e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3550e-07 max=2.8600e-07
+[STAT] controlnet avg update/param = 6.192e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.5846e-08 max=2.3186e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.3178e-08 max=1.2817e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.3702e-09 max=1.3718e-08
+[DEBUG] grad Adapter dw_t.weight: mean=1.0554e-08 max=2.3400e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1410e-08 max=9.7441e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=4.6616e-09 max=7.6836e-09
+[STAT] controlnet avg update/param = 5.399e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.3034e-08 max=1.7385e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.2229e-08 max=2.1150e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.2748e-09 max=1.1863e-08
+[DEBUG] grad Adapter dw_t.weight: mean=7.3644e-09 max=1.7828e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=1.7610e-08 max=1.2303e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=6.6519e-09 max=1.5283e-08
+[STAT] controlnet avg update/param = 4.687e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.2541e-08 max=6.0604e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.0235e-07 max=1.4386e-06
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.7346e-08 max=3.9653e-07
+[DEBUG] grad Adapter dw_t.weight: mean=2.5345e-08 max=3.8707e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=3.7190e-08 max=1.2423e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=2.4428e-08 max=5.9211e-08
+[STAT] controlnet avg update/param = 4.347e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.6992e-08 max=2.1567e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.0488e-08 max=2.0626e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.2839e-09 max=1.4755e-08
+[DEBUG] grad Adapter dw_t.weight: mean=1.6548e-08 max=2.8568e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=1.3195e-08 max=5.6213e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=1.0117e-08 max=2.8705e-08
+[STAT] controlnet avg update/param = 3.791e-03
+[train_one_epoch] step=31  avg_loss=1.3858  avg_acc=0.3710
+[DEBUG] sample weight after step: -0.011793
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.9292e-07 max=1.3564e-06
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.4269e-06 max=5.1885e-06
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7605e-07 max=1.7907e-06
+[DEBUG] grad Adapter dw_t.weight: mean=8.4506e-08 max=1.8383e-07
+[DEBUG] grad Adapter pw_mix.weight: mean=7.3128e-08 max=4.2182e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=2.1928e-08 max=4.2238e-08
+[STAT] controlnet avg update/param = 5.214e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.5332e-09 max=4.9046e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.7714e-08 max=1.9976e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.7093e-08 max=9.3497e-08
+[DEBUG] grad Adapter dw_t.weight: mean=1.1022e-08 max=2.1807e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=8.7367e-09 max=5.5719e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=1.5688e-09 max=3.0153e-09
+[STAT] controlnet avg update/param = 4.550e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.4604e-10 max=6.7665e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.7891e-09 max=6.2740e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.0361e-11 max=3.3886e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.1418e-09 max=1.5766e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.7372e-09 max=8.9992e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=8.8049e-10 max=1.5173e-09
+[STAT] controlnet avg update/param = 3.960e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.2210e-08 max=2.7765e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.2490e-07 max=6.7553e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.1060e-09 max=4.9625e-08
+[DEBUG] grad Adapter dw_t.weight: mean=3.9490e-08 max=5.6305e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=4.1741e-08 max=2.0818e-07
+[DEBUG] grad Adapter pw_mix.bias: mean=1.4945e-08 max=2.8449e-08
+[STAT] controlnet avg update/param = 3.593e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.4053e-09 max=7.6692e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.7876e-09 max=2.8773e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.8850e-10 max=3.4542e-09
+[DEBUG] grad Adapter dw_t.weight: mean=3.2699e-09 max=9.8464e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=3.4096e-09 max=1.2681e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=2.4526e-09 max=4.4016e-09
+[STAT] controlnet avg update/param = 3.124e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.6324e-10 max=2.5481e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.8718e-10 max=2.6699e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.1394e-12 max=9.6112e-11
+[DEBUG] grad Adapter dw_t.weight: mean=5.0743e-10 max=7.4462e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.6324e-10 max=3.1415e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.4453e-10 max=4.8224e-10
+[STAT] controlnet avg update/param = 2.724e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.9547e-09 max=3.0911e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.2917e-09 max=2.6660e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.1293e-10 max=2.0546e-09
+[DEBUG] grad Adapter dw_t.weight: mean=5.2969e-09 max=1.0432e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=5.6585e-09 max=2.7007e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=3.9091e-09 max=7.0302e-09
+[STAT] controlnet avg update/param = 2.375e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.4058e-09 max=3.1051e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=9.4745e-09 max=4.5560e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.4383e-10 max=2.1429e-09
+[DEBUG] grad Adapter dw_t.weight: mean=8.5541e-09 max=1.9485e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=9.6999e-09 max=5.4196e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=5.6884e-09 max=8.1489e-09
+[STAT] controlnet avg update/param = 2.088e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.3830e-10 max=2.5967e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=6.0544e-10 max=2.6734e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.1063e-12 max=9.2634e-11
+[DEBUG] grad Adapter dw_t.weight: mean=5.9121e-10 max=8.6807e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.4186e-10 max=1.5583e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.7445e-10 max=6.1048e-10
+[STAT] controlnet avg update/param = 1.824e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.1345e-10 max=4.4108e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=8.3034e-10 max=2.6123e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.9078e-11 max=3.0343e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.2411e-09 max=2.1740e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1401e-09 max=6.9781e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=6.1255e-10 max=1.2321e-09
+[STAT] controlnet avg update/param = 1.601e-03
+[train_one_epoch] step=41  avg_loss=1.3860  avg_acc=0.3537
+[DEBUG] sample weight after step: -0.011812
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.3477e-10 max=1.3518e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.2474e-10 max=1.1503e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.8518e-12 max=1.1346e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.2770e-10 max=2.5136e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.3196e-10 max=5.6008e-10
+[DEBUG] grad Adapter pw_mix.bias: mean=1.0847e-10 max=2.7314e-10
+[STAT] controlnet avg update/param = 1.396e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.5490e-10 max=3.3123e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=8.0380e-10 max=2.6566e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.0080e-12 max=4.4336e-11
+[DEBUG] grad Adapter dw_t.weight: mean=8.0180e-10 max=1.3063e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=6.9046e-10 max=4.1029e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=3.7842e-10 max=6.7994e-10
+[STAT] controlnet avg update/param = 1.218e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.5189e-10 max=7.1988e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.9016e-09 max=7.3461e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.0952e-12 max=1.2659e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.4002e-09 max=3.0369e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.5282e-09 max=1.1197e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=7.6996e-10 max=1.0663e-09
+[STAT] controlnet avg update/param = 1.063e-03
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.9940e-10 max=1.1998e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.4492e-09 max=1.2947e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0623e-11 max=2.7244e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.4684e-09 max=3.3501e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.7521e-09 max=7.1791e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3927e-09 max=3.2269e-09
+[STAT] controlnet avg update/param = 9.287e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.0248e-09 max=6.1081e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.3345e-09 max=5.7445e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=8.0593e-11 max=2.2651e-09
+[DEBUG] grad Adapter dw_t.weight: mean=7.8591e-09 max=1.2707e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=1.0190e-08 max=5.6647e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=6.7796e-09 max=1.8477e-08
+[STAT] controlnet avg update/param = 8.084e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.2269e-08 max=2.5883e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.3209e-08 max=8.5564e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.7274e-10 max=1.0874e-08
+[DEBUG] grad Adapter dw_t.weight: mean=1.6890e-08 max=3.1348e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=2.0734e-08 max=9.4355e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=1.4832e-08 max=4.5169e-08
+[STAT] controlnet avg update/param = 7.317e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.1430e-09 max=1.1947e-07
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.6476e-08 max=1.5357e-07
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=3.7297e-10 max=1.0584e-08
+[DEBUG] grad Adapter dw_t.weight: mean=1.0902e-08 max=1.7340e-08
+[DEBUG] grad Adapter pw_mix.weight: mean=8.9998e-09 max=5.2569e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=8.5343e-09 max=2.6951e-08
+[STAT] controlnet avg update/param = 6.477e-04
+[train_one_epoch] Done. epoch_loss=1.3860  epoch_acc=0.3229
+[Epoch] Result: train_loss=1.3860  train_acc=0.3229
+[Checkpoint] Saved best fold checkpoint: /scratch/slurm_tmpdir/job_2182868/job_2182868/results/sd2-1_img256_float32_251119_1141/best_model/best_model.pt  (val_acc=0.3229)
+
+[Epoch] 03/200
+[train_one_epoch] Starting training iteration...
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.6902e-10 max=1.3830e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.0325e-09 max=1.9093e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.6749e-11 max=7.8425e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.8330e-09 max=4.6471e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.9728e-09 max=8.4981e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.4885e-09 max=2.5831e-09
+[STAT] controlnet avg update/param = 5.591e-04
+[train_one_epoch] step=1  avg_loss=1.3863  avg_acc=0.0000
+[DEBUG] sample weight after step: -0.011816
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.3502e-10 max=6.9146e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.0803e-09 max=1.1415e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.8698e-11 max=5.1846e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.1312e-09 max=1.8720e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1411e-09 max=4.3569e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=8.8885e-10 max=1.9915e-09
+[STAT] controlnet avg update/param = 4.865e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.7944e-10 max=6.2328e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.1428e-09 max=1.4244e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.1667e-11 max=6.9464e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.2967e-09 max=2.6349e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1047e-09 max=8.5270e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=4.6706e-10 max=8.5139e-10
+[STAT] controlnet avg update/param = 4.224e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.6811e-10 max=4.2100e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.4886e-09 max=7.9210e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.3582e-11 max=3.2398e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.1400e-09 max=2.5089e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1354e-09 max=8.7980e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=5.2855e-10 max=9.3464e-10
+[STAT] controlnet avg update/param = 3.666e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.1788e-10 max=4.8820e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.3408e-09 max=9.1430e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.9721e-11 max=5.6570e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.1276e-09 max=1.8624e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=9.8790e-10 max=4.9517e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=8.2120e-10 max=2.4045e-09
+[STAT] controlnet avg update/param = 3.160e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.4140e-10 max=3.5627e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.0583e-09 max=6.9580e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.6916e-11 max=4.8361e-10
+[DEBUG] grad Adapter dw_t.weight: mean=9.2978e-10 max=1.8048e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=8.8838e-10 max=4.2720e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=6.9291e-10 max=2.0563e-09
+[STAT] controlnet avg update/param = 2.710e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.1199e-10 max=1.9615e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=9.9548e-10 max=4.8098e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.5753e-11 max=4.2122e-10
+[DEBUG] grad Adapter dw_t.weight: mean=5.2138e-10 max=9.6016e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.8066e-10 max=1.8810e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=3.7259e-10 max=9.3973e-10
+[STAT] controlnet avg update/param = 2.275e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=7.8717e-11 max=8.2878e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.3683e-10 max=1.0136e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.1422e-12 max=1.0534e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.5131e-10 max=4.2296e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=1.8363e-10 max=1.3429e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=8.8955e-11 max=2.3970e-10
+[STAT] controlnet avg update/param = 1.923e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=4.4099e-10 max=3.5396e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=6.6438e-10 max=6.8534e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=8.6845e-12 max=2.6354e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.6864e-09 max=3.9187e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.7666e-09 max=8.9983e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.1636e-09 max=3.5268e-09
+[STAT] controlnet avg update/param = 1.688e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.0083e-10 max=2.3161e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.9757e-10 max=3.3308e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.7022e-11 max=3.7222e-10
+[DEBUG] grad Adapter dw_t.weight: mean=7.4242e-10 max=1.6684e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=7.8141e-10 max=3.6594e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=5.5606e-10 max=1.5970e-09
+[STAT] controlnet avg update/param = 1.417e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=8.1197e-10 max=7.3157e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=2.6870e-09 max=1.9449e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7446e-11 max=8.4347e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.7124e-09 max=5.0996e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=2.5809e-09 max=1.5212e-08
+[DEBUG] grad Adapter pw_mix.bias: mean=2.2564e-09 max=7.5784e-09
+[STAT] controlnet avg update/param = 1.204e-04
+[train_one_epoch] step=11  avg_loss=1.3862  avg_acc=0.2273
+[DEBUG] sample weight after step: -0.011817
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.6858e-10 max=3.1620e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=9.2173e-10 max=3.4517e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.0105e-11 max=2.7924e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.5023e-09 max=3.7714e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.6530e-09 max=9.5920e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.0237e-09 max=3.0034e-09
+[STAT] controlnet avg update/param = 1.042e-04
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.2011e-10 max=7.1869e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=6.2908e-10 max=2.5004e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=4.1724e-12 max=1.0121e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.1335e-10 max=7.7419e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.6591e-10 max=4.7451e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3486e-10 max=3.4463e-10
+[STAT] controlnet avg update/param = 8.672e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.1392e-10 max=4.6751e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.9117e-09 max=1.1695e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.7083e-11 max=7.7979e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.8185e-10 max=2.7908e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=4.0201e-10 max=3.3923e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=9.0609e-11 max=2.4453e-10
+[STAT] controlnet avg update/param = 7.045e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=3.6053e-10 max=6.3467e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.6036e-09 max=1.0150e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.4699e-11 max=7.4210e-10
+[DEBUG] grad Adapter dw_t.weight: mean=1.3604e-09 max=2.4151e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1791e-09 max=7.0527e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=9.9321e-10 max=3.3911e-09
+[STAT] controlnet avg update/param = 5.469e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.8599e-10 max=1.5508e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.6612e-10 max=6.1425e-10
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.1444e-12 max=4.9779e-11
+[DEBUG] grad Adapter dw_t.weight: mean=5.5518e-10 max=1.3007e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=5.6371e-10 max=4.2686e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.9270e-10 max=7.6641e-10
+[STAT] controlnet avg update/param = 4.046e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=6.8873e-10 max=7.6388e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.1948e-09 max=2.2247e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=5.9783e-11 max=1.5824e-09
+[DEBUG] grad Adapter dw_t.weight: mean=2.0370e-09 max=4.5038e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=2.0049e-09 max=9.6008e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.3954e-09 max=4.5243e-09
+[STAT] controlnet avg update/param = 3.064e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.9622e-10 max=9.4615e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.9115e-09 max=2.6349e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.3139e-11 max=1.7443e-09
+[DEBUG] grad Adapter dw_t.weight: mean=1.4773e-09 max=2.4712e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=1.1007e-09 max=6.5123e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=8.7593e-10 max=3.0283e-09
+[STAT] controlnet avg update/param = 2.122e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.1187e-10 max=1.2869e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.1959e-10 max=1.2906e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.8083e-12 max=1.6043e-10
+[DEBUG] grad Adapter dw_t.weight: mean=3.6967e-10 max=1.0460e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=4.6058e-10 max=3.0323e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.5607e-10 max=7.0033e-10
+[STAT] controlnet avg update/param = 1.428e-05
+[DEBUG] grad ControlNet base.conv_in.weight: mean=9.3138e-10 max=1.0175e-08
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.9755e-09 max=2.7997e-08
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.3382e-11 max=2.0263e-09
+[DEBUG] grad Adapter dw_t.weight: mean=5.8371e-10 max=1.1964e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=4.9269e-10 max=1.4530e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=3.8489e-10 max=1.0252e-09
+[STAT] controlnet avg update/param = 8.807e-06
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.1741e-10 max=1.6152e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=3.9680e-10 max=1.4699e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=1.7333e-12 max=2.4090e-11
+[DEBUG] grad Adapter dw_t.weight: mean=1.7212e-10 max=3.0207e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=2.6167e-10 max=2.1136e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=1.1243e-10 max=1.8950e-10
+[STAT] controlnet avg update/param = 4.676e-06
+[train_one_epoch] step=21  avg_loss=1.3863  avg_acc=0.2619
+[DEBUG] sample weight after step: -0.011817
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.2903e-10 max=9.5072e-10
+[DEBUG] grad ControlNet base.conv_in.bias: mean=4.3773e-10 max=1.4721e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=6.2268e-12 max=1.6157e-10
+[DEBUG] grad Adapter dw_t.weight: mean=2.6136e-10 max=8.2509e-10
+[DEBUG] grad Adapter pw_mix.weight: mean=3.7302e-10 max=2.4815e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.0802e-10 max=5.3700e-10
+[STAT] controlnet avg update/param = 2.038e-06
+[DEBUG] grad ControlNet base.conv_in.weight: mean=5.5292e-10 max=5.0283e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=1.6678e-09 max=6.4166e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=7.4789e-12 max=9.5331e-11
+[DEBUG] grad Adapter dw_t.weight: mean=5.6148e-10 max=1.4648e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=5.4377e-10 max=3.1820e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.7984e-10 max=5.0081e-10
+[STAT] controlnet avg update/param = 5.072e-07
+[DEBUG] grad ControlNet base.conv_in.weight: mean=1.6647e-10 max=1.1032e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=5.8773e-10 max=1.7667e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=9.0439e-12 max=2.1308e-10
+[DEBUG] grad Adapter dw_t.weight: mean=3.9616e-10 max=1.1555e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=5.1683e-10 max=3.4702e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=2.8320e-10 max=7.5766e-10
+[STAT] controlnet avg update/param = 5.180e-09
+[DEBUG] grad ControlNet base.conv_in.weight: mean=2.4709e-10 max=2.1832e-09
+[DEBUG] grad ControlNet base.conv_in.bias: mean=7.1225e-10 max=2.4806e-09
+[DEBUG] grad ControlNet base.time_embedding.linear_1.weight: mean=2.2886e-12 max=3.6332e-11
+[DEBUG] grad Adapter dw_t.weight: mean=7.0814e-10 max=1.3733e-09
+[DEBUG] grad Adapter pw_mix.weight: mean=6.6668e-10 max=3.6200e-09
+[DEBUG] grad Adapter pw_mix.bias: mean=4.1028e-10 max=1.1013e-09
+[STAT] controlnet avg update/param = 4.514e-07
+[INFO] Kopiere Ergebnisse zurück nach /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/outputs/train_dc_dropout_2d_Scheduler_2182868 ...
+              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=1/4)         32,768   0%    0.00kB/s    0:00:00      337,346,560  23%  321.69MB/s    0:00:03      702,906,368  48%  335.32MB/s    0:00:02    1,068,859,392  73%  340.00MB/s    0:00:01    1,434,681,344  98%  342.30MB/s    0:00:00    1,457,055,517 100%  342.50MB/s    0:00:04 (xfr#1, to-chk=0/4)  1,457,055,517 100%  342.50MB/s    0:00:04 (xfr#1, to-chk=0/4)  1,457,055,517 100%  341.32MB/s    0:00:04 (xfr#1, to-chk=0/4)
+
+Number of files: 4 (reg: 1, dir: 3)
+Number of created files: 3 (reg: 1, dir: 2)
+Number of deleted files: 0
+Number of regular files transferred: 1
+Total file size: 1,457,055,517 bytes
+Total transferred file size: 1,457,055,517 bytes
+Literal data: 1,457,055,517 bytes
+Matched data: 0 bytes
+File list size: 0
+File list generation time: 0.022 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 1,457,411,480
+Total bytes received: 50
+
+sent 1,457,411,480 bytes  received 50 bytes  323,869,228.89 bytes/sec
+total size is 1,457,055,517  speedup is 1.00
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc3n072
+Job ID: 2182868
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:53:48
+CPU Efficiency: 6.14% of 14:36:16 core-walltime
+Job Wall-clock time: 00:54:46
+Memory Utilized: 12.72 GB
+Memory Efficiency: 31.79% of 40.00 GB (40.00 GB/node)

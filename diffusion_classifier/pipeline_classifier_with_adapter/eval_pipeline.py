@@ -145,16 +145,17 @@ def encode_all_frames_with_vae(frames_vae, vae, scaling=0.18215):
 
 def validate_dc(
     loader, front, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
-    scheduler, eargs, img_size, torch_dtype, use_amp,  reduce="mean", output_dir=None
+    scheduler, eargs, img_size, torch_dtype, use_amp, pd_f, reduce="mean", output_dir=None
 ):
     image_dir = os.path.join(output_dir, 'images')
     os.makedirs(image_dir, exist_ok=True)
     cams_dir = os.path.join(output_dir, "images_grad_cams")
     os.makedirs(cams_dir, exist_ok=True)
 
-    front.eval()
-    controlnet.eval()
-    unet.eval()
+    front.to(device).eval()
+    vae.to(device).eval()
+    controlnet.to(device).eval()
+    unet.to(device).eval()
 
     latent_size = img_size // 8
     out_hw = (img_size, img_size)
@@ -180,7 +181,7 @@ def validate_dc(
             with torch.no_grad():
                 for s in range(0, bt, chunk):
                     lat_chunks.append(encode_all_frames_with_vae(frames[s:s+chunk], vae, scaling=0.18215))
-            latents_flat = torch.cat(lat_chunks, dim=0)
+            latents_flat = torch.cat(lat_chunks, dim=0).to(device)
             lat_stack = latents_flat.view(B, T, 4, latent_size, latent_size)
             lat = front(lat_stack)
             try:
@@ -189,18 +190,23 @@ def validate_dc(
                 cn_in_ch = getattr(controlnet, "in_channels", 4)
 
             if cn_in_ch == 3:
-                control_cond_img = vae.decode(lat / 0.18215).sample  # ohne no_grad
-                control_cond_img = ((control_cond_img.clamp(-1, 1) + 1.0) / 2.0)
-                control_cond_img = control_cond_img.to(lat.device)
-                control_cond_img.requires_grad_(True)
+                img_for_cam = vae.decode(lat / 0.18215).sample          # [-1,1]
+                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1.0) / 2.0)  # [0,1]
+                img_for_cam = img_for_cam.to(lat.device)
+                img_for_cam.requires_grad_(True)
+
+                control_cond_img = img_for_cam
             else:
                 control_cond_img = None
+                with torch.no_grad():
+                    img_for_cam = vae.decode(lat / 0.18215).sample
+                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1.0) / 2.0).to(lat.device)
 
-            imgs01 = ((control_cond_img.detach().float().clamp(-1, 1) + 1.0) / 2.0).cpu() 
+            imgs01 = img_for_cam.detach().cpu()
             Bc = imgs01.shape[0]
             for bi in range(Bc):
-                arr = imgs01[bi].numpy() 
-                arr = np.transpose(arr, (1, 2, 0))  
+                arr = imgs01[bi].numpy()
+                arr = np.transpose(arr, (1, 2, 0))
                 save_path = os.path.join(image_dir, f"{formatstr.format(step)}_{label.item()}_{bi:02d}.tiff")
                 io.imsave(save_path, arr, check_contrast=False)
 
@@ -220,21 +226,16 @@ def validate_dc(
                     controlnet_cond=cond_to_pass
                 )
                 errors_list.append(class_errors_i)
-
+            
             errors = torch.stack(errors_list, dim=0).to(label.dtype if label.is_floating_point() else torch.float32)
             logits = -errors
             preds = torch.argmax(logits, dim=1) 
+            prompt = pd_f.prompt_texts[preds.item()]
+            preds = pd_f.prompt_to_class[preds.item()].item()
 
-            if control_cond_img is None:
-                with torch.no_grad():
-                    decoded = vae.decode(lat / 0.18215).sample
-                img_for_cam = ((decoded.clamp(-1, 1) + 1.0) / 2.0).detach()
-            else:
-                img_for_cam = ((control_cond_img.clamp(-1, 1) + 1.0) / 2.0).detach()
 
-            img_for_cam = img_for_cam.clone().to(lat.device).requires_grad_(True)
 
-            B = errors.size(0)  
+            B = errors.size(0)
             loss = errors[torch.arange(B, device=errors.device), preds].mean()
 
             for p in unet.parameters():
@@ -243,21 +244,30 @@ def validate_dc(
                 for p in controlnet.parameters():
                     p.requires_grad_(False)
 
-            grads = torch.autograd.grad(loss, img_for_cam, retain_graph=False, create_graph=False)[0]
-            sal = grads.abs().sum(dim=1)
-            sal = sal / (sal.amax(dim=(1, 2), keepdim=True) + 1e-8)
+            if control_cond_img is not None:
+                grads = torch.autograd.grad(
+                    loss,
+                    img_for_cam,
+                    retain_graph=False,
+                    create_graph=False
+                )[0]
 
-            for bi in range(sal.size(0)):
-                cam01 = sal[bi].detach().cpu().numpy()
-                rgb01 = img_for_cam[bi].detach().cpu().numpy()
-                rgb01 = np.transpose(rgb01, (1, 2, 0))
-                cam_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_cam_errgrad.tiff")
-                overlay_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_overlay_errgrad.tiff")
-                _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path)
+                sal = grads.abs().sum(dim=1)
+                sal = sal / (sal.amax(dim=(1, 2), keepdim=True) + 1e-8)
+
+                for bi in range(sal.size(0)):
+                    cam01 = sal[bi].detach().cpu().numpy()
+                    rgb01 = img_for_cam[bi].detach().cpu().numpy()
+                    rgb01 = np.transpose(rgb01, (1, 2, 0))
+                    cam_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_cam_errgrad.tiff")
+                    overlay_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_overlay_errgrad.tiff")
+                    _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path)
+           
+
 
         correct += (preds == label).sum().item()
         total += label.numel()
-        torch.save(dict(errors=errors.detach().cpu(), pred=preds.detach().cpu(), label=label), fname)
+        torch.save(dict(errors=errors.detach().cpu(), pred=preds, label=label), fname)
         if step % 20 == 1:
             print(f"[validate] step={step}  running_acc={correct/max(1,total):.4f}")
 
@@ -376,7 +386,7 @@ def main(args):
         )
         unet_f = unet_f.to(device).eval()
         vae_f = vae_f.to(device).eval()
-        controlnet_f.base.load_state_dict(ckpt["controlnet_state_dict"], strict=False)
+        controlnet_f.load_state_dict(ckpt["controlnet_state_dict"], strict=False)
         controlnet_f = controlnet_f.to(device).eval()
         pb_f = PromptBank(ckpt["prompts_csv"])
         prompt_embeds_f = pb_f.to_text_embeds(tokenizer_f, text_encoder_f, device)
@@ -429,7 +439,7 @@ def main(args):
         front_f = ControlNetAdapterWrapper(
             controlnet_cfg=controlnet_cfg,
             in_channels=2,
-            out_size=expected_size,
+            out_size=256,
             target_T=64,
             stride_T=4
         ).to(device)
@@ -455,6 +465,7 @@ def main(args):
         eargs_f.num_train_timesteps = ckpt["num_train_timesteps"]
         eargs_f.version   = ckpt["version"]
         eargs_f.learn_front = False
+        eargs_f.cond_scale = 1.0
         
         use_amp_final = (device == "cuda") and (ckpt["dtype"] in ("float16", "bfloat16"))
         final_torch_dtype = torch.float16 if ckpt["dtype"] == "float16" else (
@@ -465,7 +476,8 @@ def main(args):
         ds_loader, front_f, unet_f, controlnet_f, vae_f,
         prompt_embeds_f, prompt_to_class_f, num_classes_f,
         scheduler_f, eargs_f, img_size_ckpt,
-        torch_dtype=final_torch_dtype, use_amp=use_amp_final, reduce="mean", output_dir=result_dir
+        torch_dtype=final_torch_dtype, use_amp=use_amp_final, pd_f=pb_f,
+        reduce="mean", output_dir=result_dir
         )
         print(f"Final Accuracy: {final_acc:.4f}")
         
