@@ -1,3 +1,70 @@
+"""
+evaluate_predictions.py
+
+Load saved prediction tensors from a folder, compute standard classification
+metrics, and save a confusion matrix plus a text report.
+
+The script expects `.pt` files that contain at least:
+    - "pred" or "preds" : predicted class indices (tensor or scalar)
+    - "label"          : ground-truth class indices
+
+Example usage
+-------------
+
+# Minimal usage: evaluate all .pt files in a folder and write results
+# back into the same folder
+python evaluate_predictions.py \
+    /path/to/results_folder
+
+# With class names from prompts.csv and custom output directory
+python evaluate_predictions.py \
+    /path/to/results_folder \
+    --prompts_csv /path/to/prompts.csv \
+    --output_dir /path/to/output_dir
+
+
+Command line arguments
+----------------------
+
+Positional:
+- folder        : Path to the folder containing `.pt` prediction files.
+                  Each file must store a dict with keys:
+                  - "pred"  or "preds"
+                  - "label"
+
+Optional:
+- --prompts_csv : Optional CSV to map class indices to human-readable names.
+                  The file is expected to contain columns:
+                  - "classidx"
+                  - "classname"
+                  If missing, numeric labels are used instead.
+
+- --output_dir  : Directory to store the evaluation results.
+                  If not provided, the input folder is used.
+
+What the script does
+--------------------
+
+1. Scans the given folder for all `.pt` files.
+2. Loads each file and extracts predictions and labels.
+3. Computes:
+   - Accuracy
+   - Balanced accuracy
+   - Full sklearn classification report
+   - Confusion matrix
+
+4. Prints a summary to stdout.
+
+5. Saves into the chosen output directory:
+   - "confusion_matrix.png"    : heatmap of the confusion matrix
+   - "confusion_matrix.pdf"    : same as vector graphic
+   - "classification_report.txt":
+       - accuracy
+       - balanced accuracy
+       - detailed classification report
+"""
+
+
 import argparse
 import os
 from pathlib import Path

@@ -1,3 +1,49 @@
+"""
+Eval script for THz classifiers and diffusion-based classifiers.
+
+Usage examples:
+
+# Evaluate a diffusion classifier (Stable Diffusion + ControlNet + latent adapter)
+python eval_pipeline.py \
+    --pretrained_path /path/to/dc_checkpoint.pt \
+    --classifier diffusion \
+    --adapter latent \
+    --dataset thz_for_adapter \
+    --split test \
+    --output_dir ./results_eval_pipeline
+
+# Evaluate a baseline backbone (e.g. ViT-B/32) with ControlNet adapter
+python eval_pipeline.py \
+    --pretrained_path /path/to/baseline_checkpoint.pt \
+    --classifier vit_b_32 \
+    --adapter cn_wrapper \
+    --dataset thz_for_adapter \
+    --split test \
+    --output_dir ./results_eval_pipeline
+
+Arguments:
+    --dataset        Name of the dataset handled by diffusion.datasets.get_target_dataset
+                     (default: thz_for_adapter).
+    --pretrained_path
+                     Path to the checkpoint (.pt) file to evaluate. This can be a
+                     diffusion-classifier checkpoint or a baseline classifier checkpoint.
+    --split          Which split of the target dataset to evaluate on: 'train' or 'test'.
+    --classifier     Type of classifier to evaluate:
+                        - diffusion  : Stable Diffusion + ControlNet zero-shot classifier
+                        - resnet50   : torchvision ResNet-50 backbone
+                        - vit_b_16   : torchvision ViT-B/16 backbone
+                        - vit_b_32   : torchvision ViT-B/32 backbone
+                        - convnext_tiny : torchvision ConvNeXt-Tiny backbone
+    --adapter        Front-end that maps THz volumes to images/latents:
+                        - rgb            : (not used here, reserved)
+                        - cn_wrapper     : ControlNetAdapterWrapper (new)
+                        - latent         : LatentMultiChannelAdapter
+                        - old_cn_wrapper : legacy ControlNet adapter wrapper
+    --output_dir     Root directory where evaluation outputs are written
+                     (per run, a timestamped subfolder is created).
+    --n_workers      Number of DataLoader workers.
+"""
+
 import torch, tqdm
 import os, copy, time, json, argparse, random
 from pathlib import Path
@@ -87,6 +133,10 @@ def _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path, alpha=0.35):
 def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
                   img_out_size, final_dtype, use_amp_final, output_dir):
     total, correct = 0, 0
+    front.to(device).eval()
+    backbone.to(device).eval()
+    print("[validate_base] Starting validation iteration...")
+
     image_dir = os.path.join(output_dir, 'images')
     os.makedirs(image_dir, exist_ok=True)
     cams_dir = os.path.join(output_dir, "images_grad_cams")
@@ -99,6 +149,7 @@ def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
         target_layers=target_layers,
         reshape_transform=vit_reshape_transform if is_vit else None
     )
+    
     formatstr = get_formatstr(len(loader) - 1)
     for i, (vol, label, _) in enumerate(loader, start=1):
         vol = vol.to(device)

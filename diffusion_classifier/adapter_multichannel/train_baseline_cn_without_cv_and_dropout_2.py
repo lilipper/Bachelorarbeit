@@ -1,3 +1,78 @@
+"""
+Train a THz-to-RGB ControlNet-based adapter + torchvision backbone classifier
+without cross-validation, using a two-stage optimizer schedule and optional
+early stopping.
+
+This script is a stronger baseline variant that:
+  - builds a 3D ControlNet-based THz-to-RGB front-end (ControlNetAdapterWrapper),
+  - builds a torchvision backbone (ResNet, ViT, ConvNeXt) with a dropout head,
+  - trains on the full training set (no CV),
+  - first uses AdamW + OneCycleLR, then switches to SGD + CosineAnnealingLR,
+  - supports early stopping based on accuracy and loss thresholds,
+  - optionally runs a final evaluation and aggregates predictions with
+    `evaluate_predictions`.
+
+Workflow:
+    1. Load the THz dataset from `--data_train` and `--train_csv`.
+    2. Build the ControlNetAdapterWrapper front-end and a chosen backbone
+       (resnet50, vit_b16, vit_b32, convnext_tiny) with an ImageNet-style head.
+    3. Configure two optimizers:
+       - AdamW + OneCycleLR for the first 60% of epochs,
+       - SGD + CosineAnnealingLR for the remaining 40% of epochs.
+    4. Train on the full training set with AMP and ImageNet normalization,
+       track best training accuracy and save the best checkpoint.
+    5. Optionally, if `--final_eval` is set:
+       - reload the best checkpoint,
+       - evaluate on a fixed test set,
+       - save per-sample prediction files and call `evaluate_predictions(...)`
+         to compute evaluation metrics.
+
+How to run:
+    python train_baseline_cn_without_cv_and_dropout_2.py \\
+        --data_train /path/to/thz_data \\
+        --train_csv /path/to/train.csv \\
+        --backbone vit_b32 \\
+        --pretrained \\
+        --epochs 200 \\
+        --batch_size 2 \\
+        --learn_front \\
+        --train_backbone \\
+        --lr_front 0.05 \\
+        --lr_backbone 0.05 \\
+        --acc_threshold 0.98 \\
+        --loss_threshold 0.05 \\
+        --final_eval \\
+        --data_test /path/to/test_data \\
+        --test_csv /path/to/test.csv
+
+Key arguments:
+    --data_train (str)      Root directory containing the THz training volumes.
+    --train_csv (str)       CSV with (path,label) pairs for the training set.
+    --backbone (str)        Backbone name: resnet50 | vit_b16 | vit_b32 | convnext_tiny.
+    --pretrained            Load ImageNet-1k pretrained weights for the backbone.
+    --num_classes (int)     Number of output classes.
+    --epochs (int)          Total number of training epochs.
+    --batch_size (int)      Training batch size.
+    --num_workers (int)     Number of DataLoader workers.
+    --acc_threshold (float) Early-stopping accuracy threshold on the training set.
+    --loss_threshold (float)Early-stopping loss threshold on the training set.
+    --learn_front           Train the THz adapter front-end.
+    --lr_front (float)      Base learning rate for the adapter (used in both phases).
+    --wd_front (float)      Weight decay for the adapter.
+    --train_backbone        Train the backbone classifier.
+    --lr_backbone (float)   Base learning rate for the backbone (used in both phases).
+    --wd_backbone (float)   Weight decay for the backbone.
+    --dtype (str)           AMP compute dtype: float16 | bfloat16 | float32.
+    --seed (int)            Global random seed.
+    --dropout_p (float)     Dropout probability for adapter/backbone heads.
+    --final_eval            Run a final evaluation after training.
+    --data_test (str)       Root directory of the test dataset.
+    --test_csv (str)        CSV with (path,label) pairs for the test set.
+    --val_csv (str)         Fallback CSV for final_eval when --test_csv is not provided.
+    --save_dir (str)        Base directory for checkpoints, logs, and evaluation outputs.
+"""
+
+
 import os
 import argparse
 import csv

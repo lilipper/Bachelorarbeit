@@ -1,3 +1,76 @@
+"""
+Train a THz-to-RGB ControlNet-based adapter together with a torchvision backbone
+classifier using Repeated Stratified K-Fold cross-validation.
+
+For each CV split, this script builds a fresh 3D ControlNet-based front-end
+(ControlNetAdapterWrapper) that maps THz volumes to RGB images, and a
+torchvision backbone (ResNet/ViT/ConvNeXt) initialized from ImageNet weights.
+Adapter and/or backbone are trained independently per split, which yields clean
+cross-validation statistics and serves as the canonical baseline for the
+ControlNet adapter experiments.
+
+Workflow:
+    1. Read (path, label) pairs from the training CSV and construct
+       RepeatedStratifiedKFold splits.
+    2. For each split:
+       - build a new THz-to-RGB front-end (ControlNetAdapterWrapper),
+       - build a new torchvision backbone with a classification head,
+       - create fold-specific train/val CSVs and DataLoaders,
+       - train the selected components (front and/or backbone) using AMP,
+         AdamW, and ImageNet-style normalization,
+       - track and save the best checkpoint based on validation accuracy.
+    3. After all splits:
+       - write a cv_summary.csv with per-split validation accuracies,
+       - keep track of the globally best checkpoint.
+    4. Optionally (if --final_eval is set):
+       - reload the global best checkpoint,
+       - evaluate it on a fixed test set,
+       - save per-sample prediction files for further analysis.
+
+How to run:
+    python train_baseline_cn_adapter.py \\
+        --data_train /path/to/thz_data \\
+        --train_csv /path/to/train.csv \\
+        --backbone vit_b32 \\
+        --pretrained \\
+        --epochs 60 \\
+        --batch_size 2 \\
+        --learn_front \\
+        --train_backbone \\
+        --cv_splits 5 \\
+        --cv_repeats 2 \\
+        --final_eval \\
+        --data_test /path/to/test_data \\
+        --test_csv /path/to/test.csv
+
+Key arguments:
+    --data_train (str)      Root directory containing the THz training volumes.
+    --train_csv (str)       CSV with (path,label) pairs for training samples.
+    --backbone (str)        Backbone name: resnet50 | vit_b16 | vit_b32 | convnext_tiny.
+    --pretrained            Load ImageNet-1k pretrained weights for the backbone.
+    --num_classes (int)     Number of output classes.
+    --epochs (int)          Number of epochs per CV split.
+    --batch_size (int)      Training batch size.
+    --num_workers (int)     Number of DataLoader workers.
+    --learn_front           Train the THz adapter front-end.
+    --lr_front (float)      Learning rate for the adapter.
+    --wd_front (float)      Weight decay for the adapter.
+    --train_backbone        Train the backbone classifier.
+    --lr_backbone (float)   Learning rate for the backbone.
+    --wd_backbone (float)   Weight decay for the backbone.
+    --dtype (str)           AMP compute dtype: float16 | bfloat16 | float32.
+    --cv_splits (int)       Number of CV folds.
+    --cv_repeats (int)      Number of CV repeats.
+    --cv_seed (int)         Random seed for splitting and training.
+    --final_eval            Run a final evaluation on a fixed test set.
+    --data_test (str)       Root directory of the test dataset.
+    --test_csv (str)        CSV for the test set; falls back to --val_csv if not set.
+    --val_csv (str)         Fallback CSV for final_eval when --test_csv is missing.
+    --save_dir (str)        Base directory for splits, checkpoints, and summaries.
+"""
+
+
+
 import os
 import argparse
 import csv
@@ -198,6 +271,47 @@ def validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, mean_s
 # ----------------------- Main -----------------------
 
 def main():
+    """
+    Train a THz-to-RGB adapter together with a torchvision backbone classifier using
+    Repeated Stratified K-Fold cross-validation.
+
+    The script builds a THz front-end based on a ControlNet-style adapter and a
+    selected torchvision backbone (ResNet, ViT, ConvNeXt). It trains the model with
+    RSKF, saves the best checkpoint per split, writes a CV summary CSV, and
+    optionally performs a final evaluation on a fixed test set using the globally
+    best model.
+
+    Parameters (command-line arguments):
+        --data_train (str): Root directory of the THz training dataset.
+        --train_csv (str): CSV file with (path,label) pairs for training samples.
+        --backbone (str): Name of the torchvision backbone
+            ("resnet50", "vit_b16", "vit_b32", "convnext_tiny").
+        --pretrained (flag): If set, load ImageNet-1k pretrained weights.
+        --num_classes (int): Number of output classes for the classifier.
+        --epochs (int): Number of training epochs per CV split.
+        --batch_size (int): Mini-batch size for training.
+        --num_workers (int): Number of worker processes for the DataLoaders.
+        --learn_front (flag): If set, train the THz adapter front-end.
+        --lr_front (float): Learning rate for the THz front-end.
+        --wd_front (float): Weight decay for the THz front-end.
+        --train_backbone (flag): If set, train the backbone classifier.
+        --lr_backbone (float): Learning rate for the backbone.
+        --wd_backbone (float): Weight decay for the backbone.
+        --dtype (str): AMP compute dtype ("float16", "bfloat16", or "float32").
+        --cv_splits (int): Number of folds for RepeatedStratifiedKFold.
+        --cv_repeats (int): Number of repeats for RepeatedStratifiedKFold.
+        --cv_seed (int): Random seed used for CV splitting and training.
+        --final_eval (flag): If set, run a final evaluation after CV.
+        --data_test (str): Root directory of the test dataset.
+        --test_csv (str): CSV file with (path,label) pairs for the test set.
+        --val_csv (str): Fallback CSV for final_eval when --test_csv is not provided.
+        --save_dir (str): Base directory where splits, checkpoints, and summaries are stored.
+
+    Side effects:
+        - Saves the best model checkpoint for each split in a dedicated fold directory.
+        - Writes a CV summary CSV with validation accuracy per split.
+        - Optionally saves per-sample prediction files and prints final test accuracy.
+    """
     parser = argparse.ArgumentParser(description="THz-Adapter + (torchvision ResNet/ViT) Classifier with RSKF + FinalEval")
     # Data
     parser.add_argument("--data_train", type=str, required=True)

@@ -4,6 +4,45 @@
 The easiest way is to use show_results.py
 Here you can select one pretrained model and you get the results in return.
 
+## `eval_pipeline.py`
+
+This script is a unified evaluation entry point for both baseline classifiers and the diffusion-based classifier.
+
+Given a pretrained checkpoint, it rebuilds the corresponding model and adapter, runs inference on a chosen dataset split, and stores per-sample predictions together with visualization outputs (reconstructed images and Grad-CAM-style saliency maps). Afterwards, it optionally aggregates the results using `eval_the_pipeline_results.py`.
+
+### Features
+
+- Supports:
+  - Torchvision backbones (`resnet50`, `vit_b_16`, `vit_b_32`, `convnext_tiny`) with THz adapters
+  - Diffusion-based zero-shot classifier (Stable Diffusion + ControlNet + latent adapter)
+- Uses different adapters to map THz volumes to RGB images or latents:
+  - `cn_wrapper`, `old_cn_wrapper`, `latent`
+- Saves:
+  - Per-sample prediction `.pt` files (`pred`, `label`, optionally `errors`)
+  - Reconstructed images and Grad-CAM overlays
+- Can be combined with `eval_the_pipeline_results.py` to produce confusion matrices and reports
+
+### Usage
+
+```bash
+# Diffusion zero-shot classifier with latent adapter
+python eval_pipeline.py \
+    --pretrained_path /path/to/dc_checkpoint.pt \
+    --classifier diffusion \
+    --adapter latent \
+    --dataset thz_for_adapter \
+    --split test \
+    --output_dir ./results_eval_pipeline
+
+# Baseline ViT-B/32 model with ControlNet-based adapter
+python eval_pipeline.py \
+    --pretrained_path /path/to/baseline_checkpoint.pt \
+    --classifier vit_b_32 \
+    --adapter cn_wrapper \
+    --dataset thz_for_adapter \
+    --split test \
+    --output_dir ./results_eval_pipeline
+```
 
 ## eval_the_pipeline_results.py
 
@@ -36,7 +75,7 @@ Run the script with:
 python evaluate_predictions.py /path/to/results \
     --prompts_csv /path/to/prompts.csv \
     --output_dir /path/to/output
-
+```
 
 ## extract_learning_curve_from_log.py
 
@@ -65,4 +104,4 @@ Run it from the terminal:
 python extract_learning_curve_from_log.py \
     --log /path/to/logfile.out \
     --outdir output_folder
-
+```

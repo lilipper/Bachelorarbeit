@@ -1,3 +1,47 @@
+"""
+Train a THz-to-RGB ControlNet-based adapter together with a torchvision backbone
+classifier using Repeated Stratified K-Fold cross-validation.
+
+In this variant ("load_once"), the THz front-end (ControlNetAdapterWrapper) and
+the backbone classifier are instantiated only once before the CV loop and then
+reused across all splits. Each split trains on its own train/val partition, but
+the same model instance is updated continuously instead of being reinitialized
+per fold.
+
+Workflow:
+    1. Read (path, label) pairs from the training CSV and create RSKF splits.
+    2. Build a THz-to-RGB front-end that maps THz volumes to ImageNet-like
+       RGB images, and a torchvision backbone (ResNet/ViT/ConvNeXt).
+    3. For each split:
+       - create fold-specific train/val CSVs and DataLoaders,
+       - train the selected parameters (front and/or backbone) for several
+         epochs using AMP and ImageNet normalization,
+       - track and save the best validation checkpoint for that split.
+    4. After CV:
+       - write a cv_summary.csv with per-split validation accuracy,
+       - track the globally best checkpoint across all folds.
+    5. Optionally (if --final_eval is set):
+       - rebuild the front and backbone,
+       - load the global best checkpoint,
+       - run evaluation on a fixed test set and save per-sample predictions.
+
+Command-line usage:
+    python train_baseline_cn_adapter_load_once.py \\
+        --data_train /path/to/thz_data \\
+        --train_csv train.csv \\
+        --backbone vit_b32 \\
+        --pretrained \\
+        --learn_front \\
+        --train_backbone \\
+        --epochs 60 \\
+        --cv_splits 5 \\
+        --cv_repeats 2 \\
+        --final_eval \\
+        --data_test /path/to/test_data \\
+        --test_csv test.csv
+"""
+
+
 import os
 import argparse
 import csv
@@ -199,6 +243,10 @@ def validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, mean_s
 # ----------------------- Main -----------------------
 
 def main():
+    # Main entry point: handles argument parsing, sets up AMP and directories,
+    # builds the front-end and backbone once, and runs the full RSKF training loop.
+    # After cross-validation, the function writes a summary CSV and can optionally
+    # run a final evaluation on a fixed test set using the global best checkpoint.
     parser = argparse.ArgumentParser(description="THz-Adapter + (torchvision ResNet/ViT) Classifier with RSKF + FinalEval")
     # Data
     parser.add_argument("--data_train", type=str, required=True)

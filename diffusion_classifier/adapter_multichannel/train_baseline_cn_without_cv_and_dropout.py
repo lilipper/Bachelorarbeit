@@ -1,3 +1,56 @@
+"""
+Train a THz-to-RGB ControlNet-based adapter together with a torchvision backbone
+classifier in a single-run baseline setup without cross-validation.
+
+This script builds a 3D ControlNet-based front-end (ControlNetAdapterWrapper)
+that maps THz volumes to RGB images, and a torchvision backbone (ResNet/ViT/
+ConvNeXt) with a dropout-regularized classification head. It trains both modules
+(or only the backbone/adapter depending on flags) on the full training set,
+tracks the best training accuracy, and stores a single best checkpoint.
+
+Workflow:
+    1. Load THz volumes and labels from one training CSV.
+    2. Construct the ControlNet-based THz adapter that reduces the temporal
+       dimension and produces 2D RGB-like latent images.
+    3. Build an ImageNet-initialized backbone with a dropout-augmented
+       classification head.
+    4. Train with AMP, AdamW, and ImageNet normalization.
+    5. Save the best checkpoint based on accuracy.
+    6. Optionally run a final evaluation on a separate test set.
+
+How to run:
+    python train_baseline_cn_without_cv_and_dropout.py \\
+        --data_train /path/to/train/data \\
+        --train_csv /path/to/train.csv \\
+        --backbone vit_b32 \\
+        --pretrained \\
+        --epochs 60 \\
+        --batch_size 2 \\
+        --learn_front \\
+        --train_backbone \\
+        --final_eval \\
+        --data_test /path/to/test/data \\
+        --test_csv /path/to/test.csv
+
+Arguments:
+    --data_train (str)      Root directory containing THz training volumes.
+    --train_csv (str)       CSV with (path,label) pairs.
+    --backbone (str)        Backbone name: resnet50 | vit_b16 | vit_b32 | convnext_tiny.
+    --pretrained            Load ImageNet-1k weights for the backbone.
+    --epochs (int)          Number of training epochs.
+    --batch_size (int)      Batch size.
+    --learn_front           Train the THz adapter front-end.
+    --train_backbone        Train the backbone classifier.
+    --dropout_p (float)     Dropout probability for both adapter + backbone.
+    --final_eval            Run final evaluation on a fixed test set.
+    --data_test (str)       Root directory for final test volumes.
+    --test_csv (str)        CSV for final test evaluation.
+
+This script is intended as a fast baseline without CV, useful for ablations or
+quick adapter/backbone experiments under dropout regularization.
+"""
+
+
 import os
 import argparse
 import csv

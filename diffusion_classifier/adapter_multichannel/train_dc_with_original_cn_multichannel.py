@@ -1,3 +1,108 @@
+"""
+Train a diffusion-based classifier on THz volumes using Stable Diffusion v2.x,
+an original ControlNet, and a LatentMultiChannelAdapter. The script performs
+Repeated Stratified K-Fold cross-validation (RSKF) and optionally runs a final
+evaluation on a fixed test set.
+
+The pipeline:
+    1. Load THz volumes and labels from a CSV file.
+    2. Convert each THz volume into a sequence of pseudo-RGB frames and encode
+       them into latents using the frozen Stable Diffusion VAE.
+    3. Aggregate the latent sequence with LatentMultiChannelAdapter into a
+       single 2D latent.
+    4. Pass the latent through the UNet + ControlNet and compute class-wise
+       errors with a prompt-based diffusion classifier
+       (`eval_prob_adaptive_differentiable`).
+    5. Pool prompt errors into class errors, turn them into logits, compute a
+       cross-entropy loss, and train ControlNet (and optionally the adapter)
+       across RSKF splits.
+    6. Save the best model per split and a CV summary, and optionally reload
+       the globally best model for evaluation on a held-out test set.
+
+How to run:
+    python train_dc_with_original_cn_multichannel.py \
+        --data_train /path/to/thz_data \
+        --train_csv /path/to/train.csv \
+        --prompts_csv /path/to/prompts.csv \
+        --version 2-1 \
+        --dtype bfloat16 \
+        --img_size 256 \
+        --num_train_timesteps 1000 \
+        --n_trials 1 \
+        --n_samples 8 4 2 \
+        --to_keep 3 2 1 \
+        --loss l2 \
+        --logit_scale 60.0 \
+        --use_xformers \
+        --cond_scale 2.0 \
+        --learn_adapter \
+        --lr_adapter 1e-3 \
+        --wd_adapter 0.0 \
+        --lr_controlnet 5e-3 \
+        --wd_controlnet 0.0 \
+        --epochs 200 \
+        --batch_size 2 \
+        --cv_splits 5 \
+        --cv_repeats 1 \
+        --cv_seed 42 \
+        --final_eval \
+        --data_test /path/to/test_data \
+        --test_csv /path/to/test.csv
+
+Key arguments:
+    Data:
+        --data_train (str)         Root directory with THz training volumes.
+        --train_csv (str)          CSV with (path,label) pairs for training.
+        --data_root_eval (str)     Optional root for validation data
+                                   (defaults to --data_train).
+
+    Prompts / Stable Diffusion:
+        --prompts_csv (str)        CSV with columns: prompt, classname, classidx.
+        --version (str)            SD version (e.g. 2-1, 2-0, 1-5, ...).
+        --dtype (str)              float16 | float32 | bfloat16.
+        --img_size (int)           Input image size for SD (256 or 512).
+        --num_train_timesteps (int)Number of diffusion timesteps.
+        --n_trials (int)           Number of diffusion trials per sample.
+        --n_samples (list[int])    Sequence of sample counts per trial.
+        --to_keep (list[int])      How many samples to keep per trial.
+        --loss (str)               Error loss type (l1 | l2 | huber).
+        --logit_scale (float)      Scale factor for converting errors to logits.
+        --use_xformers             Enable xFormers memory-efficient attention.
+
+    ControlNet / Adapter:
+        --cond_scale (float)       Conditioning scale for ControlNet.
+        --learn_adapter            If set, train the LatentMultiChannelAdapter.
+        --lr_adapter (float)       Learning rate for the adapter.
+        --wd_adapter (float)       Weight decay for the adapter.
+        --lr_controlnet (float)    Learning rate for ControlNet.
+        --wd_controlnet (float)    Weight decay for ControlNet.
+
+    Training / CV:
+        --epochs (int)             Number of epochs per CV split.
+        --batch_size (int)         Training batch size.
+        --num_workers (int)        DataLoader workers.
+        --cv_splits (int)          Number of RSKF folds.
+        --cv_repeats (int)         Number of RSKF repeats.
+        --cv_seed (int)            Seed for CV and training.
+
+    Final evaluation:
+        --final_eval               If set, run final eval on a fixed test set.
+        --data_test (str)          Root directory of the test dataset.
+        --test_csv (str)           CSV with (path,label) pairs for the test set.
+        --val_csv (str)            Fallback CSV if --test_csv is not provided.
+
+    IO:
+        --save_dir (str)           Base directory for splits, checkpoints,
+                                   and cv_summary.csv.
+
+Side effects:
+    - Creates a timestamped experiment folder under --save_dir.
+    - Saves the best diffusion classifier checkpoint per CV split.
+    - Writes a CV summary CSV with validation accuracy per split.
+    - Optionally reloads the global best model and reports final test accuracy.
+"""
+
+
 import os
 import argparse
 import csv

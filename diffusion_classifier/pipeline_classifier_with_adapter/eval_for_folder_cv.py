@@ -1,3 +1,7 @@
+'''
+Script to automate some steps
+'''
+
 import shutil
 import os
 # from eval_the_pipeline_results import evaluate_predictions

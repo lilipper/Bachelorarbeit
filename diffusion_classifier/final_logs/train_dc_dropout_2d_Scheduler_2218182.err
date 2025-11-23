@@ -1,0 +1,18 @@
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/xformers/ops/fmha/flash.py:211: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_fwd")
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/xformers/ops/fmha/flash.py:344: FutureWarning: `torch.library.impl_abstract` was renamed to `torch.library.register_fake`. Please use that instead; we will remove `torch.library.impl_abstract` in a future version of PyTorch.
+  @torch.library.impl_abstract("xformers_flash::flash_bwd")
+Couldn't connect to the Hub: 401 Client Error. (Request ID: Root=1-6921fa3d-2063082e4a4d896707911a58;e34cc9af-1e0d-4a76-b636-3b51451695de)
+
+Repository Not Found for url: https://huggingface.co/api/models/stabilityai/stable-diffusion-2-1-base.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+Invalid username or password..
+Will try to load from local cache.
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  33%|███▎      | 2/6 [00:00<00:01,  2.25it/s]Loading pipeline components...:  83%|████████▎ | 5/6 [00:01<00:00,  4.48it/s]Loading pipeline components...: 100%|██████████| 6/6 [00:01<00:00,  3.51it/s]Loading pipeline components...: 100%|██████████| 6/6 [00:01<00:00,  3.48it/s]
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/adapter_multichannel/train_dc_with_original_cn_multichannel_dropout.py:48: FutureWarning: Accessing config attribute `in_channels` directly via 'ControlNetModel' object attribute is deprecated. Please access 'in_channels' over 'ControlNetModel's config object instead, e.g. 'unet.config.in_channels'.
+  return getattr(self.base, name)
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/adapter_multichannel/train_dc_with_original_cn_multichannel_dropout.py:48: FutureWarning: Accessing config attribute `in_channels` directly via 'ControlNetModel' object attribute is deprecated. Please access 'in_channels' over 'ControlNetModel's config object instead, e.g. 'unet.config.in_channels'.
+  return getattr(self.base, name)
+/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]

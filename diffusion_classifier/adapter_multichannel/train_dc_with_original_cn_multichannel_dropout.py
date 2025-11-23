@@ -1,3 +1,125 @@
+"""
+Train a diffusion-based classifier on THz volumes using Stable Diffusion v2.x,
+a ControlNet with dropout regularization, and a LatentMultiChannelAdapter with
+dropout. The script uses a two-stage optimizer schedule (AdamW + OneCycleLR,
+then SGD + CosineAnnealingLR), early stopping based on accuracy/loss thresholds,
+and can run a final evaluation with prediction export and downstream metrics.
+
+Pipeline:
+    1. Load THz volumes and labels from a CSV file.
+    2. Convert each THz volume into a sequence of pseudo-RGB frames and encode
+       them into latents using the frozen Stable Diffusion VAE.
+    3. Aggregate the multi-frame latent sequence with LatentMultiChannelAdapter
+       into a single 2D latent.
+    4. Run the latent through UNet + a wrapped ControlNet with dropout and
+       evaluate per-sample class errors via eval_prob_adaptive_differentiable.
+    5. Convert class errors into logits, optimize ControlNet (and optionally
+       the adapter) with cross-entropy loss, and track the best model by
+       training accuracy.
+    6. Optionally reload the best checkpoint, run inference on a fixed test
+       set, save per-sample predictions, and compute evaluation metrics via
+       evaluate_predictions.
+
+How to run:
+    python train_dc_with_original_cn_multichannel_dropout.py \
+        --data_train /path/to/thz_data \
+        --train_csv /path/to/train.csv \
+        --prompts_csv /path/to/prompts.csv \
+        --version 2-1 \
+        --dtype bfloat16 \
+        --img_size 256 \
+        --num_train_timesteps 1000 \
+        --n_trials 1 \
+        --n_samples 8 4 2 \
+        --to_keep 3 2 1 \
+        --loss l2 \
+        --logit_scale 60.0 \
+        --use_xformers \
+        --cond_scale 2.0 \
+        --learn_adapter \
+        --lr_adapter 1e-2 \
+        --wd_adapter 1e-2 \
+        --lr_controlnet 5e-3 \
+        --wd_controlnet 3e-3 \
+        --dropout_p 0.1 \
+        --dropout_p_controlnet 0.1 \
+        --controlnet_spatial_dropout \
+        --epochs 200 \
+        --batch_size 2 \
+        --num_workers 4 \
+        --acc_threshold 0.98 \
+        --loss_threshold 0.5 \
+        --save_dir ./runs/checkpoints_dc_adapter_multichannel_dropout \
+        --final_eval \
+        --data_test /path/to/test_data \
+        --test_csv /path/to/test.csv
+
+Key arguments:
+    Data:
+        --data_train (str)          Root directory with THz training volumes.
+        --train_csv (str)           CSV with (path,label) pairs for training.
+        --data_root_eval (str)      Optional root override for val/test
+                                    datasets (not used for training here).
+
+    Prompts / Stable Diffusion:
+        --prompts_csv (str)         CSV with: prompt, classname, classidx.
+        --version (str)             SD version ("2-1", "2-0", "1-5", ...).
+        --dtype (str)               "float16", "float32", or "bfloat16".
+        --img_size (int)            Input image size (256 or 512).
+        --num_train_timesteps (int) Number of diffusion timesteps.
+        --n_trials (int)            Number of diffusion trials per sample.
+        --n_samples (list[int])     Sequence of sample counts per trial.
+        --to_keep (list[int])       Number of samples kept per trial.
+        --loss (str)                Error loss type ("l1", "l2", "huber").
+        --logit_scale (float)       Scale factor to map errors to logits.
+        --use_xformers              Enable xFormers attention if available.
+
+    ControlNet / Adapter / Regularization:
+        --cond_scale (float)        conditioning_scale for ControlNet.
+        --learn_adapter             If set, train the LatentMultiChannelAdapter.
+        --lr_adapter (float)        Learning rate for the adapter.
+        --wd_adapter (float)        Weight decay for the adapter.
+        --lr_controlnet (float)     Learning rate for ControlNet.
+        --wd_controlnet (float)     Weight decay for ControlNet.
+        --dropout_p_controlnet      Dropout probability on ControlNet residuals.
+        --controlnet_spatial_dropout
+                                    If set, use spatial Dropout2d on HxW.
+        --dropout_p (float)         Dropout probability in the adapter.
+
+    Training / Schedule / Early stopping:
+        --epochs (int)              Max number of epochs.
+        --batch_size (int)          Training batch size.
+        --num_workers (int)         DataLoader workers.
+        --cv_seed (int)             Seed for training and dataloader shuffling.
+        --acc_threshold (float)     Stop training once accuracy exceeds this.
+        --loss_threshold (float)    And loss is below this value.
+
+        Internally:
+            - Epochs are split into two phases:
+              * Phase 1: AdamW + OneCycleLR.
+              * Phase 2: SGD + CosineAnnealingLR.
+            - The switch happens at ~60%% of the total epochs.
+
+    Final evaluation:
+        --final_eval                If set, run evaluation on a fixed test set.
+        --data_test (str)           Root directory of the test dataset.
+        --test_csv (str)            CSV with (path,label) for the test set.
+        --val_csv (str)             Fallback CSV if --test_csv is not set.
+
+    IO:
+        --save_dir (str)            Base directory for checkpoints & results.
+
+Side effects:
+    - Creates a timestamped experiment folder under --save_dir.
+    - Saves the best model checkpoint (ControlNet + adapter) as best_model.pt.
+    - If --final_eval is set:
+        * runs inference on the test set,
+        * saves per-sample prediction tensors into a result directory,
+        * calls evaluate_predictions(...) to compute evaluation metrics and
+          write them into an evaluation directory.
+"""
+
+
 import os
 import argparse
 import csv

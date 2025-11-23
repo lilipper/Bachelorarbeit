@@ -1,3 +1,59 @@
+"""
+extract_learning_curve_from_log.py
+
+Parse a training log file, extract epoch-wise training loss and accuracy,
+save them as a CSV file, and plot learning curves (loss and accuracy)
+as PNG and PDF.
+
+Example usage
+-------------
+
+# Basic usage with default output directory ("./log_curves")
+python extract_learning_curve_from_log.py \
+    --log /path/to/logfile.out
+
+# Custom output directory
+python extract_learning_curve_from_log.py \
+    --log /path/to/logfile.err \
+    --outdir ./results/log_curves
+
+
+Command line arguments
+----------------------
+
+Required:
+- --log      : Path to the training log file (e.g. *.out / *.err).
+               The script expects lines of the form:
+                 "[Epoch] 12/700"
+                 "[train_one_epoch] Done. epoch_loss=0.9026  epoch_acc=0.4688"
+
+Optional:
+- --outdir   : Root output directory for CSV and plots.
+               Default: "./log_curves"
+
+What the script does
+--------------------
+
+1. Parses the log and looks for:
+   - epoch lines: "[Epoch] <current>/<max>"
+   - metric lines: "... epoch_loss=<float>  epoch_acc=<float>"
+
+2. Builds a pandas DataFrame with columns:
+   - epoch       : current epoch index
+   - max_epoch   : total number of epochs from the log
+   - train_loss  : training loss at the end of the epoch
+   - train_acc   : training accuracy at the end of the epoch
+
+3. Creates a subfolder inside --outdir that is derived from the log filename
+   (dots replaced with underscores, ".out"/".err" removed).
+
+4. Saves:
+   - learning_curve.csv      : epoch, train_loss, train_acc
+   - train_loss.png / .pdf   : loss over epochs
+   - train_acc.png / .pdf    : accuracy over epochs
+"""
+
+
 import re
 from pathlib import Path
 import os

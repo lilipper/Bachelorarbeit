@@ -3,6 +3,28 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class LatentMultiChannelAdapter(nn.Module):
+    """
+    LatentMultiChannelAdapter
+
+    This module compresses a sequence of Stable Diffusion latent frames into a single
+    2D latent representation. It processes inputs of shape (B, T, 4, H, W) and produces
+    an output of shape (B, 4, H, W), making multi-frame THz data compatible with
+    pretrained diffusion backbones.
+
+    The adapter applies depthwise temporal convolution, pointwise channel mixing,
+    normalization, optional temporal downsampling, and either attention-based or
+    average temporal pooling. A final 2D mixing layer ensures that the aggregated
+    latent matches the expected format of the downstream diffusion model.
+
+    Parameters:
+        k_t (int): Kernel size for the temporal depthwise convolution.
+        use_attn_pool (bool): If True, uses attention-based temporal pooling.
+        reduce_T_stride (int): Temporal downsampling stride; >1 enables AvgPool3d.
+        hidden_channels (int): Hidden channel size used inside the attention MLP.
+
+    Returns:
+        torch.Tensor: A compressed 2D latent tensor of shape (B, 4, H, W).
+    """
     def __init__(self, k_t=5, use_attn_pool=True, reduce_T_stride=1, hidden_channels=8):
         super().__init__()
         self.use_attn_pool = use_attn_pool
