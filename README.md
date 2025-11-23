@@ -11,12 +11,11 @@ For this purpose, a **trainable adapter** is developed that transforms complex 3
 To set up the project locally, run the following commands:
 
 ```bash
-# Clone the repository
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
-
-# Install dependencies
-pip install -r requirements.txt
+## Clone the repository
+git clone https://github.com/lilipper/Bachelorarbeit.git
+cd Bachelorarbeit
+# Install dependencies and create conda env
+conda env create -f environment.yaml
 ```
 
 ## 🎯 Project Overview
@@ -28,6 +27,16 @@ pip install -r requirements.txt
 - **Evaluation:** Besides accuracy, explainability (Grad-CAM) and robustness are analyzed.  
 
 ## 📊 Dataset
+
+A short visualization of the data.  
+The colors are enhanced to improve the contrast.
+
+<video src="images/cut_Thzdata.mp4" controls width="600">
+  Your browser does not support the video tag.
+</video>
+
+
+
 You can find the dataset here: [THz Dataset](https://uni-siegen.sciebo.de/s/QdKujlTwbVhmAAX)
 The dataset consists of **THz measurements of fiber-reinforced plastic samples** with various defect types, such as:  
 
