@@ -33,6 +33,8 @@ models = {
 
 
     #Dropout Models
+
+    # vit b32
     'vit_b_32_pretrained_dropout_cn': {
         'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb32_dropout_pretrained_2_2153738/vit_b32_bfloat16_251117_1103/best model/best_checkpoint.pt',
         'classifier' : 'vit_b_32',
@@ -46,6 +48,8 @@ models = {
 
 
     # CV Models
+    
+    # vit b16
     'vit_b16_pretrained_cn': {
         'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/a_cv/vitb16_pretrained_cn_wrapper_2050294/vit_b16_bfloat16_251104_1455/split_004/best.pt',
         'classifier' : 'vit_b_16',
