@@ -1,8 +1,33 @@
 # This is the pipeline to test and evaluate models and results.
 
-## show_results.py
-The easiest way is to use show_results.py
-Here you can select one pretrained model and you get the results in return.
+## `show_results.py`
+
+This script is a small convenience wrapper around `eval_pipeline.py`.  
+It lets you evaluate one of the preconfigured models with a single command.
+
+All available models are defined in the `models` dictionary inside the script.  
+Each entry specifies:
+- the checkpoint path,
+- the classifier type (e.g. `diffusion`, `resnet50`, `vit_b_16`, `vit_b_32`, `convnext_tiny`),
+- the adapter type (`cn_wrapper`, `old_cn_wrapper`, or `latent`).
+
+Internally, the script builds the argument object and calls `eval_pipeline.main(...)` on:
+- the `thz_for_adapter` dataset,
+- the `test` split,
+- with `prompts/thz_prompts.csv` as class definition file,
+- and writes all outputs into `./results_eval_pipeline`.
+
+### Usage
+
+```bash
+# Example: evaluate a diffusion-based latent adapter model
+python show_results.py \
+    --pretrained_model_name dc_latent_dropout
+
+# Example: evaluate a ConvNeXt-Tiny baseline with CN-wrapper
+python show_results.py \
+    --pretrained_model_name convnext_tiny_pretrained_cn
+
 
 ## `eval_pipeline.py`
 

@@ -1,3 +1,87 @@
+"""
+show_results.py
+
+Small convenience wrapper to evaluate a single preconfigured model
+via the eval_pipeline module. You select a model by name from the
+`models` dictionary and the script forwards all required arguments
+to `eval_pipeline.main`.
+
+Example usage
+-------------
+
+# List available model keys (by simply looking into the `models` dict)
+# and then call, for example:
+python show_results.py \
+    --pretrained_model_name vit_b32_pretrained_cn_once
+
+# Another example for a diffusion-based model:
+python show_results.py \
+    --pretrained_model_name dc_latent_dropout
+
+
+Command line arguments
+----------------------
+
+--pretrained_model_name : str (required)
+    Name of the pretrained model to evaluate. This must be one of the
+    keys defined in the global `models` dictionary in this file, e.g.:
+
+    - "dc_cn_wrapper"
+    - "dc_latent_every_split"
+    - "dc_latent_once"
+    - "dc_latent_dropout"
+    - "vitb32_dropout_pretrained_2_2153738"
+    - "vitb32_dropout_untrained_2109807"
+    - "vitb32_dropout_pretrained_2_2153739"
+    - "convnext_tiny_dropout_pretrained_2_2153749"
+    - "convnext_tiny_dropout_untrained_2109804"
+    - "vitb16_dropout_pretrained_2_2153753"
+    - "vitb16_dropout_pretrained_2_2153747"
+    - "resnet50_dropout_pretrained_2_2153748"
+    - "resnet50_dropout_pretrained_2_2153754"
+    - "resnet50_dropout_untrained_2109805"
+    - "vit_b16_pretrained_cn"
+    - "vit_b16_pretrained_cn_once"
+    - "vit_b16_pretrained_cn_once_long_8"
+    - "vit_b16_pretrained_cn_once_long_50"
+    - "convnext_tiny_pretrained_cn"
+    - "convnext_tiny_pretrained_cn_once"
+    - "convnext_tiny_pretrained_cn_once_long"
+    - "vit_b32_pretrained_cn"
+    - "vit_b32_pretrained_cn_once"
+    - "vit_b32_pretrained_cn_once_long"
+    - "resnet50_pretrained_cn"
+    - "resnet50_pretrained_cn_once"
+    - "resnet50_pretrained_cn_once_long"
+
+What the script does
+--------------------
+
+1. Looks up the entry in the `models` dict for the chosen
+   `--pretrained_model_name`.
+
+2. Builds an argument object with:
+   - `pretrained_path` : path to the checkpoint
+   - `classifier`      : one of {"diffusion", "resnet50", "vit_b_16",
+                                 "vit_b_32", "convnext_tiny"}
+   - `adapter`         : one of {"cn_wrapper", "latent", "old_cn_wrapper"}
+   - fixed settings for:
+       - `dataset`     = "thz_for_adapter"
+       - `split`       = "test"
+       - `n_workers`   = 1
+       - `output_dir`  = "./results_eval_pipeline"
+       - `prompts_csv` = path to THz prompts CSV
+
+3. Calls `eval_pipeline.main(p_args)` to:
+   - run inference on the chosen dataset split,
+   - save prediction `.pt` files and GradCAM / visualisations,
+   - call `evaluate_predictions` to create a confusion matrix and report.
+
+This script is meant as the easiest entry point to inspect the final
+results of predefined models used in the thesis.
+"""
+
+
 import torch, tqdm
 import os, copy, time, json, argparse, random
 from pathlib import Path
