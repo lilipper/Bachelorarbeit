@@ -35,16 +35,63 @@ models = {
     #Dropout Models
 
     # vit b32
-    'vit_b_32_pretrained_dropout_cn': {
+    'vitb32_dropout_pretrained_2_2153738': {
         'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb32_dropout_pretrained_2_2153738/vit_b32_bfloat16_251117_1103/best model/best_checkpoint.pt',
         'classifier' : 'vit_b_32',
         'adapter' : 'cn_wrapper',
     },
-    'vit_b_32_untrained_dropout_cn': {
-        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/final_eval/vitb32_dropout_untrained_2109807/vit_b32_bfloat16_251112_1219/best model/best_checkpoint.pt',
+    'vitb32_dropout_untrained_2109807': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb32_dropout_untrained_2109807/vit_b32_bfloat16_251112_1219/best model/best_checkpoint.pt',
         'classifier' : 'vit_b_32',
         'adapter' : 'cn_wrapper',
     },
+    'vitb32_dropout_pretrained_2_2153739': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb32_dropout_pretrained_2_2153739/vit_b32_bfloat16_251117_1103/best model/best_checkpoint.pt',
+        'classifier' : 'vit_b_32',
+        'adapter' : 'cn_wrapper',
+    },
+    # convnext tiny
+    'convnext_tiny_dropout_pretrained_2_2153749': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/convnext_tiny_dropout_pretrained_2_2153749/convnext_tiny_bfloat16_251117_1112/best model/best_checkpoint.pt',
+        'classifier' : 'convnext_tiny',
+        'adapter' : 'cn_wrapper',
+    },
+    'convnext_tiny_dropout_untrained_2109804': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/convnext_tiny_dropout_untrained_2109804/convnext_tiny_bfloat16_251112_1154/best model/best_checkpoint.pt',
+        'classifier' : 'convnext_tiny',
+        'adapter' : 'cn_wrapper',
+    },
+
+    # vit b16
+    'vitb16_dropout_pretrained_2_2153753': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb16_dropout_pretrained_2_2153753/vit_b16_bfloat16_251117_0644/best model/best_checkpoint.pt',
+        'classifier' : 'vit_b_16',
+        'adapter' : 'cn_wrapper',
+    },
+    'vitb16_dropout_pretrained_2_2153747': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb16_dropout_pretrained_2_2153747/vit_b16_bfloat16_251117_1103/best model/best_checkpoint.pt',
+        'classifier' : 'vit_b_16',
+        'adapter' : 'cn_wrapper',
+    },
+
+    #resnet50
+    'resnet50_dropout_pretrained_2_2153748': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/resnet50_dropout_pretrained_2_2153748/resnet50_bfloat16_251117_1103/best model/best_checkpoint.pt',
+        'classifier' : 'resnet50',
+        'adapter' : 'cn_wrapper',
+    },
+    'resnet50_dropout_pretrained_2_2153754': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/resnet50_dropout_pretrained_2_2153754/resnet50_bfloat16_251117_0717/best model/best_checkpoint.pt',
+        'classifier' : 'resnet50',
+        'adapter' : 'cn_wrapper',
+    },
+    'resnet50_dropout_untrained_2109805': {
+        'path' :'/pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/resnet50_dropout_untrained_2109805/resnet50_bfloat16_251112_1201/best model/best_checkpoint.pt',
+        'classifier' : 'resnet50',
+        'adapter' : 'cn_wrapper',
+    },
+    
+
 
 
     # CV Models
