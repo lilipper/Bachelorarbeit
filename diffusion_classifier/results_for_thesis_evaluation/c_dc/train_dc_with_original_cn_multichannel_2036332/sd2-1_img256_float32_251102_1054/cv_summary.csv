@@ -1,0 +1,4 @@
+split_idx,best_val_acc,fold_dir
+1,0.696969696969697,./runs/checkpoints_dc_adapter_multichannel/sd2-1_img256_float32_251102_1054/split_001
+2,0.71875,./runs/checkpoints_dc_adapter_multichannel/sd2-1_img256_float32_251102_1054/split_002
+3,0.78125,./runs/checkpoints_dc_adapter_multichannel/sd2-1_img256_float32_251102_1054/split_003
