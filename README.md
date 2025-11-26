@@ -31,9 +31,7 @@ conda env create -f environment.yaml
 A short visualization of the data.  
 The colors are enhanced to improve the contrast.
 
-<video src="images/cut_Thzdata.mp4" controls width="600">
-  Your browser does not support the video tag.
-</video>
+![THz Beispiel](images/gif_thz.gif)
 
 
 
