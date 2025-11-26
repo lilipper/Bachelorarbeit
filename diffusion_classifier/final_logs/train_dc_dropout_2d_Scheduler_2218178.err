@@ -16,3 +16,4 @@ Will try to load from local cache.
   return getattr(self.base, name)
 /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/miniconda3/envs/diffusion-classifier/lib/python3.9/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
   with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+slurmstepd: error: *** JOB 2218178 ON uc2n902 CANCELLED AT 2025-11-24T20:30:51 DUE TO TIME LIMIT ***

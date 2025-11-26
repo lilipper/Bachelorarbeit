@@ -16300,3 +16300,18 @@ FrozenDict([('in_channels', 4), ('conditioning_channels', 3), ('flip_sin_to_cos'
 
 [Epoch] 47/200
 [train_one_epoch] Starting training iteration...
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n902
+Job ID: 2218178
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: TIMEOUT (exit code 0)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:02:31
+CPU Efficiency: 0.01% of 32-00:00:32 core-walltime
+Job Wall-clock time: 2-00:00:02
+Memory Utilized: 14.57 GB
+Memory Efficiency: 36.42% of 40.00 GB (40.00 GB/node)
