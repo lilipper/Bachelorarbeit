@@ -17,6 +17,8 @@ The following folders are created or adapted by myself:
   - You find here also my evaluation scripts
 - prompts
   - I just added my prompts 
+- results_for_thesis_results
+  - Here you can find some images and the results fiiles for every evaluation in my thesis
 
 
 <div align="center">
