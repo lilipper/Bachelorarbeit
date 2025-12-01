@@ -2,6 +2,7 @@
 
 ## `show_results.py`
 
+**You first need to change the "models_folder" to the path to the folder were the trained models are.**
 This script is a small convenience wrapper around `eval_pipeline.py`.  
 It lets you evaluate one of the preconfigured models with a single command.
 

@@ -61,6 +61,7 @@ from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 import numpy as np
 from skimage import io
 import pandas as pd
+import cv2
 
 from eval_prob_adaptive import eval_prob_adaptive_differentiable
 from adapter_multichannel.train_baseline_cn_without_cv_and_dropout import ControlNetAdapterWrapper
@@ -80,11 +81,6 @@ from pipeline_classifier_with_adapter.eval_the_pipeline_results import evaluate_
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def _is_vit_backbone(backbone):
-    name = backbone.__class__.__name__.lower()
-    return ("visiontransformer" in name) or ("vit" in name)
-
-
 def vit_reshape_transform(tensor):
    
     B, seq_len, C = tensor.shape
@@ -96,39 +92,94 @@ def vit_reshape_transform(tensor):
     return x
 
 
-def _get_cam_target_layers(backbone):
-    name = backbone.__class__.__name__.lower()
+def compute_volume_gradcam(
+    vol,
+    front,
+    backbone,
+    imagenet_mean,
+    imagenet_std,
+    img_out_size,
+    final_dtype,
+    use_amp_final,
+    target_class: Optional[int] = None,
+):
+    """
+    Gradient-basierte Relevanzkarte pro Slice im Volumen.
 
-    if _is_vit_backbone(backbone):
-        try:
-            last_block = list(backbone.encoder.layers.children())[-1]
-            return [last_block.ln_1]
-        except Exception:
-            return [backbone.encoder]
-    if hasattr(backbone, "layer4"):
-        return [backbone.layer4[-1]]
-    if "convnext" in name and hasattr(backbone, "features"):
-        return [backbone.features[-1]]
-    if hasattr(backbone, "features"):
-        return [backbone.features]
-    return [backbone]
+    Unterstützte Formen:
+        vol: [1, 2, Z, H, W]  (dein aktuelles Setup)
+        alternativ auch [1, Z, H, W] oder [Z, H, W]
 
+    Rückgabe:
+        vol_slices_np: [Z, H, W]  (Visualisierungsvolumen)
+        relevance_np:  [Z, H, W]  (normierte Relevanz 0..1)
+        target_class:  int
+    """
 
-def _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path, alpha=0.35):
-    cam = cam01
-    cam = cam - cam.min()
-    cam = cam / (cam.max() + 1e-8)
-    io.imsave(cam_path, (cam * 65535).astype(np.uint16), check_contrast=False)
-    cam_rgb = np.repeat(cam[..., None], 3, axis=2)
-    over = (1 - alpha) * rgb01 + alpha * cam_rgb
-    over = np.clip(over, 0.0, 1.0)
-    io.imsave(overlay_path, (over * 65535).astype(np.uint16), check_contrast=False)
-    plt.imshow(rgb01)
-    plt.imshow(cam01, cmap='jet', alpha=0.35)
-    plt.axis('off')
-    plt.tight_layout()
-    plt.savefig(cam_path.replace('.tiff', '.pdf'), bbox_inches='tight', pad_inches=0)
-    plt.close()
+    vol_cam = vol.detach().clone().to(device)
+
+    if vol_cam.dim() == 5:
+        if vol_cam.size(0) != 1:
+            raise ValueError(f"compute_volume_gradcam erwartet Batchsize 1, bekam {vol_cam.size(0)}")
+    elif vol_cam.dim() == 4:
+        if vol_cam.size(0) == 1:
+            vol_cam = vol_cam.unsqueeze(1) 
+        else:
+            vol_cam = vol_cam.unsqueeze(0)  
+    elif vol_cam.dim() == 3:
+        vol_cam = vol_cam.unsqueeze(0).unsqueeze(0)
+    else:
+        raise ValueError(f"Unerwartete Volumen-Form: {vol_cam.shape}")
+
+    vol_cam.requires_grad_(True)  
+
+    with torch.autocast(device_type="cuda", dtype=final_dtype, enabled=use_amp_final):
+        img_rgb = front(vol_cam)  
+
+        if img_rgb.shape[-2] != img_out_size or img_rgb.shape[-1] != img_out_size:
+            img_rgb = F.interpolate(
+                img_rgb,
+                size=(img_out_size, img_out_size),
+                mode="bilinear",
+                align_corners=False,
+            )
+
+        img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
+        logits = backbone(img_in)  
+    if target_class is None:
+        target_class = int(torch.argmax(logits, dim=1).item())
+
+    score = logits[0, target_class]
+
+    front.zero_grad(set_to_none=True)
+    backbone.zero_grad(set_to_none=True)
+    if vol_cam.grad is not None:
+        vol_cam.grad.zero_()
+    score.backward()
+
+    grads = vol_cam.grad.detach().cpu().squeeze(0)   
+    vol_data = vol_cam.detach().cpu().squeeze(0)     
+
+    if grads.dim() == 4:
+        grads_abs = grads.abs().sum(dim=0)      
+        vol_slices = vol_data.mean(dim=0)    
+    elif grads.dim() == 3:
+        grads_abs = grads.abs()              
+        vol_slices = vol_data
+    else:
+        raise ValueError(f"Unerwartete Grad-Form: {grads.shape}")
+
+    max_val = grads_abs.max()
+    if max_val > 0:
+        relevance = grads_abs / max_val
+    else:
+        relevance = torch.zeros_like(grads_abs)
+
+    vol_slices_np = vol_slices.numpy()  
+    relevance_np = relevance.numpy()   
+
+    return vol_slices_np, relevance_np, target_class
+
 
 def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
                   img_out_size, final_dtype, use_amp_final, output_dir):
@@ -141,14 +192,7 @@ def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
     os.makedirs(image_dir, exist_ok=True)
     cams_dir = os.path.join(output_dir, "images_grad_cams")
     os.makedirs(cams_dir, exist_ok=True)
-    target_layers = _get_cam_target_layers(backbone)
-    CamCls = GradCAMPlusPlus
-    is_vit = _is_vit_backbone(backbone)
-    cam = CamCls(
-        model=backbone,
-        target_layers=target_layers,
-        reshape_transform=vit_reshape_transform if is_vit else None
-    )
+    
     
     formatstr = get_formatstr(len(loader) - 1)
     for i, (vol, label, _) in enumerate(loader, start=1):
@@ -163,27 +207,33 @@ def validate_base(loader, front, backbone, imagenet_mean, imagenet_std,
                 img_rgb = F.interpolate(img_rgb, size=(img_out_size, img_out_size),
                                         mode="bilinear", align_corners=False)
             img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
-            img_np = img_rgb.squeeze(0).detach().cpu().numpy()  
-            img_np = np.transpose(img_np, (1, 2, 0)) 
-            img_np = img_np - img_np.min()
-            img_np = img_np / (img_np.max() + 1e-8)
-            save_path = os.path.join(image_dir, f"sample_{label.item()}.tiff")
-            io.imsave(save_path, img_np, check_contrast=False)
+            
             logits = backbone(img_in)
             preds = torch.argmax(logits, dim=1)
-            targets = [ClassifierOutputTarget(int(preds.item()))]
-            grayscale_cam = cam(input_tensor=img_in, targets=targets)[0]
-            rgb01 = img_rgb.squeeze(0).detach().cpu().numpy()
-            rgb01 = np.transpose(rgb01, (1, 2, 0))
-            rgb01 = np.clip(rgb01, 0.0, 1.0)
-            cam_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_cam.tiff")
-            overlay_path = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl{label.item()}_overlay.tiff")
-            _save_cam_tiffs(grayscale_cam, rgb01, cam_path, overlay_path)
+            
 
         correct += (preds == label).sum().item()
         total += label.numel()
         formatstr = get_formatstr(len(loader) - 1)
         torch.save(dict(pred=preds.detach().cpu(), label=label.cpu()), os.path.join(output_dir,  formatstr.format(i) + '.pt'))
+        path_cam_for_step = os.path.join(cams_dir, f"{formatstr.format(i)}_lbl_{label.item()}_pred_{preds.item()}_cam")
+        os.makedirs(path_cam_for_step, exist_ok=True)
+        
+        vol_slices_np, relevance_np, target_cls = compute_volume_gradcam(
+            vol=vol,
+            front=front,
+            backbone=backbone,
+            imagenet_mean=imagenet_mean,
+            imagenet_std=imagenet_std,
+            img_out_size=img_out_size,
+            final_dtype=final_dtype,
+            use_amp_final=use_amp_final,
+            target_class=preds.item(),   
+        )
+
+        video_path = os.path.join(path_cam_for_step, "gradcam")
+        save_gradcam_video(vol_slices_np, relevance_np, video_path, fps=20)
+
     final_acc = correct / max(1, total)
     print(f"[validate_base] Done. val_acc={final_acc:.4f}")
     return final_acc
@@ -194,10 +244,185 @@ def encode_all_frames_with_vae(frames_vae, vae, scaling=0.18215):
     latents = posterior * scaling
     return latents
 
+
+def save_gradcam_video(
+    vol_slices: np.ndarray,
+    relevance: np.ndarray,
+    out_path: str,
+    fps: int = 20,
+):
+    assert vol_slices.shape == relevance.shape
+
+    Z, H, W = vol_slices.shape
+
+    os.makedirs(out_path, exist_ok=True)
+    video_path = os.path.join(out_path, "gradcam_volume.mp4")
+
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    writer = cv2.VideoWriter(video_path, fourcc, fps, (W, H))
+
+    if not writer.isOpened():
+        print(f"[save_gradcam_video] mp4v Writer konnte nicht geöffnet werden, versuche AVI/XVID...")
+        video_path = os.path.join(out_path, "gradcam_volume.avi")
+        fourcc = cv2.VideoWriter_fourcc(*"XVID")
+        writer = cv2.VideoWriter(video_path, fourcc, fps, (W, H))
+
+    if not writer.isOpened():
+        print(f"[save_gradcam_video] VideoWriter schlägt komplett fehl, speichere nur Einzelbilder.")
+        writer = None
+
+    for z in range(Z):
+        slice_img = vol_slices[z]
+        rel_map   = relevance[z]
+
+        slice_img = slice_img - slice_img.min()
+        denom = slice_img.max() + 1e-6
+        slice_img = (slice_img / denom * 255).astype("uint8")
+
+        rel_map = np.clip(rel_map, 0.0, 1.0)
+        rel_map = (rel_map * 255).astype("uint8")
+
+        heat_color = cv2.applyColorMap(rel_map, cv2.COLORMAP_JET)
+
+        slice_bgr = cv2.cvtColor(slice_img, cv2.COLOR_GRAY2BGR)
+        overlay = cv2.addWeighted(slice_bgr, 0.6, heat_color, 0.4, 0)
+
+        # ggf. Rotation, wenn du sie drin hast/willst:
+        # overlay = cv2.rotate(overlay, cv2.ROTATE_90_CLOCKWISE)
+
+        if 695 <= z <= 705:
+            cv2.imwrite(os.path.join(os.path.dirname(out_path), f"slice_{z}.png"), overlay)
+            out_file = os.path.join(os.path.dirname(out_path), f"slice_{z}.pdf")
+            plt.imsave(out_file, overlay, format="pdf")
+
+        if writer is not None:
+            writer.write(overlay)
+
+    if writer is not None:
+        writer.release()
+
+
 def validate_dc(
+    loader,
+    front,
+    unet,
+    controlnet,
+    vae,
+    prompt_embeds,
+    prompt_to_class,
+    num_classes,
+    scheduler,
+    eargs,
+    img_size,
+    torch_dtype,
+    use_amp,
+    pd_f,
+    reduce="mean",
+    output_dir=None,
+):
+    image_dir = os.path.join(output_dir, "images")
+    os.makedirs(image_dir, exist_ok=True)
+    cams_dir = os.path.join(output_dir, "images_grad_cams")
+    os.makedirs(cams_dir, exist_ok=True)
+
+    front.to(device).eval()
+    vae.to(device).eval()
+    controlnet.to(device).eval()
+    unet.to(device).eval()
+
+    latent_size = img_size // 8
+    out_hw = (img_size, img_size)
+    formatstr = get_formatstr(len(loader) - 1)
+
+    total, correct = 0, 0
+    print("[validate] Starting validation iteration...")
+
+    for step, (vol, label, _) in enumerate(loader, start=1):
+        fname = os.path.join(output_dir, formatstr.format(step) + ".pt")
+        vol = vol.to(device)
+        if vol.dim() == 6:
+            vol = vol.squeeze(1)
+        label = label.to(device).long()
+
+        with torch.autocast(device_type="cuda" if device == "cuda" else "cpu", dtype=torch_dtype, enabled=use_amp):
+            x = vol.mean(dim=1)
+            B, T, H, W = x.shape
+            frames = x.unsqueeze(2).repeat(1, 1, 3, 1, 1).view(B * T, 3, H, W)
+            frames = F.interpolate(frames, size=out_hw, mode="bilinear", align_corners=False)
+            frames = frames.clamp(0, 1) * 2 - 1
+
+            lat_chunks = []
+            bt = frames.shape[0]
+            chunk = getattr(eargs, "vae_chunk", 256)
+            with torch.no_grad():
+                for s in range(0, bt, chunk):
+                    lat_chunks.append(encode_all_frames_with_vae(frames[s : s + chunk], vae, scaling=0.18215))
+            latents_flat = torch.cat(lat_chunks, dim=0).to(device)
+            lat_stack = latents_flat.view(B, T, 4, latent_size, latent_size)
+            lat = front(lat_stack)
+
+            try:
+                cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
+            except Exception:
+                cn_in_ch = getattr(controlnet, "in_channels", 4)
+
+            if cn_in_ch == 3:
+                img_for_cam = vae.decode(lat / 0.18215).sample
+                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1) / 2).to(device)
+                control_cond_img = img_for_cam
+            else:
+                control_cond_img = None
+                with torch.no_grad():
+                    img_for_cam = vae.decode(lat / 0.18215).sample
+                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1) / 2).to(device)
+
+            imgs01 = img_for_cam.detach().cpu()
+            for bi in range(imgs01.shape[0]):
+                arr = imgs01[bi].numpy().transpose(1, 2, 0)
+                save_path = os.path.join(image_dir, f"{formatstr.format(step)}_{label.item()}_{bi:02d}.tiff")
+                io.imsave(save_path, arr, check_contrast=False)
+
+            errors_list = []
+            for i in range(B):
+                cond = control_cond_img[i : i + 1] if control_cond_img is not None else None
+                _, _, class_errors_i = eval_prob_adaptive_differentiable(
+                    unet=unet,
+                    latent=lat[i : i + 1],
+                    text_embeds=prompt_embeds,
+                    scheduler=scheduler,
+                    args=eargs,
+                    latent_size=latent_size,
+                    controlnet=controlnet,
+                    all_noise=None,
+                    controlnet_cond=cond,
+                )
+                errors_list.append(class_errors_i)
+
+            errors = torch.stack(errors_list, dim=0)
+            logits = -errors
+            preds_idx = torch.argmax(logits, dim=1)
+            preds = pd_f.prompt_to_class[preds_idx.item()].item()
+            loss = errors[torch.arange(B, device=errors.device), preds].mean()
+
+        correct += (preds == label).sum().item()
+        total += label.numel()
+
+        torch.save(dict(errors=errors.detach().cpu(), pred=preds, label=label), fname)
+
+        if step % 20 == 1:
+            print(f"[validate] step={step}  running_acc={correct / max(1, total):.4f}")
+
+    val_acc = correct / max(1, total)
+    print(f"[validate] Done. val_acc={val_acc:.4f}")
+    return val_acc
+
+
+def validate_dc_with_gradcam(
     loader, front, unet, controlnet, vae, prompt_embeds, prompt_to_class, num_classes,
     scheduler, eargs, img_size, torch_dtype, use_amp, pd_f, reduce="mean", output_dir=None
 ):
+    """Is not possible, due to extreme memory consumption."""
+
     image_dir = os.path.join(output_dir, 'images')
     os.makedirs(image_dir, exist_ok=True)
     cams_dir = os.path.join(output_dir, "images_grad_cams")
@@ -213,6 +438,7 @@ def validate_dc(
     formatstr = get_formatstr(len(loader) - 1)
     total, correct = 0, 0
     print("[validate] Starting validation iteration...")
+
     for step, (vol, label, _) in enumerate(loader, start=1):
         fname = os.path.join(output_dir, formatstr.format(step) + '.pt')
         vol = vol.to(device)
@@ -220,20 +446,30 @@ def validate_dc(
             vol = vol.squeeze(1)
         label = label.to(device).long()
 
-        with torch.autocast(device_type="cuda" if device=="cuda" else "cpu", dtype=torch_dtype, enabled=use_amp):
+        with torch.autocast(
+            device_type="cuda" if device == "cuda" else "cpu",
+            dtype=torch_dtype,
+            enabled=use_amp
+        ):
             x = vol.mean(dim=1)
+            x.requires_grad_(True)
+
             B, T, H, W = x.shape
-            frames = x.unsqueeze(2).repeat(1,1,3,1,1).view(B*T,3,H,W)
+            frames = x.unsqueeze(2).repeat(1, 1, 3, 1, 1).view(B * T, 3, H, W)
             frames = F.interpolate(frames, size=out_hw, mode="bilinear", align_corners=False)
-            frames = frames.clamp(0,1)*2-1
+            frames = frames.clamp(0, 1) * 2 - 1
             lat_chunks = []
             bt = frames.shape[0]
             chunk = getattr(eargs, "vae_chunk", 256)
-            with torch.no_grad():
-                for s in range(0, bt, chunk):
-                    lat_chunks.append(encode_all_frames_with_vae(frames[s:s+chunk], vae, scaling=0.18215))
+            for s in range(0, bt, chunk):
+                lat_chunks.append(
+                    encode_all_frames_with_vae(
+                        frames[s:s+chunk], vae, scaling=0.18215
+                    )
+                )
             latents_flat = torch.cat(lat_chunks, dim=0).to(device)
             lat_stack = latents_flat.view(B, T, 4, latent_size, latent_size)
+
             lat = front(lat_stack)
             try:
                 cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
@@ -241,30 +477,27 @@ def validate_dc(
                 cn_in_ch = getattr(controlnet, "in_channels", 4)
 
             if cn_in_ch == 3:
-                img_for_cam = vae.decode(lat / 0.18215).sample          # [-1,1]
-                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1.0) / 2.0)  # [0,1]
-                img_for_cam = img_for_cam.to(lat.device)
-                img_for_cam.requires_grad_(True)
-
+                img_for_cam = vae.decode(lat / 0.18215).sample
+                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1) / 2).to(device)
                 control_cond_img = img_for_cam
             else:
                 control_cond_img = None
                 with torch.no_grad():
                     img_for_cam = vae.decode(lat / 0.18215).sample
-                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1.0) / 2.0).to(lat.device)
+                img_for_cam = ((img_for_cam.clamp(-1, 1) + 1) / 2).to(device)
 
             imgs01 = img_for_cam.detach().cpu()
-            Bc = imgs01.shape[0]
-            for bi in range(Bc):
-                arr = imgs01[bi].numpy()
-                arr = np.transpose(arr, (1, 2, 0))
-                save_path = os.path.join(image_dir, f"{formatstr.format(step)}_{label.item()}_{bi:02d}.tiff")
+            for bi in range(imgs01.shape[0]):
+                arr = imgs01[bi].numpy().transpose(1, 2, 0)
+                save_path = os.path.join(
+                    image_dir,
+                    f"{formatstr.format(step)}_{label.item()}_{bi:02d}.tiff"
+                )
                 io.imsave(save_path, arr, check_contrast=False)
 
-            B = lat.size(0)
             errors_list = []
             for i in range(B):
-                cond_to_pass = control_cond_img[i:i+1] if control_cond_img is not None else None
+                cond = control_cond_img[i:i+1] if control_cond_img is not None else None
                 _, _, class_errors_i = eval_prob_adaptive_differentiable(
                     unet=unet,
                     latent=lat[i:i+1],
@@ -274,58 +507,61 @@ def validate_dc(
                     latent_size=latent_size,
                     controlnet=controlnet,
                     all_noise=None,
-                    controlnet_cond=cond_to_pass
+                    controlnet_cond=cond
                 )
                 errors_list.append(class_errors_i)
-            
-            errors = torch.stack(errors_list, dim=0).to(label.dtype if label.is_floating_point() else torch.float32)
+
+            errors = torch.stack(errors_list, dim=0)
             logits = -errors
-            preds = torch.argmax(logits, dim=1) 
-            prompt = pd_f.prompt_texts[preds.item()]
-            preds = pd_f.prompt_to_class[preds.item()].item()
+            preds_idx = torch.argmax(logits, dim=1)
+            preds = pd_f.prompt_to_class[preds_idx.item()].item()
 
-
-
-            B = errors.size(0)
             loss = errors[torch.arange(B, device=errors.device), preds].mean()
 
-            for p in unet.parameters():
-                p.requires_grad_(False)
-            if controlnet is not None:
-                for p in controlnet.parameters():
-                    p.requires_grad_(False)
+            grads_x = torch.autograd.grad(
+                loss,
+                x,
+                retain_graph=False,
+                create_graph=False
+            )[0] 
 
-            if control_cond_img is not None:
-                grads = torch.autograd.grad(
-                    loss,
-                    img_for_cam,
-                    retain_graph=False,
-                    create_graph=False
-                )[0]
+            grads_x_abs = grads_x.abs()
 
-                sal = grads.abs().sum(dim=1)
-                sal = sal / (sal.amax(dim=(1, 2), keepdim=True) + 1e-8)
+            for bi in range(B):
+                vol_slices = x[bi].detach().cpu()         
+                relevance = grads_x_abs[bi].detach().cpu() 
 
-                for bi in range(sal.size(0)):
-                    cam01 = sal[bi].detach().cpu().numpy()
-                    rgb01 = img_for_cam[bi].detach().cpu().numpy()
-                    rgb01 = np.transpose(rgb01, (1, 2, 0))
-                    cam_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_cam_errgrad.tiff")
-                    overlay_path = os.path.join(cams_dir, f"{formatstr.format(step)}_{bi:02d}_overlay_errgrad.tiff")
-                    _save_cam_tiffs(cam01, rgb01, cam_path, overlay_path)
-           
+                max_val = relevance.max()
+                if max_val > 0:
+                    relevance /= max_val
+                else:
+                    relevance = torch.zeros_like(relevance)
 
+                vol_np = vol_slices.numpy()
+                rel_np = relevance.numpy()
+
+                path_cam_for_step = os.path.join(
+                    cams_dir,
+                    f"{formatstr.format(step)}_lbl_{label.item()}_pred_{preds}_cam_b{bi:02d}"
+                )
+                os.makedirs(path_cam_for_step, exist_ok=True)
+
+                video_out = os.path.join(path_cam_for_step, "gradcam")
+                save_gradcam_video(vol_np, rel_np, video_out, fps=20)
 
         correct += (preds == label).sum().item()
         total += label.numel()
-        torch.save(dict(errors=errors.detach().cpu(), pred=preds, label=label), fname)
+        torch.save(dict(errors=errors.detach().cpu(),
+                        pred=preds, label=label), fname)
+
         if step % 20 == 1:
             print(f"[validate] step={step}  running_acc={correct/max(1,total):.4f}")
 
     val_acc = correct / max(1, total)
     print(f"[validate] Done. val_acc={val_acc:.4f}")
-    
     return val_acc
+
+
 
 def old_validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, imagenet_mean, imagenet_std, output_dir=None):
     """Validation loop with AMP and ImageNet normalization."""
@@ -334,14 +570,7 @@ def old_validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, im
     os.makedirs(image_dir, exist_ok=True)
     cams_dir = os.path.join(output_dir, "images_grad_cams")
     os.makedirs(cams_dir, exist_ok=True)
-    target_layers = _get_cam_target_layers(backbone)
-    CamCls = GradCAMPlusPlus
-    is_vit = _is_vit_backbone(backbone)
-    cam = CamCls(
-        model=backbone,
-        target_layers=target_layers,
-        reshape_transform=vit_reshape_transform if is_vit else None
-    )
+    
     front.to(device).eval()
     backbone.to(device).eval()
     total, correct = 0, 0
@@ -359,29 +588,37 @@ def old_validate(loader, front, backbone, torch_dtype, use_amp, img_out_size, im
                 img_rgb = F.interpolate(img_rgb, size=(img_out_size, img_out_size),
                                         mode="bilinear", align_corners=False)
             img_in = normalize_batch(img_rgb, imagenet_mean, imagenet_std)
-            img_np = img_rgb.squeeze(0).detach().cpu().numpy()  
-            img_np = np.transpose(img_np, (1, 2, 0)) 
-            img_np = img_np - img_np.min()
-            img_np = img_np / (img_np.max() + 1e-8)
-            save_path = os.path.join(image_dir, f"sample_{label.item()}.tiff")
-            io.imsave(save_path, img_np, check_contrast=False)
             logits = backbone(img_in)
             preds = torch.argmax(logits, dim=1)
-            targets = [ClassifierOutputTarget(int(preds.item()))]
-            grayscale_cam = cam(input_tensor=img_in, targets=targets)[0]
-            rgb01 = img_rgb.squeeze(0).detach().cpu().numpy()
-            rgb01 = np.transpose(rgb01, (1, 2, 0))
-            rgb01 = np.clip(rgb01, 0.0, 1.0)
-            cam_path = os.path.join(cams_dir, f"{formatstr.format(step)}_lbl{label.item()}_cam.tiff")
-            overlay_path = os.path.join(cams_dir, f"{formatstr.format(step)}_lbl{label.item()}_overlay.tiff")
-            _save_cam_tiffs(grayscale_cam, rgb01, cam_path, overlay_path)
 
         correct += (preds == label).sum().item()
         total += label.numel()
         
         torch.save(dict(pred=preds.detach().cpu(), label=label.cpu()), os.path.join(output_dir,  formatstr.format(step) + '.pt'))
-        if step % 50 == 0 or step == 1:
-            print(f"[validate] step={step}  running_acc={correct/max(1,total):.4f}")
+        
+        vol_for_cam = vol
+        if vol_for_cam.dim() == 3:
+            vol_for_cam = vol_for_cam.unsqueeze(0)
+
+        vol_slices_np, relevance_np, target_cls = compute_volume_gradcam(
+            vol=vol_for_cam,
+            front=front,
+            backbone=backbone,
+            imagenet_mean=imagenet_mean,
+            imagenet_std=imagenet_std,
+            img_out_size=img_out_size,
+            final_dtype=torch_dtype,
+            use_amp_final=use_amp,
+            target_class=preds.item(),  
+        )
+        path_cam_for_step = os.path.join(
+            cams_dir,
+            f"{formatstr.format(step)}_lbl_{label.item()}_pred_{preds.item()}_cam"
+        )
+        os.makedirs(path_cam_for_step, exist_ok=True)
+
+        video_path = os.path.join(path_cam_for_step, "gradcam_volume.mp4")
+        save_gradcam_video(vol_slices_np, relevance_np, video_path, fps=20)
 
     val_acc = correct / max(1, total)
     print(f"[validate] Done. val_acc={val_acc:.4f}")
@@ -523,7 +760,7 @@ def main(args):
             torch.bfloat16 if ckpt["dtype"] == "bfloat16" else torch.float32
         )
 
-        final_acc = validate_dc(
+        final_acc = validate_dc_with_gradcam(
         ds_loader, front_f, unet_f, controlnet_f, vae_f,
         prompt_embeds_f, prompt_to_class_f, num_classes_f,
         scheduler_f, eargs_f, img_size_ckpt,
