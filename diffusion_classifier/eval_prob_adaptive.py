@@ -11,6 +11,7 @@ from diffusion.models import get_sd_model, get_scheduler_config
 from diffusion.utils import LOG_DIR, get_formatstr
 import torchvision.transforms as torch_transforms
 from torchvision.transforms.functional import InterpolationMode
+from types import GeneratorType
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -164,34 +165,25 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
     t_evaluated = set()
     remaining_prmpt_idxs = list(range(len(text_embeds)))
 
-    # gleiche t-Auswahl wie im Original
     start = T // max_n_samples // 2
     t_to_eval = list(range(start, T, T // max_n_samples))[:max_n_samples]
 
-    # Wir sammeln ALLE (ts, noise_idxs, text_embed_idxs), rechnen die Errors einmal,
-    # und gruppieren danach. Das reduziert Overhead und behält Gradienten.
     global_ts = []
     global_noise_idxs = []
     global_text_embed_idxs = []
 
-    # Merker, um pro Round zu wissen, was neu ist
-    per_round_spans = []  # (start_index, end_index, curr_prompt_set)
-
-    # Round-Runden wie im Original
+    per_round_spans = []  
     for n_samples, n_to_keep in zip(args.n_samples, args.to_keep):
         curr_t_to_eval = t_to_eval[len(t_to_eval) // n_samples // 2::len(t_to_eval) // n_samples][:n_samples]
         curr_t_to_eval = [t for t in curr_t_to_eval if t not in t_evaluated]
 
         round_start = len(global_ts)
 
-        # wie im Original: pro verbleibendem Prompt alle ts * n_trials
         for prompt_i in remaining_prmpt_idxs:
             for t_idx, t in enumerate(curr_t_to_eval, start=len(t_evaluated)):
-                # ts: je t 'n_trials' Wiederholungen
                 global_ts.extend([t] * args.n_trials)
-                # noise-indizes für diesen Block
                 global_noise_idxs.extend(list(range(args.n_trials * t_idx, args.n_trials * (t_idx + 1))))
-                # prompt-indizes
+         
                 global_text_embed_idxs.extend([prompt_i] * args.n_trials)
 
         t_evaluated.update(curr_t_to_eval)
@@ -199,10 +191,6 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
         round_end = len(global_ts)
         per_round_spans.append((round_start, round_end, remaining_prmpt_idxs.copy()))
 
-        # Nach der Round-Selektion wird remaining_prmpt_idxs upgedated,
-        # das machen wir NACH dem Fehler-Compute unten (einmalig über alle Runden).
-
-    # 1x differenzierbar Fehler berechnen
     pred_errors_all = eval_error_differentiable(
         unet, scheduler, latent, all_noise,
         ts=global_ts, noise_idxs=global_noise_idxs,
@@ -211,23 +199,22 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
         conditioning_scale=args.cond_scale, controlnet_cond=controlnet_cond
     ) 
 
-    # Jetzt die Round-Logik „matchen“ (ohne detach)
-    # und dabei data befüllen wie im Original
+
     data = dict()
     t_evaluated = set()
     remaining_prmpt_idxs = list(range(len(text_embeds)))
     pos = 0
 
     for round_start, round_end, prompt_set_snapshot in per_round_spans:
-        # Slice der aktuellen Round
+
         ts_slice            = global_ts[round_start:round_end]
         noise_idxs_slice    = global_noise_idxs[round_start:round_end]
         text_embed_idxs_slice = global_text_embed_idxs[round_start:round_end]
         errors_slice        = pred_errors_all[round_start:round_end]  # [S]
 
-        # Gruppieren wie im Original
+  
         round_data = _group_errors_by_prompt(ts_slice, text_embed_idxs_slice, errors_slice)
-        # Merge in 'data' (verkettet pro Prompt)
+
         for prompt_i, pack in round_data.items():
             if prompt_i not in data:
                 data[prompt_i] = {'t': pack['t'], 'pred_errors': pack['pred_errors']}
@@ -235,30 +222,17 @@ def eval_prob_adaptive_differentiable(unet, latent, text_embeds, scheduler, args
                 data[prompt_i]['t'] = torch.cat([data[prompt_i]['t'], pack['t']], dim=0)
                 data[prompt_i]['pred_errors'] = torch.cat([data[prompt_i]['pred_errors'], pack['pred_errors']], dim=0)
 
-        # Selektion nächster verbleibender Prompts wie im Original
-        # (Nutzen die bisher gesammelten Fehler in 'data')
+    
         mean_errs = torch.stack(
             [data[p]['pred_errors'].mean() for p in remaining_prmpt_idxs], dim=0
-        )  # [len(rem)]
-        # errors = [-mean]; best k größte => kleinste mean_errs
+        )  
         scores = -mean_errs
-        # Wir nehmen den zu dieser Runde passenden n_to_keep:
-        # Finde n_to_keep dieser Runde über Matching:
-        # (einfacher: iteriere erneut die args.n_samples/args.to_keep parallel)
-        # Aber wir kennen ihn noch: er war beim Append der Round in per_round_spans nicht gespeichert.
-        # Wir lösen es pragmatisch: recompute Index dieser Round.
         round_idx = per_round_spans.index((round_start, round_end, prompt_set_snapshot))
         n_to_keep = args.to_keep[round_idx]
 
         best_idxs_local = torch.topk(scores, k=n_to_keep, dim=0).indices.tolist()
         remaining_prmpt_idxs = [remaining_prmpt_idxs[i] for i in best_idxs_local]
 
-        # t_evaluated erweitern
-        # (wir könnten curr_t_to_eval für diese Runde rekonstruieren; für die nächste Runde spielt es
-        #  hier aber keine Rolle mehr, da wir ts bereits gebaut haben.)
-        # -> Wir lassen diese Verwaltungsvariable hier symbolisch; sie wird oben nicht mehr benötigt.
-
-    # Organize output wie im Original:
     if len(remaining_prmpt_idxs) > 1:
         with torch.no_grad():
             mean_errs_final = torch.stack(
@@ -290,22 +264,8 @@ def eval_error_differentiable(
     device = latent.device
     pred_errors = []
 
-    # Timesteps sicher initialisieren (für scale_model_input/index_for_timestep)
     if not hasattr(scheduler, "timesteps") or scheduler.timesteps is None:
         scheduler.set_timesteps(int(max(ts) + 1))
-
-    # erwartete Eingangs-Kanalzahl des ControlNet bestimmen (3 == Pixel, 4 == Latent)
-    cond_ch = None       # z.B. 3 (Pixel-CN)
-    sample_in_ch = None  # z.B. 4 (Latent-Sample)
-    if controlnet is not None:
-        try:
-            cond_ch = controlnet.config.conditioning_channels
-        except Exception:
-            cond_ch = 3
-        try:
-            sample_in_ch = controlnet.config.in_channels
-        except Exception:
-            sample_in_ch = 4
 
     idx_global = 0
     total = len(ts)
@@ -315,9 +275,8 @@ def eval_error_differentiable(
         batch_noise_idxs = noise_idxs[idx_global:end]
         batch_text_idxs  = text_embed_idxs[idx_global:end]
 
-        # Timesteps (long), Noise & Alphas
-        batch_ts = torch.tensor(batch_ts_list, device=device, dtype=torch.long)   # [B]
-        noise    = all_noise[batch_noise_idxs]                                     # [B,4,h,w]
+        batch_ts = torch.tensor(batch_ts_list, device=device, dtype=torch.long)   
+        noise    = all_noise[batch_noise_idxs]                                
 
         alphas = scheduler.alphas_cumprod.to(device)[batch_ts].view(-1, 1, 1, 1)
         if dtype == 'float16':
@@ -327,28 +286,30 @@ def eval_error_differentiable(
         else:
             noise  = noise.float();  alphas = alphas.float()
 
-        noised_latent = latent * (alphas ** 0.5) + noise * ((1.0 - alphas) ** 0.5)  # [B,4,h,w]
-        text_input    = text_embeds[batch_text_idxs]                                 # [B, seq, hid]
+        noised_latent = latent * (alphas ** 0.5) + noise * ((1.0 - alphas) ** 0.5) 
+        text_input    = text_embeds[batch_text_idxs]  
 
         B = noised_latent.size(0)
         errors_B = torch.empty(B, device=device, dtype=noise.dtype)
 
-        # Pro unique timestep skalieren & vorwärts
         unique_ts = torch.unique(batch_ts)
         for t_val in unique_ts:
             sel   = (batch_ts == t_val)
             idxs  = sel.nonzero(as_tuple=True)[0]
 
-            nl_sel    = noised_latent[idxs]     # [b_t,4,h,w]
-            noise_sel = noise[idxs]             # [b_t,4,h,w]
-            txt_sel   = text_input[idxs]        # [b_t,seq,hid]
+            nl_sel    = noised_latent[idxs]    
+            noise_sel = noise[idxs]            
+            txt_sel   = text_input[idxs]        
 
-            # UNet-Input skalieren (ein Skalar-t)
             lat_in  = scheduler.scale_model_input(nl_sel, t_val)
             t_batch = torch.full((nl_sel.size(0),), int(t_val.item()), device=device, dtype=batch_ts.dtype)
 
             if controlnet is None:
-                noise_pred_sel = unet(lat_in, t_batch, encoder_hidden_states=txt_sel).sample
+                out_unet = unet(
+                    lat_in, t_batch,
+                    encoder_hidden_states=txt_sel,
+                    return_dict=False,       
+                )
             else:
                 down_res, mid_res = controlnet(
                     lat_in, t_batch,
@@ -357,13 +318,27 @@ def eval_error_differentiable(
                     conditioning_scale=conditioning_scale,
                     return_dict=False,
                 )
-                noise_pred_sel = unet(
-                    lat_in, t_batch, encoder_hidden_states=txt_sel,
+                out_unet = unet(
+                    lat_in, t_batch,
+                    encoder_hidden_states=txt_sel,
                     down_block_additional_residuals=down_res,
-                    mid_block_additional_residual=mid_res
-                ).sample
+                    mid_block_additional_residual=mid_res,
+                    return_dict=False,
+                )
 
-            # Fehler pro Sample
+            if isinstance(out_unet, (tuple, list)):
+                noise_pred_sel = out_unet[0]
+            else:
+                noise_pred_sel = getattr(out_unet, "sample", out_unet)
+
+
+            
+            if isinstance(noise_sel, GeneratorType):
+                noise_sel = torch.stack(list(noise_sel), dim=0)
+
+            if isinstance(noise_pred_sel, GeneratorType):
+                noise_pred_sel = torch.stack(list(noise_pred_sel), dim=0)
+
             if loss == 'l2':
                 err_sel = F.mse_loss(noise_sel, noise_pred_sel, reduction='none').mean(dim=(1, 2, 3))
             elif loss == 'l1':
@@ -373,7 +348,9 @@ def eval_error_differentiable(
             else:
                 raise NotImplementedError
 
+            err_sel = err_sel.to(errors_B.dtype)
             errors_B[idxs] = err_sel
+
 
         pred_errors.append(errors_B)
         idx_global = end
@@ -393,8 +370,8 @@ def group_errors_per_prompt_idx(ts, text_embed_idxs, pred_errors, remaining_prmp
     data = {}
     for prompt_i in remaining_prmpt_idxs:
         mask = (tei_t == prompt_i)
-        prompt_ts = ts_t[mask]                # [K]
-        prompt_pred_errors = pred_errors[mask]# [K]
+        prompt_ts = ts_t[mask]                
+        prompt_pred_errors = pred_errors[mask]
         data[prompt_i] = (prompt_ts, prompt_pred_errors)
     return data
 
@@ -423,8 +400,8 @@ def _group_errors_by_prompt(ts, text_embed_idxs, pred_errors):
     for prompt_i in uniq:
         mask = (tei_t == prompt_i)
         data[prompt_i] = {
-            't': ts_t[mask],                        # [k]
-            'pred_errors': pred_errors[mask]        # [k]
+            't': ts_t[mask],                        
+            'pred_errors': pred_errors[mask] 
         }
     return data
 
@@ -455,8 +432,8 @@ def _mean_error_per_prompt(data, prompt_indices):
     return torch.stack(errs, dim=0) 
 
 def mean_error_per_class_from_prompt_errors(
-    errors_per_prompt: torch.Tensor,        # [P]
-    prompt_to_class: torch.Tensor,          # [P] mit classidx je Prompt
+    errors_per_prompt: torch.Tensor, 
+    prompt_to_class: torch.Tensor,        
     num_classes: int = 2,
     fill_value: float = float('inf'),
 ):
@@ -474,7 +451,6 @@ def mean_error_per_class_from_prompt_errors(
     sums  = torch.zeros(num_classes, device=device, dtype=errors_per_prompt.dtype)
     counts = torch.zeros(num_classes, device=device, dtype=errors_per_prompt.dtype)
 
-    # Fehlende Prompts hatten evtl. +inf → die ignorieren wir beim Mittelwert
     finite_mask = torch.isfinite(errors_per_prompt)
     if finite_mask.any():
         cls_idx = prompt_to_class[finite_mask]

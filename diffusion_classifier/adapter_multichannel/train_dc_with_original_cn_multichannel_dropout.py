@@ -359,16 +359,10 @@ def train_one_epoch(
             latents_flat = torch.cat(lat_chunks, dim=0)
             lat_stack = latents_flat.view(B, T, 4, latent_size, latent_size)
             lat = adapter(lat_stack)
-            try:
-                cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
-            except Exception:
-                cn_in_ch = getattr(controlnet, "in_channels", 4)
-
-            if cn_in_ch == 3:
-                with torch.no_grad():
-                    control_cond_img = vae.decode(lat / 0.18215).sample
-            else:
-                control_cond_img = None
+            with torch.no_grad():
+                img_for_cam = vae.decode(lat / 0.18215).sample
+            img_for_cam = ((img_for_cam.clamp(-1, 1) + 1) / 2).to(device)
+            control_cond_img = img_for_cam
         
             B = lat.size(0)
             errors_list = []
@@ -501,16 +495,10 @@ def validate(
             latents_flat = torch.cat(lat_chunks, dim=0)
             lat_stack = latents_flat.view(B, T, 4, latent_size, latent_size)
             lat = adapter(lat_stack)
-            try:
-                cn_in_ch = controlnet.controlnet_cond_embedding.conv_in.in_channels
-            except Exception:
-                cn_in_ch = getattr(controlnet, "in_channels", 4)
-
-            if cn_in_ch == 3:
-                with torch.no_grad():
-                    control_cond_img = vae.decode(lat / 0.18215).sample
-            else:
-                control_cond_img = None
+            with torch.no_grad():
+                img_for_cam = vae.decode(lat / 0.18215).sample
+            img_for_cam = ((img_for_cam.clamp(-1, 1) + 1) / 2).to(device)
+            control_cond_img = img_for_cam
 
             B = lat.size(0)
             errors_list = []
