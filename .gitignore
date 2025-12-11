@@ -17,6 +17,16 @@ diffusion_classifier\runs
 */logs
 *.safethensors
 *.pt
+*.tiff
 */Slurm
 */results_eval_pipeline
 */log_curves
+
+*/slice_702.png
+*/slice_702.pdf
+*/slice_703.png
+*/slice_703.pdf
+*/slice_704.png
+*/slice_704.pdf
+*/slice_705.png
+*/slice_705.pdf
