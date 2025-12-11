@@ -1,0 +1,71 @@
+=== Job gestartet: Tue Dec  2 01:30:21 PM CET 2025 ===
+Job-ID: 2379055 auf Node: uc3n078.localdomain
+=== GPU-Check ===
+Tue Dec  2 13:30:21 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.195.03             Driver Version: 570.195.03     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    On  |   00000000:06:00.0 Off |                    0 |
+| N/A   45C    P0             70W /  415W |      27MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3518      G   /usr/libexec/Xorg                        17MiB |
++-----------------------------------------------------------------------------------------+
+Running base model: convnext_tiny_pretrained_cn_wrapper_2017198
+Starting pipeline evaluation with model: convnext_tiny_pretrained_cn_wrapper_2017198
+Using pretrained model from: /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/a_cv/convnext_tiny_pretrained_cn_wrapper_2017198/convnext_tiny_bfloat16_251031_0810/split_004/best.pt
+Baue Torchvision Classifier...
+[build_backbone] Built ConvNeXt-Tiny (pretrained=True) with ImageNet mean/std: (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschenhals-Tiefe: 8
+[validate] Starting validation iteration...
+[validate] Done. val_acc=0.4545
+Final Accuracy: 0.4545
+
+============================================================
+ E V A L U A T I O N   R E P O R T
+============================================================
+ Results folder: ./results_eval_pipeline_show_results/convnext_tiny_pretrained_cn_wrapper_2017198/convnext_tiny_old_cn_wrapper/251202_1332/results
+ Number of evaluated samples: 33
+------------------------------------------------------------
+ Accuracy: 45.45%
+ Balanced Accuracy: 50.00%
+------------------------------------------------------------
+ Detailed classification report:
+              precision    recall  f1-score   support
+
+           0      0.000     0.000     0.000        18
+           1      0.455     1.000     0.625        15
+
+    accuracy                          0.455        33
+   macro avg      0.227     0.500     0.312        33
+weighted avg      0.207     0.455     0.284        33
+
+============================================================
+Results evaluation completed successfully.
+Pipeline evaluation completed.
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc3n078
+Job ID: 2379055
+Array Job ID: 2357767_14
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:05:50
+CPU Efficiency: 8.07% of 01:12:16 core-walltime
+Job Wall-clock time: 00:04:31
+Memory Utilized: 4.17 GB
+Memory Efficiency: 8.34% of 50.00 GB (50.00 GB/node)

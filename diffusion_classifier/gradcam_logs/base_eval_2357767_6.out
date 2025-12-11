@@ -1,0 +1,72 @@
+=== Job gestartet: Tue Dec  2 01:30:12 PM CET 2025 ===
+Job-ID: 2379046 auf Node: uc3n077.localdomain
+=== GPU-Check ===
+Tue Dec  2 13:30:12 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.195.03             Driver Version: 570.195.03     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    On  |   00000000:06:00.0 Off |                    0 |
+| N/A   45C    P0             72W /  415W |      27MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3738      G   /usr/libexec/Xorg                        17MiB |
++-----------------------------------------------------------------------------------------+
+Running base model: vitb16_dropout_pretrained_2_2153747
+Starting pipeline evaluation with model: vitb16_dropout_pretrained_2_2153747
+Using pretrained model from: /pfs/work9/workspace/scratch/ma_lilipper-lippert_bachelorthesis_ws/Bachelorarbeit/diffusion_classifier/results_for_thesis_evaluation/b_dropout/vitb16_dropout_pretrained_2_2153747/vit_b16_bfloat16_251117_1103/best model/best_checkpoint.pt
+Baue Torchvision Classifier...
+[build_backbone] Built ViT-B/16 (pretrained=True) with ImageNet mean/std: (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+Lade ControlNet-Wrapper Adapter...
+Adapter konfiguriert: Eingangstiefe -> 4x Reduktion -> 64 -> ControlNet-Flaschenhals-Tiefe: 8
+[validate_base] Starting validation iteration...
+[validate_base] Done. val_acc=0.5455
+Final Accuracy: 0.5455
+
+============================================================
+ E V A L U A T I O N   R E P O R T
+============================================================
+ Results folder: ./results_eval_pipeline_show_results/vitb16_dropout_pretrained_2_2153747/vit_b_16_cn_wrapper/251202_1332/results
+ Number of evaluated samples: 33
+------------------------------------------------------------
+ Accuracy: 54.55%
+ Balanced Accuracy: 50.00%
+------------------------------------------------------------
+ Detailed classification report:
+              precision    recall  f1-score   support
+
+           0      0.545     1.000     0.706        18
+           1      0.000     0.000     0.000        15
+
+    accuracy                          0.545        33
+   macro avg      0.273     0.500     0.353        33
+weighted avg      0.298     0.545     0.385        33
+
+============================================================
+Results evaluation completed successfully.
+Pipeline evaluation completed.
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc3n077
+Job ID: 2379046
+Array Job ID: 2357767_6
+Cluster: uc3
+User/Group: ma_lilipper/ma_ma
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:06:36
+CPU Efficiency: 8.90% of 01:14:08 core-walltime
+Job Wall-clock time: 00:04:38
+Memory Utilized: 4.09 GB
+Memory Efficiency: 8.18% of 50.00 GB (50.00 GB/node)
